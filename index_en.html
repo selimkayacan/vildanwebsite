@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vildan Kara Kayacan — Independent Advisor</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --black: #0a0a0a; --dark: #141414; --dark2: #1e1e1e; --dark3: #2a2a2a;
+    --white: #ffffff; --off-white: #f0eeea; --purple: #6b46c1; --purple-light: #805ad5;
+    --gray: #888888; --light-gray: #cccccc;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; background: var(--white); color: var(--black); font-size: 15px; line-height: 1.7; }
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: var(--black); display: flex; align-items: center; justify-content: space-between; padding: 0 40px; height: 60px; }
+  .nav-brand { display: flex; flex-direction: column; }
+  .nav-brand .name { color: var(--white); font-size: 16px; font-weight: 700; letter-spacing: 0.5px; }
+  .nav-brand .name span { color: var(--purple); }
+  .nav-brand .sub { color: var(--gray); font-size: 11px; letter-spacing: 1px; }
+  .nav-links { display: flex; align-items: center; gap: 32px; list-style: none; }
+  .nav-links a { color: var(--light-gray); text-decoration: none; font-size: 13px; letter-spacing: 0.5px; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--white); }
+  .nav-cta { background: var(--purple); color: var(--white) !important; padding: 9px 22px; border-radius: 2px; font-size: 13px !important; font-weight: 600; transition: background 0.2s !important; }
+  .nav-cta:hover { background: var(--purple-light) !important; }
+  section { scroll-margin-top: 60px; }
+  .hero { min-height: 100vh; background: var(--black); display: grid; grid-template-columns: 1fr 1fr; padding-top: 60px; position: relative; overflow: hidden; }
+  .hero::before { content: ''; position: absolute; inset: 0; background: url('https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1600&q=80') center/cover no-repeat; opacity: 0.25; }
+  .hero-left { padding: 100px 40px 60px 60px; display: flex; flex-direction: column; justify-content: center; position: relative; z-index: 1; }
+  .hero-left h1 { color: var(--white); font-size: 52px; font-weight: 700; line-height: 1.15; margin-bottom: 20px; }
+  .hero-left p { color: #aaa; font-size: 16px; margin-bottom: 36px; max-width: 440px; }
+  .btn-primary { display: inline-block; background: transparent; color: var(--white); border: 1.5px solid var(--white); padding: 13px 30px; font-size: 14px; font-weight: 600; letter-spacing: 1px; cursor: pointer; transition: all 0.2s; text-decoration: none; }
+  .btn-primary:hover { background: var(--white); color: var(--black); }
+  .btn-purple { background: var(--purple); border-color: var(--purple); }
+  .btn-purple:hover { background: var(--purple-light); border-color: var(--purple-light); color: var(--white); }
+  .hero-right { display: flex; align-items: center; justify-content: center; padding: 100px 60px 60px 40px; position: relative; z-index: 1; }
+  .subscribe-box { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); padding: 36px; width: 100%; max-width: 360px; }
+  .subscribe-box h3 { color: var(--white); font-size: 18px; margin-bottom: 20px; }
+  .subscribe-box input { width: 100%; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.2); color: var(--white); padding: 10px 14px; font-size: 14px; margin-bottom: 12px; outline: none; }
+  .subscribe-box input::placeholder { color: #888; }
+  .subscribe-box button { background: var(--purple); color: var(--white); border: none; padding: 11px 24px; font-size: 14px; font-weight: 600; cursor: pointer; width: 100%; transition: background 0.2s; }
+  .subscribe-box button:hover { background: var(--purple-light); }
+  .subscribe-box label { color: #888; font-size: 12px; display: flex; align-items: center; gap: 8px; margin-top: 10px; cursor: pointer; }
+  .why { display: grid; grid-template-columns: 1fr 1fr; min-height: 500px; }
+  .why-left { padding: 80px 60px; background: var(--white); display: flex; align-items: center; }
+  .why-left h2 { font-size: 42px; font-weight: 700; line-height: 1.2; color: var(--black); }
+  .why-right { padding: 60px 60px 60px 40px; background: var(--white); display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-content: center; }
+  .why-item { }
+  .why-icon { width: 44px; height: 44px; border: 2px solid var(--purple); position: relative; margin-bottom: 16px; }
+  .why-icon::after { content: ''; position: absolute; width: 22px; height: 22px; background: var(--purple); bottom: -8px; right: -8px; }
+  .why-item h4 { font-size: 16px; font-weight: 700; margin-bottom: 8px; color: var(--black); }
+  .why-item p { font-size: 13px; color: #555; line-height: 1.6; }
+  .about-dark { background: var(--dark); min-height: 400px; display: grid; grid-template-columns: 1fr 1fr; position: relative; overflow: hidden; }
+  .about-dark::before { content: ''; position: absolute; inset: 0; background: url('https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=1400&q=80') center/cover no-repeat; opacity: 0.18; }
+  .about-left { padding: 80px 40px 80px 60px; position: relative; z-index: 1; }
+  .about-left h2 { color: var(--white); font-size: 38px; font-weight: 700; line-height: 1.2; margin-bottom: 12px; }
+  .about-left p { color: #aaa; font-size: 15px; margin-bottom: 32px; }
+  .about-right { padding: 80px 60px 80px 40px; position: relative; z-index: 1; display: flex; flex-direction: column; justify-content: center; }
+  .about-right p { color: #bbb; font-size: 14px; line-height: 1.8; margin-bottom: 16px; }
+  .btn-outline-white { display: inline-block; border: 1.5px solid var(--white); color: var(--white); padding: 11px 28px; font-size: 13px; font-weight: 600; letter-spacing: 1px; cursor: pointer; transition: all 0.2s; text-decoration: none; }
+  .btn-outline-white:hover { background: var(--white); color: var(--black); }
+  .stats { background: var(--dark2); position: relative; overflow: hidden; }
+  .stats::before { content: ''; position: absolute; inset: 0; background: url('https://images.unsplash.com/photo-1518770660439-4636190af475?w=1400&q=80') center/cover no-repeat; opacity: 0.12; }
+  .stats-inner { position: relative; z-index: 1; display: grid; grid-template-columns: 1fr 1fr; min-height: 380px; }
+  .stats-left { padding: 70px 40px 70px 60px; }
+  .stats-left h2 { color: var(--white); font-size: 32px; font-weight: 700; margin-bottom: 40px; }
+  .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+  .stat-item .num { font-size: 40px; font-weight: 800; color: var(--purple); line-height: 1; margin-bottom: 6px; }
+  .stat-item .label { color: #aaa; font-size: 13px; line-height: 1.4; }
+  .stats-right { padding: 70px 60px 70px 40px; display: flex; flex-direction: column; justify-content: center; }
+  .stats-right p { color: #bbb; font-size: 14px; line-height: 1.8; margin-bottom: 14px; }
+  .values { padding: 80px 60px; background: var(--white); }
+  .values h2 { font-size: 36px; font-weight: 700; text-align: center; margin-bottom: 8px; }
+  .values .sub { text-align: center; color: #888; margin-bottom: 50px; font-size: 14px; }
+  .values-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 32px; }
+  .value-item { text-align: center; }
+  .value-icon { width: 40px; height: 40px; border: 2px solid var(--black); position: relative; margin: 0 auto 16px; }
+  .value-icon::after { content: ''; position: absolute; width: 20px; height: 20px; background: var(--purple); opacity: 0.3; bottom: -6px; right: -6px; }
+  .value-item h4 { font-size: 14px; font-weight: 700; margin-bottom: 8px; }
+  .value-item p { font-size: 12px; color: #666; line-height: 1.6; }
+  .academics { padding: 80px 60px; background: var(--dark); position: relative; overflow: hidden; }
+  .academics::before { content: ''; position: absolute; inset: 0; background: url('https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1400&q=80') center/cover no-repeat; opacity: 0.15; }
+  .academics-inner { position: relative; z-index: 1; }
+  .academics h2 { color: var(--white); font-size: 38px; font-weight: 700; text-align: center; margin-bottom: 10px; }
+  .academics .sub { color: #aaa; text-align: center; font-size: 14px; margin-bottom: 50px; }
+  .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
+  .service-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); padding: 36px 28px; transition: background 0.2s; }
+  .service-card:hover { background: rgba(255,255,255,0.07); }
+  .service-card h3 { color: var(--white); font-size: 17px; font-weight: 600; margin-bottom: 12px; }
+  .service-card p { color: #888; font-size: 13px; line-height: 1.7; margin-bottom: 20px; }
+  .btn-purple-sm { display: inline-block; background: var(--purple); color: var(--white); padding: 8px 20px; font-size: 12px; font-weight: 600; letter-spacing: 0.5px; text-decoration: none; border: none; cursor: pointer; transition: background 0.2s; }
+  .btn-purple-sm:hover { background: var(--purple-light); }
+  .resources { padding: 80px 60px; background: var(--white); }
+  .resources-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
+  .resources h2 { font-size: 32px; font-weight: 700; }
+  .resources .sub { color: #666; font-size: 14px; margin-bottom: 40px; max-width: 300px; }
+  .btn-outline { display: inline-block; border: 1.5px solid var(--black); color: var(--black); padding: 10px 24px; font-size: 13px; font-weight: 600; text-decoration: none; transition: all 0.2s; }
+  .btn-outline:hover { background: var(--black); color: var(--white); }
+  .blog-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+  .blog-card { cursor: pointer; }
+  .blog-img { width: 100%; height: 200px; object-fit: cover; display: block; background: #eee; }
+  .blog-meta { font-size: 12px; color: #999; margin: 14px 0 8px; }
+  .blog-card h3 { font-size: 16px; font-weight: 700; color: var(--purple); margin-bottom: 10px; line-height: 1.4; }
+  .blog-card p { font-size: 13px; color: #555; line-height: 1.6; }
+  .quote { padding: 100px 60px; text-align: center; background: var(--dark3); position: relative; overflow: hidden; }
+  .quote::before { content: ''; position: absolute; inset: 0; background: url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=1400&q=80') center/cover no-repeat; opacity: 0.15; }
+  .quote blockquote { position: relative; z-index: 1; color: var(--white); font-size: 32px; font-weight: 700; line-height: 1.5; max-width: 820px; margin: 0 auto 20px; }
+  .quote cite { position: relative; z-index: 1; color: #aaa; font-size: 14px; font-style: normal; }
+  .partner-strip { background: var(--off-white); padding: 40px 60px; text-align: center; }
+  .partner-strip h2 { font-size: 20px; font-weight: 700; color: #333; margin-bottom: 30px; letter-spacing: 1px; }
+  .partner-logos { display: flex; justify-content: center; align-items: center; gap: 50px; flex-wrap: wrap; }
+  .partner-logo { font-size: 15px; font-weight: 700; color: #bbb; letter-spacing: 3px; text-transform: uppercase; }
+  footer { background: var(--black); padding: 60px; }
+  .footer-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+  .footer-brand .name { color: var(--white); font-size: 20px; font-weight: 700; margin-bottom: 4px; }
+  .footer-brand .name span { color: var(--purple); }
+  .footer-brand .sub { color: var(--gray); font-size: 12px; margin-bottom: 24px; }
+  .footer-brand h3 { color: var(--white); font-size: 28px; font-weight: 700; margin-bottom: 20px; }
+  .footer-brand input { background: transparent; border: none; border-bottom: 1px solid #444; color: var(--white); padding: 8px 0; font-size: 14px; width: 220px; outline: none; display: block; margin-bottom: 12px; }
+  .footer-brand input::placeholder { color: #555; }
+  .footer-brand button { border: 1.5px solid var(--white); background: transparent; color: var(--white); padding: 9px 24px; font-size: 13px; cursor: pointer; transition: all 0.2s; }
+  .footer-brand button:hover { background: var(--white); color: var(--black); }
+  .footer-info { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+  .footer-col h4 { color: var(--white); font-size: 14px; font-weight: 700; margin-bottom: 12px; }
+  .footer-col p, .footer-col a { color: var(--gray); font-size: 13px; line-height: 1.8; display: block; text-decoration: none; }
+  .footer-col a:hover { color: var(--white); }
+  .footer-bottom { border-top: 1px solid #222; margin-top: 40px; padding-top: 20px; color: #444; font-size: 12px; }
+  .page-hero { min-height: 100vh; background: var(--dark); padding-top: 60px; display: grid; grid-template-columns: 1fr 1fr; position: relative; overflow: hidden; }
+  .page-hero::before { content: ''; position: absolute; inset: 0; background: url('https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=1200&q=80') right/cover no-repeat; opacity: 0.3; }
+  .page-hero-left { padding: 80px 40px 80px 60px; position: relative; z-index: 1; display: flex; flex-direction: column; justify-content: center; }
+  .page-hero-left h1 { color: var(--white); font-size: 42px; font-weight: 700; line-height: 1.2; margin-bottom: 16px; }
+  .page-hero-left p { color: #aaa; font-size: 15px; margin-bottom: 32px; max-width: 400px; }
+  .page-hero-right { padding: 80px 60px 80px 40px; position: relative; z-index: 1; display: flex; flex-direction: column; justify-content: center; }
+  .page-hero-right p { color: #ccc; font-size: 14px; line-height: 1.8; margin-bottom: 14px; }
+  .team { padding: 80px 60px; background: var(--white); }
+  .team h2 { font-size: 36px; font-weight: 700; text-align: center; margin-bottom: 8px; }
+  .team .sub { text-align: center; color: #888; margin-bottom: 50px; font-size: 14px; }
+  .team-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 36px; }
+  .team-card { text-align: center; }
+  .team-img { width: 100%; height: 260px; object-fit: cover; background: #eee; display: block; margin-bottom: 16px; }
+  .team-card .role { font-size: 11px; color: var(--purple); font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 4px; }
+  .team-card h3 { font-size: 20px; font-weight: 700; margin-bottom: 4px; }
+  .team-card .company { font-size: 12px; color: #999; margin-bottom: 12px; }
+  .team-card p { font-size: 13px; color: #666; line-height: 1.6; }
+  .contact { background: var(--dark); display: grid; grid-template-columns: 1fr 1fr; min-height: 500px; }
+  .contact-left { padding: 80px 40px 80px 60px; position: relative; z-index: 1; }
+  .contact-left h2 { color: var(--white); font-size: 32px; font-weight: 700; margin-bottom: 8px; }
+  .contact-left .sub-line { width: 40px; height: 3px; background: var(--purple); margin: 12px 0 16px; }
+  .contact-left .tagline { color: var(--purple); font-size: 14px; margin-bottom: 32px; }
+  .form-group { margin-bottom: 14px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .form-group.full { grid-template-columns: 1fr; }
+  .form-group input, .form-group textarea { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); color: var(--white); padding: 10px 14px; font-size: 13px; outline: none; width: 100%; }
+  .form-group input::placeholder, .form-group textarea::placeholder { color: #666; }
+  .form-group textarea { height: 100px; resize: none; }
+  .chat-box { margin-top: 32px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 28px; }
+  .chat-box h3 { color: var(--white); font-size: 16px; margin-bottom: 8px; }
+  .chat-box p { color: #888; font-size: 13px; margin-bottom: 16px; }
+  .btn-outline-sm { display: inline-block; border: 1px solid var(--white); color: var(--white); padding: 8px 20px; font-size: 12px; text-decoration: none; transition: all 0.2s; }
+  .btn-outline-sm:hover { background: var(--white); color: var(--black); }
+  .contact-right { position: relative; overflow: hidden; }
+  .contact-right::before { content: ''; position: absolute; inset: 0; background: url('https://images.unsplash.com/photo-1497366216548-37526070297c?w=1000&q=80') center/cover no-repeat; opacity: 0.7; }
+  .faq { padding: 80px 60px; background: var(--white); max-width: 800px; margin: 0 auto; }
+  .faq h2 { font-size: 32px; font-weight: 700; margin-bottom: 36px; }
+  .faq-item { border-bottom: 1px solid #eee; padding: 20px 0; }
+  .faq-item h4 { font-size: 15px; font-weight: 600; margin-bottom: 8px; }
+  .faq-item p { font-size: 13px; color: #666; line-height: 1.7; }
+  .resources-page-hero { background: var(--dark); padding: 100px 60px 60px; text-align: center; }
+  .resources-page-hero h1 { color: var(--white); font-size: 38px; font-weight: 700; margin-bottom: 10px; }
+  .resources-page-hero p { color: var(--purple); font-size: 14px; }
+  .blog-filter { padding: 20px 60px; background: var(--white); border-bottom: 1px solid #eee; display: flex; gap: 20px; }
+  .blog-filter button { background: none; border: none; font-size: 13px; font-weight: 600; cursor: pointer; color: #999; padding-bottom: 4px; border-bottom: 2px solid transparent; }
+  .blog-filter button.active { color: var(--purple); border-color: var(--purple); }
+  .blog-full { padding: 60px; background: var(--white); }
+  .blog-full-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+  .site-page { display: none; }
+  .site-page.active { display: block; }
+  @media (max-width: 900px) {
+    nav { padding: 0 20px; }
+    .nav-links { display: none; }
+    .hero, .why, .about-dark, .stats-inner, .contact { grid-template-columns: 1fr; }
+    .hero-left, .hero-right, .about-left, .about-right, .stats-left, .stats-right, .contact-left { padding: 60px 24px; }
+    .values-grid { grid-template-columns: repeat(2, 1fr); }
+    .services-grid, .blog-grid, .blog-full-grid { grid-template-columns: 1fr; }
+    .team-grid { grid-template-columns: 1fr 1fr; }
+    .resources, .academics, .values, .team, .faq, .blog-full, .resources-page-hero, .blog-filter, .partner-strip, footer { padding-left: 24px; padding-right: 24px; }
+    .footer-inner { grid-template-columns: 1fr; }
+    .footer-info { grid-template-columns: 1fr 1fr; }
+    .contact-right { display: none; }
+    .page-hero { grid-template-columns: 1fr; }
+    .page-hero-left, .page-hero-right { padding: 60px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">
+    <div class="name">Vildan<span>.</span></div>
+    <div class="sub">Independent Advisor</div>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#" onclick="showPage('home')">Home</a></li>
+    <li><a href="#" onclick="showPage('about')">About</a></li>
+    <li><a href="#" onclick="showPage('services')">Services</a></li>
+    <li><a href="#" onclick="showPage('resources')">Insights</a></li>
+    <li><a href="#" onclick="showPage('team')">Experience</a></li>
+    <li><a href="#" onclick="showPage('contact')">Contact</a></li>
+    <li><a href="#" class="nav-cta" onclick="showPage('contact')">Get in Touch</a></li>
+  </ul>
+</nav>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- PAGE: HOME -->
+<!-- ══════════════════════════════════════════ -->
+<div id="home" class="site-page active">
+
+  <section class="hero">
+    <div class="hero-left">
+      <h1>Turning Transformation Strategy into Measurable Business Value</h1>
+      <p>Independent advisory with 20+ years of EMEA and META experience in SAP transformation, managed services, and AI adoption. Bridging strategy and execution.</p>
+      <a href="#" class="btn-primary btn-purple" onclick="showPage('contact')">Get in Touch</a>
+    </div>
+    <div class="hero-right">
+      <div class="subscribe-box">
+        <h3>Subscribe to My Mailing List</h3>
+        <input type="email" placeholder="Enter your email address">
+        <button>Subscribe</button>
+        <label><input type="checkbox" style="width:auto;margin:0;"> Yes, subscribe me to your newsletter.</label>
+      </div>
+    </div>
+  </section>
+
+  <section class="why">
+    <div class="why-left">
+      <h2>Why Independent Advisory?</h2>
+    </div>
+    <div class="why-right">
+      <div class="why-item">
+        <div class="why-icon"></div>
+        <h4>At Your Own Pace</h4>
+        <p>A flexible advisory model shaped around your organization's needs and timeline.</p>
+      </div>
+      <div class="why-item">
+        <div class="why-icon"></div>
+        <h4>Industry Expert Perspective</h4>
+        <p>Real-world knowledge from 20+ years at NTT Data, SAP, and Metro Group.</p>
+      </div>
+      <div class="why-item">
+        <div class="why-icon"></div>
+        <h4>Independent & Unbiased</h4>
+        <p>Free from any product, vendor, or sales agenda — working solely for your interests.</p>
+      </div>
+      <div class="why-item">
+        <div class="why-icon"></div>
+        <h4>Proven Results</h4>
+        <p>€1M+ programs, 35% cost reduction, 100+ person global team setups delivered.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="about-dark">
+    <div class="about-left">
+      <h2>About Vildan Kara Kayacan</h2>
+      <p>An advisor who knows transformation from the inside</p>
+      <a href="#" class="btn-outline-white" onclick="showPage('about')">Read More</a>
+    </div>
+    <div class="about-right">
+      <p>For over two decades, I led the most critical transformation programs at some of the world's largest enterprises — from the inside. I built Turkey's first SAP global support hub for Daimler, with a multinational team of 100+.</p>
+      <p>Today I work as an independent advisor — because the most valuable guidance comes from standing outside any product, technology firm, or sales agenda.</p>
+    </div>
+  </section>
+
+  <section class="stats">
+    <div class="stats-inner">
+      <div class="stats-left">
+        <h2>Our Mission Is to Empower</h2>
+        <div class="stats-grid">
+          <div class="stat-item"><div class="num">20+</div><div class="label">Years of International Experience</div></div>
+          <div class="stat-item"><div class="num">3</div><div class="label">Global Institutions (NTT Data, SAP, Metro Group)</div></div>
+          <div class="stat-item"><div class="num">35%</div><div class="label">Operational Cost Reduction Achieved</div></div>
+          <div class="stat-item"><div class="num">100+</div><div class="label">Person Global Team Established</div></div>
+        </div>
+      </div>
+      <div class="stats-right">
+        <p>From SAP transformation to AI adoption, from vendor selection to managed service models — I build the bridge between strategy and execution.</p>
+        <p>I offer CIOs and senior IT leaders an independent, unbiased, outcome-focused perspective.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="values">
+    <h2>Our Core Values</h2>
+    <p class="sub">We practice what we preach</p>
+    <div class="values-grid">
+      <div class="value-item"><div class="value-icon"></div><h4>Integrity</h4><p>Every recommendation is delivered from an independent, unbiased perspective.</p></div>
+      <div class="value-item"><div class="value-icon"></div><h4>Accountability</h4><p>Commitments are honored under all circumstances.</p></div>
+      <div class="value-item"><div class="value-icon"></div><h4>Knowledge</h4><p>Real-world expertise earned over 20+ years in the field.</p></div>
+      <div class="value-item"><div class="value-icon"></div><h4>Commitment</h4><p>By your side at every step of the journey until the outcome is achieved.</p></div>
+      <div class="value-item"><div class="value-icon"></div><h4>Passion</h4><p>A deep belief in and fascination with the human dimension of transformation.</p></div>
+    </div>
+  </section>
+
+  <section class="academics">
+    <div class="academics-inner">
+      <h2>Our Academics</h2>
+      <p class="sub">Independent advisory across every phase of transformation</p>
+      <div class="services-grid">
+        <div class="service-card">
+          <h3>SAP & S/4HANA Transformation</h3>
+          <p>S/4HANA migration strategy, program management, target operating model design, and post-go-live stabilization.</p>
+          <a href="#" class="btn-purple-sm" onclick="showPage('services')">View Details</a>
+        </div>
+        <div class="service-card">
+          <h3>Managed Services & Operating Model</h3>
+          <p>ITIL-based service model design, SLA/KPI frameworks, multi-region delivery organization, and continuous improvement.</p>
+          <a href="#" class="btn-purple-sm" onclick="showPage('services')">View Details</a>
+        </div>
+        <div class="service-card">
+          <h3>Vendor Selection & RFP Management</h3>
+          <p>Independent vendor evaluation, RFP/RFI process design, technical and commercial assessment frameworks.</p>
+          <a href="#" class="btn-purple-sm" onclick="showPage('services')">View Details</a>
+        </div>
+        <div class="service-card">
+          <h3>Program & Portfolio Management</h3>
+          <p>PMO setup, project portfolio management, governance frameworks, and transformation program leadership.</p>
+          <a href="#" class="btn-purple-sm" onclick="showPage('services')">View Details</a>
+        </div>
+        <div class="service-card">
+          <h3>AI Adoption & Change Management</h3>
+          <p>Enterprise AI strategy, organizational change management, workforce readiness, and AI governance framework.</p>
+          <a href="#" class="btn-purple-sm" onclick="showPage('services')">View Details</a>
+        </div>
+        <div class="service-card">
+          <h3>Enterprise Architecture & Governance</h3>
+          <p>TOGAF-based enterprise architecture assessment, governance model design, risk and quality management frameworks.</p>
+          <a href="#" class="btn-purple-sm" onclick="showPage('services')">View Details</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="resources">
+    <div class="resources-header">
+      <div>
+        <h2>Resources</h2>
+        <p class="sub">Expand your knowledge by reading from the most prominent experts</p>
+      </div>
+      <a href="#" class="btn-outline" onclick="showPage('resources')">View More</a>
+    </div>
+    <div class="blog-grid">
+      <div class="blog-card">
+        <div class="blog-img" style="background:url('https://images.unsplash.com/photo-1551434678-e076c223a692?w=600&q=80') center/cover;"></div>
+        <div class="blog-meta">Article · 5 min read</div>
+        <h3>Why SAP S/4HANA Migrations Fail</h3>
+        <p>The root cause is rarely technology — it lies in gaps around people, process, and governance...</p>
+      </div>
+      <div class="blog-card">
+        <div class="blog-img" style="background:url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&q=80') center/cover;"></div>
+        <div class="blog-meta">Article · 4 min read</div>
+        <h3>How AI Is Transforming the Enterprise</h3>
+        <p>AI is not just a technology — it is an organizational transformation challenge...</p>
+      </div>
+      <div class="blog-card">
+        <div class="blog-img" style="background:url('https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=600&q=80') center/cover;"></div>
+        <div class="blog-meta">Article · 3 min read</div>
+        <h3>Staying Ahead of the Industry</h3>
+        <p>Change is accelerating. Three critical areas every CIO needs to prepare for today...</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="quote">
+    <blockquote>"Success is not final, failure is not fatal: it is the courage to continue that counts."</blockquote>
+    <cite>— Winston Churchill</cite>
+  </section>
+
+  <div class="partner-strip">
+    <h2>We Work With the Very Best</h2>
+    <div class="partner-logos">
+      <span class="partner-logo">NTT Data</span>
+      <span class="partner-logo">SAP</span>
+      <span class="partner-logo">Metro Group</span>
+      <span class="partner-logo">Daimler</span>
+      <span class="partner-logo">THY</span>
+      <span class="partner-logo">Arçelik</span>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="name">Vildan<span>.</span></div>
+        <div class="sub">Independent Advisor</div>
+        <h3>Join The Success!</h3>
+        <input type="email" placeholder="Enter your email address">
+        <button>Enroll Now</button>
+      </div>
+      <div class="footer-info">
+        <div class="footer-col"><h4>Info</h4><p>+90 553 296 55 75</p><a href="mailto:vildan@vildankara.com">vildan@vildankara.com</a></div>
+        <div class="footer-col"><h4>Address</h4><p>Istanbul, Türkiye</p></div>
+        <div class="footer-col"><h4>Pages</h4><a href="#" onclick="showPage('about')">About</a><a href="#" onclick="showPage('services')">Services</a><a href="#" onclick="showPage('team')">Experience</a><a href="#" onclick="showPage('contact')">Contact</a></div>
+        <div class="footer-col"><h4>Follow</h4><a href="#">LinkedIn</a></div>
+      </div>
+    </div>
+    <div class="footer-bottom">© 2026 Vildan Kara Kayacan. All rights reserved.</div>
+  </footer>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- PAGE: ABOUT (WHO WE ARE) -->
+<!-- ══════════════════════════════════════════ -->
+<div id="about" class="site-page">
+  <section class="page-hero">
+    <div class="page-hero-left">
+      <h1>About Vildan Kara Kayacan</h1>
+      <p>An independent advisor who knows transformation from the inside</p>
+      <a href="#" class="btn-outline-white" onclick="showPage('contact')">Get in Touch</a>
+    </div>
+    <div class="page-hero-right">
+      <p>For over two decades, I led the most critical transformation programs at some of the world's largest enterprises. I built Turkey's first SAP global support hub for Daimler, with a multinational team of 100+.</p>
+      <p>I led organizational change for Turkish Airlines' largest-ever ERP transformation. At NTT Data, I shaped service strategy and delivery models across EMEA and META. I doubled a managed services portfolio and cut operating costs by 35%.</p>
+    </div>
+  </section>
+
+  <section class="stats">
+    <div class="stats-inner">
+      <div class="stats-left">
+        <h2>Our Mission Is to Empower</h2>
+        <div class="stats-grid">
+          <div class="stat-item"><div class="num">20+</div><div class="label">Years of International Experience</div></div>
+          <div class="stat-item"><div class="num">16</div><div class="label">Countries with Project Experience</div></div>
+          <div class="stat-item"><div class="num">€1M+</div><div class="label">Transformation Programs Managed</div></div>
+          <div class="stat-item"><div class="num">35%</div><div class="label">Operational Cost Reduction</div></div>
+        </div>
+      </div>
+      <div class="stats-right">
+        <p>What all of this taught me: technology transformation is not a software installation project. Without the right strategy, governance, processes, and people, even the largest technology investment will fall short.</p>
+        <p>Today I work as an independent advisor — because the most valuable guidance comes from standing outside any product, technology firm, or sales agenda.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="values">
+    <h2>Our Core Values</h2>
+    <p class="sub">We practice what we preach</p>
+    <div class="values-grid">
+      <div class="value-item"><div class="value-icon"></div><h4>Integrity</h4><p>Every recommendation from an independent, unbiased perspective.</p></div>
+      <div class="value-item"><div class="value-icon"></div><h4>Accountability</h4><p>Commitments honored under all circumstances.</p></div>
+      <div class="value-item"><div class="value-icon"></div><h4>Knowledge</h4><p>Real-world expertise earned over 20+ years in the field.</p></div>
+      <div class="value-item"><div class="value-icon"></div><h4>Commitment</h4><p>By your side at every step until the outcome is achieved.</p></div>
+      <div class="value-item"><div class="value-icon"></div><h4>Passion</h4><p>A deep belief in the human dimension of transformation.</p></div>
+    </div>
+  </section>
+
+  <div class="partner-strip">
+    <h2>We Work With the Very Best</h2>
+    <div class="partner-logos">
+      <span class="partner-logo">NTT Data</span><span class="partner-logo">SAP</span><span class="partner-logo">Metro Group</span><span class="partner-logo">Daimler</span><span class="partner-logo">THY</span><span class="partner-logo">Arçelik</span>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand"><div class="name">Vildan<span>.</span></div><div class="sub">Independent Advisor</div><h3>Join The Success!</h3><input type="email" placeholder="Enter your email"><button>Enroll Now</button></div>
+      <div class="footer-info">
+        <div class="footer-col"><h4>Info</h4><p>+90 553 296 55 75</p><a href="mailto:vildan@vildankara.com">vildan@vildankara.com</a></div>
+        <div class="footer-col"><h4>Address</h4><p>Istanbul, Türkiye</p></div>
+        <div class="footer-col"><h4>Pages</h4><a href="#" onclick="showPage('home')">Home</a><a href="#" onclick="showPage('services')">Services</a><a href="#" onclick="showPage('contact')">Contact</a></div>
+        <div class="footer-col"><h4>Follow</h4><a href="#">LinkedIn</a></div>
+      </div>
+    </div>
+    <div class="footer-bottom">© 2026 Vildan Kara Kayacan. All rights reserved.</div>
+  </footer>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- PAGE: SERVICES (LEARNING MODULES) -->
+<!-- ══════════════════════════════════════════ -->
+<div id="services" class="site-page">
+  <section class="resources-page-hero">
+    <h1>Online Learning Modules</h1>
+    <p>Learn about our flagship advisory services</p>
+  </section>
+  <section class="academics" style="padding-top:60px;">
+    <div class="academics-inner">
+      <div class="services-grid">
+        <div class="service-card">
+          <h3>SAP & S/4HANA Transformation</h3>
+          <p>SAP S/4HANA transitions are complex transformation programs requiring the simultaneous management of strategy, architecture, data, organization, and governance. I have accompanied institutions such as THY, Eureko Sigorta, Arçelik, and Yapı Kredi on this journey.</p>
+          <p style="color:#aaa;font-size:12px;margin-top:8px;"><strong style="color:#ccc;">Scope:</strong> Transition strategy, RFP/vendor selection, program management, target operating model, go-live & stabilization.</p>
+        </div>
+        <div class="service-card">
+          <h3>Managed Services & Operating Model Design</h3>
+          <p>Over 10+ years at NTT Data, I designed, built, and managed ITIL-based service models for large enterprises across EMEA and META. For B/S/H, I stood up a 75+ person service organization in three months.</p>
+          <p style="color:#aaa;font-size:12px;margin-top:8px;"><strong style="color:#ccc;">Scope:</strong> Service model design, SLA/KPI framework, organizational structure, governance, transition planning.</p>
+        </div>
+        <div class="service-card">
+          <h3>Vendor Selection & RFP Management</h3>
+          <p>Technology vendors come with strong sales teams. As an independent evaluator, I address the technical, commercial, and organizational dimensions together to help you make the best decision.</p>
+          <p style="color:#aaa;font-size:12px;margin-top:8px;"><strong style="color:#ccc;">Scope:</strong> RFP/RFI design, evaluation criteria & weighting, independent assessment report, negotiation support.</p>
+        </div>
+        <div class="service-card">
+          <h3>Program & Portfolio Management</h3>
+          <p>At NTT Data, I established and led the PMO. At SAP Turkey, I managed the country's largest and most complex transformation programs — including THY, Arçelik, and Eureko Sigorta — on time and on budget.</p>
+          <p style="color:#aaa;font-size:12px;margin-top:8px;"><strong style="color:#ccc;">Scope:</strong> PMO setup, portfolio management, governance frameworks, program leadership.</p>
+        </div>
+        <div class="service-card">
+          <h3>AI Adoption & Change Management</h3>
+          <p>I bring both deep enterprise transformation experience and the perspective of a practitioner who actively builds and uses AI-enabled tools. I have built AI-powered project management systems in my own practice.</p>
+          <p style="color:#aaa;font-size:12px;margin-top:8px;"><strong style="color:#ccc;">Scope:</strong> AI readiness assessment, strategy, change management, workforce readiness, governance.</p>
+        </div>
+        <div class="service-card">
+          <h3>Enterprise Architecture & Governance</h3>
+          <p>As a TOGAF-certified enterprise architect, I bring a holistic approach to aligning technology architecture with business strategy. I designed governance frameworks adopted enterprise-wide at NTT Data and SAP Turkey.</p>
+          <p style="color:#aaa;font-size:12px;margin-top:8px;"><strong style="color:#ccc;">Scope:</strong> Architecture assessment, target architecture design, governance model, risk management.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand"><div class="name">Vildan<span>.</span></div><div class="sub">Independent Advisor</div><h3>Join The Success!</h3><input type="email" placeholder="Enter your email"><button>Enroll Now</button></div>
+      <div class="footer-info">
+        <div class="footer-col"><h4>Info</h4><p>+90 553 296 55 75</p><a href="mailto:vildan@vildankara.com">vildan@vildankara.com</a></div>
+        <div class="footer-col"><h4>Address</h4><p>Istanbul, Türkiye</p></div>
+        <div class="footer-col"><h4>Pages</h4><a href="#" onclick="showPage('home')">Home</a><a href="#" onclick="showPage('about')">About</a><a href="#" onclick="showPage('contact')">Contact</a></div>
+        <div class="footer-col"><h4>Follow</h4><a href="#">LinkedIn</a></div>
+      </div>
+    </div>
+    <div class="footer-bottom">© 2026 Vildan Kara Kayacan. All rights reserved.</div>
+  </footer>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- PAGE: RESOURCES (INSIGHTS) -->
+<!-- ══════════════════════════════════════════ -->
+<div id="resources" class="site-page">
+  <section class="resources-page-hero">
+    <h1>Resources</h1>
+    <p>Expand your knowledge toolkit by reading from the most prominent experts</p>
+  </section>
+  <div class="blog-filter">
+    <button class="active">All Posts</button>
+    <button>Featured Post</button>
+  </div>
+  <section class="blog-full">
+    <div class="blog-full-grid">
+      <div class="blog-card"><div class="blog-img" style="background:url('https://images.unsplash.com/photo-1551434678-e076c223a692?w=600&q=80') center/cover;height:220px;"></div><div class="blog-meta">Article · 5 min read</div><h3>Why SAP S/4HANA Migrations Fail</h3><p>The root cause is rarely technology — it lies in gaps around people, process, and governance...</p></div>
+      <div class="blog-card"><div class="blog-img" style="background:url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&q=80') center/cover;height:220px;"></div><div class="blog-meta">Article · 4 min read</div><h3>How AI Is Transforming the Enterprise</h3><p>AI is not just a technology challenge — it is an organizational transformation challenge...</p></div>
+      <div class="blog-card"><div class="blog-img" style="background:url('https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=600&q=80') center/cover;height:220px;"></div><div class="blog-meta">Article · 3 min read</div><h3>Staying Ahead of the Industry</h3><p>Change is accelerating. Three critical areas every CIO needs to prepare for today...</p></div>
+      <div class="blog-card"><div class="blog-img" style="background:url('https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&q=80') center/cover;height:220px;"></div><div class="blog-meta">Article · 6 min read</div><h3>10 Ways to Reach New Clients</h3><p>Choosing the wrong vendor can be a transformation program's biggest risk...</p></div>
+      <div class="blog-card"><div class="blog-img" style="background:url('https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=600&q=80') center/cover;height:220px;"></div><div class="blog-meta">Article · 4 min read</div><h3>New Data Tools You Should Know</h3><p>ITIL is not just a framework — it is the foundation of operational excellence...</p></div>
+      <div class="blog-card"><div class="blog-img" style="background:url('https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=600&q=80') center/cover;height:220px;"></div><div class="blog-meta">Article · 5 min read</div><h3>A Business Trend or a Fad?</h3><p>Should every new technology be treated as a trend? Here is how to tell the difference...</p></div>
+    </div>
+  </section>
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand"><div class="name">Vildan<span>.</span></div><div class="sub">Independent Advisor</div><h3>Join The Success!</h3><input type="email" placeholder="Enter your email"><button>Enroll Now</button></div>
+      <div class="footer-info">
+        <div class="footer-col"><h4>Info</h4><p>+90 553 296 55 75</p><a href="mailto:vildan@vildankara.com">vildan@vildankara.com</a></div>
+        <div class="footer-col"><h4>Address</h4><p>Istanbul, Türkiye</p></div>
+        <div class="footer-col"><h4>Pages</h4><a href="#" onclick="showPage('home')">Home</a><a href="#" onclick="showPage('about')">About</a><a href="#" onclick="showPage('contact')">Contact</a></div>
+        <div class="footer-col"><h4>Follow</h4><a href="#">LinkedIn</a></div>
+      </div>
+    </div>
+    <div class="footer-bottom">© 2026 Vildan Kara Kayacan. All rights reserved.</div>
+  </footer>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- PAGE: EXPERIENCE (OUR TEAM) -->
+<!-- ══════════════════════════════════════════ -->
+<div id="team" class="site-page">
+  <section class="page-hero" style="grid-template-columns:1fr;">
+    <div class="page-hero-left" style="padding:120px 60px 80px;">
+      <h1>Meet The Team</h1>
+      <p>The business leader of today</p>
+    </div>
+  </section>
+
+  <section class="team">
+    <h2>Career Journey</h2>
+    <p class="sub">NTT Data · SAP Turkey · Metro Group · EMEA & META</p>
+    <div class="team-grid">
+      <div class="team-card">
+        <div class="team-img" style="background:url('https://images.unsplash.com/photo-1486325212027-8081e485255e?w=600&q=80') center/cover;"></div>
+        <div class="role">Nov 2014 – Present</div>
+        <h3>NTT Data Business Solutions</h3>
+        <div class="company">Director — Service Sales, Global Services, PMO</div>
+        <p>Multi-million-euro RFP/RFI processes, EMEA-META service integration, B/S/H and Daimler service organizations, PMO leadership.</p>
+      </div>
+      <div class="team-card">
+        <div class="team-img" style="background:url('https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=600&q=80') center/cover;"></div>
+        <div class="role">May 2011 – Oct 2014</div>
+        <h3>SAP Turkey</h3>
+        <div class="company">Senior Business Transformation Project Manager</div>
+        <p>Leadership on the country's largest SAP transformation programs — including THY, Eureko Sigorta, Arçelik, and Yapı Kredi.</p>
+      </div>
+      <div class="team-card">
+        <div class="team-img" style="background:url('https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=600&q=80') center/cover;"></div>
+        <div class="role">Oct 2005 – Apr 2011</div>
+        <h3>Metro Group Information AG</h3>
+        <div class="company">Senior Financials Consultant — Düsseldorf, Germany</div>
+        <p>International SAP roll-out projects across 8 countries including Egypt, Kazakhstan, Slovakia, Belgium, Spain, and Pakistan.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="values" style="background:#f9f9f7;">
+    <h2>Certifications</h2>
+    <p class="sub">Professional competence credentials</p>
+    <div class="values-grid">
+      <div class="value-item"><div class="value-icon"></div><h4>TOGAF®</h4><p>Enterprise Architecture</p></div>
+      <div class="value-item"><div class="value-icon"></div><h4>PMI-RMP®</h4><p>Risk Management Professional</p></div>
+      <div class="value-item"><div class="value-icon"></div><h4>ITIL®</h4><p>Foundation Certification</p></div>
+      <div class="value-item"><div class="value-icon"></div><h4>SAP BTA</h4><p>Business Transformation Academy</p></div>
+      <div class="value-item"><div class="value-icon"></div><h4>SAP Activate</h4><p>Agile Project Management</p></div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand"><div class="name">Vildan<span>.</span></div><div class="sub">Independent Advisor</div><h3>Join The Success!</h3><input type="email" placeholder="Enter your email"><button>Enroll Now</button></div>
+      <div class="footer-info">
+        <div class="footer-col"><h4>Info</h4><p>+90 553 296 55 75</p><a href="mailto:vildan@vildankara.com">vildan@vildankara.com</a></div>
+        <div class="footer-col"><h4>Address</h4><p>Istanbul, Türkiye</p></div>
+        <div class="footer-col"><h4>Pages</h4><a href="#" onclick="showPage('home')">Home</a><a href="#" onclick="showPage('services')">Services</a><a href="#" onclick="showPage('contact')">Contact</a></div>
+        <div class="footer-col"><h4>Follow</h4><a href="#">LinkedIn</a></div>
+      </div>
+    </div>
+    <div class="footer-bottom">© 2026 Vildan Kara Kayacan. All rights reserved.</div>
+  </footer>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- PAGE: CONTACT -->
+<!-- ══════════════════════════════════════════ -->
+<div id="contact" class="site-page">
+  <section class="contact">
+    <div class="contact-left">
+      <h2>Contact Us</h2>
+      <div class="sub-line"></div>
+      <p class="tagline">We are here for questions or consulting</p>
+      <div class="form-group">
+        <input type="text" placeholder="First Name *">
+        <input type="text" placeholder="Last Name *">
+      </div>
+      <div class="form-group">
+        <input type="email" placeholder="Email *">
+        <input type="tel" placeholder="Phone">
+      </div>
+      <div class="form-group full">
+        <textarea placeholder="Leave us a message..."></textarea>
+      </div>
+      <button class="btn-purple-sm" style="padding:11px 32px;font-size:13px;">Submit</button>
+      <div class="chat-box">
+        <h3>Chat with our support team</h3>
+        <p>I would be glad to connect at any stage of your transformation journey — including when you are not yet sure where to start.</p>
+        <a href="mailto:vildan@vildankara.com" class="btn-outline-sm">Message us</a>
+      </div>
+    </div>
+    <div class="contact-right"></div>
+  </section>
+
+  <section class="faq">
+    <h2>Frequently Asked Questions</h2>
+    <div class="faq-item"><h4>What does independent advisory mean?</h4><p>Unbiased advisory delivered without any affiliation to a technology firm, product, or vendor — working solely in the client's interest.</p></div>
+    <div class="faq-item"><h4>Which sectors do you have experience in?</h4><p>Manufacturing, automotive, financial services, aviation, retail, logistics, and energy across EMEA and META — 20+ years of experience.</p></div>
+    <div class="faq-item"><h4>Do you offer remote advisory?</h4><p>Yes. Both remote and in-person working models are accommodated. Location: Istanbul, Türkiye.</p></div>
+  </section>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand"><div class="name">Vildan<span>.</span></div><div class="sub">Independent Advisor</div><h3>Join The Success!</h3><input type="email" placeholder="Enter your email"><button>Enroll Now</button></div>
+      <div class="footer-info">
+        <div class="footer-col"><h4>Info</h4><p>+90 553 296 55 75</p><a href="mailto:vildan@vildankara.com">vildan@vildankara.com</a></div>
+        <div class="footer-col"><h4>Address</h4><p>Istanbul, Türkiye</p></div>
+        <div class="footer-col"><h4>Pages</h4><a href="#" onclick="showPage('home')">Home</a><a href="#" onclick="showPage('about')">About</a><a href="#" onclick="showPage('services')">Services</a></div>
+        <div class="footer-col"><h4>Follow</h4><a href="#">LinkedIn</a></div>
+      </div>
+    </div>
+    <div class="footer-bottom">© 2026 Vildan Kara Kayacan. All rights reserved.</div>
+  </footer>
+</div>
+
+<script>
+  function showPage(id) {
+    document.querySelectorAll('.site-page').forEach(p => p.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+  function applyContent() {
+    try {
+      const d = JSON.parse(localStorage.getItem('vildan_content'));
+      if (!d) return;
+      // Stats
+      if (d.stats) {
+        document.querySelectorAll('.stats-left h2').forEach(el => el.textContent = d.stats.title);
+        const nums = document.querySelectorAll('.stat-item .num');
+        const lbls = document.querySelectorAll('.stat-item .label');
+        const ss = [d.stats.s1, d.stats.s2, d.stats.s3, d.stats.s4];
+        ss.forEach((s, i) => { if (nums[i] && s) nums[i].textContent = s.num; if (lbls[i] && s) lbls[i].textContent = s.lbl; });
+        const srps = document.querySelectorAll('.stats-right p');
+        if (srps[0] && d.stats.p1) srps[0].textContent = d.stats.p1;
+        if (srps[1] && d.stats.p2) srps[1].textContent = d.stats.p2;
+      }
+      // Values
+      if (d.values) {
+        const vi = document.querySelectorAll('.value-item');
+        vi.forEach((el, i) => {
+          if (d.values.items && d.values.items[i]) {
+            const h4 = el.querySelector('h4'); if (h4) h4.textContent = d.values.items[i].title;
+            const p = el.querySelector('p'); if (p) p.textContent = d.values.items[i].text;
+          }
+        });
+      }
+      // Services
+      if (d.services) {
+        const sc = document.querySelectorAll('.service-card');
+        sc.forEach((el, i) => {
+          if (d.services.items && d.services.items[i]) {
+            const h3 = el.querySelector('h3'); if (h3) h3.textContent = d.services.items[i].title;
+            const p = el.querySelector('p'); if (p) p.textContent = d.services.items[i].text;
+          }
+        });
+      }
+      // Quote
+      if (d.quote) {
+        document.querySelectorAll('blockquote').forEach(el => el.textContent = d.quote.text);
+        document.querySelectorAll('cite').forEach(el => el.textContent = d.quote.source);
+      }
+      // Footer
+      if (d.footer) {
+        document.querySelectorAll('.footer-brand h3').forEach(el => el.textContent = d.footer.title);
+        document.querySelectorAll('.footer-brand button').forEach(el => el.textContent = d.footer.btn);
+        document.querySelectorAll('.footer-bottom').forEach(el => el.textContent = d.footer.copy);
+        document.querySelectorAll('.footer-col a').forEach(el => {
+          if (el.href && el.href.includes('mailto')) { el.textContent = d.footer.email; el.href = 'mailto:' + d.footer.email; }
+          if (el.textContent === 'LinkedIn') el.href = d.footer.linkedin;
+        });
+      }
+    } catch(e) { console.warn('Content load error:', e); }
+  }
+  applyContent();
+</script>
+</body>
+</html>
