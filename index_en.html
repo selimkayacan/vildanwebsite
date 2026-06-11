@@ -910,9 +910,8 @@
     document.getElementById(id).classList.add('active');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
-  function applyContent() {
+  function applyContent(d) {
     try {
-      const d = JSON.parse(localStorage.getItem('vildan_content'));
       if (!d) return;
       // Stats
       if (d.stats) {
@@ -962,7 +961,18 @@
       }
     } catch(e) { console.warn('Content load error:', e); }
   }
-  applyContent();
+
+  fetch('content.json?v=' + Date.now())
+    .then(r => r.ok ? r.json() : null)
+    .then(d => {
+      if (d) applyContent(d);
+      else {
+        try { applyContent(JSON.parse(localStorage.getItem('vildan_content'))); } catch(e) {}
+      }
+    })
+    .catch(() => {
+      try { applyContent(JSON.parse(localStorage.getItem('vildan_content'))); } catch(e) {}
+    });
 </script>
 </body>
 </html>
