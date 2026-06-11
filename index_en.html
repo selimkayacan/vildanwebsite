@@ -203,6 +203,7 @@
     <li><a href="#" onclick="showPage('home')">Home</a></li>
     <li><a href="#" onclick="showPage('about')">About</a></li>
     <li><a href="#" onclick="showPage('services')">Services</a></li>
+    <li><a href="#" onclick="showPage('projects')">Projects</a></li>
     <li><a href="#" onclick="showPage('resources')">Insights</a></li>
     <li><a href="#" onclick="showPage('contact')">Contact</a></li>
     <li><a href="index.html" style="color:#888;font-size:12px;letter-spacing:1px;">TR</a></li>
@@ -629,6 +630,162 @@
     </div>
   </div>
 
+  <!-- COUNTRIES MAP -->
+  <style>
+    .ab-countries{background:var(--dark);padding:60px}
+    .ab-countries-inner{max-width:1000px;margin:0 auto}
+    .ab-countries-title{font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--purple);margin-bottom:8px}
+    .ab-countries-sub{color:#888;font-size:13px;margin-bottom:32px}
+  </style>
+  <div class="ab-countries">
+    <div class="ab-countries-inner">
+      <div class="ab-countries-title" id="ab-countries-title">Countries I've Worked In</div>
+      <div class="ab-countries-sub" id="ab-countries-sub">Project and service experience across 16 countries in EMEA &amp; META — click to see details</div>
+      <div id="project-map" style="height:480px;border-radius:4px;overflow:hidden;filter:contrast(0.9) brightness(1.05);"></div>
+    </div>
+  </div>
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script>
+  (function() {
+    function initMap() {
+      if (!document.getElementById('project-map') || window._mapInitializedEn) return;
+      window._mapInitializedEn = true;
+
+      var map = L.map('project-map', {
+        center: [30, 25],
+        zoom: 3,
+        scrollWheelZoom: false,
+        zoomControl: true
+      });
+
+      L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+        attribution: '© OpenStreetMap © CARTO',
+        subdomains: 'abcd',
+        maxZoom: 10
+      }).addTo(map);
+
+      var countries = [
+        {
+          name: 'Turkey', flag: '🇹🇷', code: 'tr', lat: 39.9, lng: 32.8,
+          projects: ['Turkish Airlines (THY) — OCM Lead (150+ team members)', 'Eureko Sigorta — First SAP HANA FSI reference project', 'Arçelik — MDM Implementation', 'Yapı Kredi Bank — First banking ERP project', 'NTT Data — EMEA & META Service Management', 'Mercedes-Benz Türk — Shared Service Operation']
+        },
+        {
+          name: 'Germany', flag: '🇩🇪', code: 'de', lat: 51.2, lng: 10.4,
+          projects: ['Metro Group AG — Düsseldorf FCC (SAP FI Consultant)', 'Schnellecke Logistics — Global transformation roll-out (onsite)', 'Air Berlin — Business Transformation (onsite)', 'Yaşar Holding — Germany Localization Project']
+        },
+        {
+          name: 'Egypt', flag: '🇪🇬', code: 'eg', lat: 26.8, lng: 30.8,
+          projects: ['Metro Group — SAP Roll-out Project', 'Financial process implementation and go-live support']
+        },
+        {
+          name: 'Kazakhstan', flag: '🇰🇿', code: 'kz', lat: 48.0, lng: 66.9,
+          projects: ['Metro Group — SAP Roll-out Project', 'International SAP FI implementation']
+        },
+        {
+          name: 'Slovakia', flag: '🇸🇰', code: 'sk', lat: 48.7, lng: 19.7,
+          projects: ['Metro Group — SAP Roll-out Project', 'Local GAAP and IFRS parallel reporting']
+        },
+        {
+          name: 'Belgium', flag: '🇧🇪', code: 'be', lat: 50.5, lng: 4.4,
+          projects: ['Metro Group — SAP Roll-out Project', 'Multi-company code SAP FI setup']
+        },
+        {
+          name: 'Spain', flag: '🇪🇸', code: 'es', lat: 40.4, lng: -3.7,
+          projects: ['Metro Group — SAP Roll-out Project', 'User acceptance testing and go-live support']
+        },
+        {
+          name: 'Bulgaria', flag: '🇧🇬', code: 'bg', lat: 42.7, lng: 25.5,
+          projects: ['Metro Group — SAP Roll-out Project', 'SAP FI functional support and training']
+        },
+        {
+          name: 'Pakistan', flag: '🇵🇰', code: 'pk', lat: 30.4, lng: 69.3,
+          projects: ['Metro Group — SAP Roll-out Project', 'International SAP implementation and training']
+        },
+        {
+          name: 'Austria', flag: '🇦🇹', code: 'at', lat: 47.5, lng: 14.5,
+          projects: ['NTT Data — EMEA Service Coordination', 'Integration with European delivery centres']
+        },
+        {
+          name: 'Poland', flag: '🇵🇱', code: 'pl', lat: 51.9, lng: 19.1,
+          projects: ['NTT Data — EMEA Service Structuring', 'Delivery centre development and integration']
+        },
+        {
+          name: 'Czech Republic', flag: '🇨🇿', code: 'cz', lat: 49.8, lng: 15.5,
+          projects: ['NTT Data — EMEA Delivery Coordination', 'Local adaptation of centralised service model']
+        },
+        {
+          name: 'Romania', flag: '🇷🇴', code: 'ro', lat: 45.9, lng: 24.9,
+          projects: ['NTT Data — EMEA Delivery Expansion', 'Support for new CoE setup']
+        },
+        {
+          name: 'Ukraine', flag: '🇺🇦', code: 'ua', lat: 48.4, lng: 31.2,
+          projects: ['NTT Data — Delivery Centre Integration', 'Part of EMEA SAP service organisation']
+        },
+        {
+          name: 'UAE', flag: '🇦🇪', code: 'ae', lat: 24.5, lng: 54.4,
+          projects: ['NTT Data — META Region Service Management', 'Middle East & Africa SAP managed services']
+        },
+        {
+          name: 'Saudi Arabia', flag: '🇸🇦', code: 'sa', lat: 24.7, lng: 46.7,
+          projects: ['NTT Data — META Region Service Expansion', 'SAP managed services strategy and delivery']
+        }
+      ];
+
+      countries.forEach(function(c) {
+        var flagIcon = L.divIcon({
+          className: '',
+          html: '<div style="width:36px;height:36px;border-radius:50%;background:#fff;border:2.5px solid #6b46c1;box-shadow:0 2px 10px rgba(107,70,193,0.35);overflow:hidden;display:flex;align-items:center;justify-content:center;cursor:pointer;"><img src="https://flagcdn.com/48x36/' + c.code + '.png" style="width:100%;height:100%;object-fit:cover;" alt="' + c.name + '"></div>',
+          iconSize: [36, 36],
+          iconAnchor: [18, 18],
+          popupAnchor: [0, -20]
+        });
+        var projectList = c.projects.map(function(p) {
+          return '<li style="padding:3px 0;border-bottom:1px solid #f0eeea;font-size:12px;color:#333;">' + p + '</li>';
+        }).join('');
+
+        var popup = L.popup({
+          maxWidth: 280,
+          className: 'vildan-popup'
+        }).setContent(
+          '<div style="padding:4px 0;">' +
+          '<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;"><img src="https://flagcdn.com/24x18/' + c.code + '.png" style="border-radius:2px;box-shadow:0 1px 3px rgba(0,0,0,0.2);" alt=""> <strong style="font-size:14px;color:#111;">' + c.name + '</strong></div>' +
+          '<ul style="list-style:none;padding:0;margin:0;">' + projectList + '</ul>' +
+          '</div>'
+        );
+
+        L.marker([c.lat, c.lng], { icon: flagIcon })
+          .addTo(map)
+          .bindPopup(popup);
+      });
+
+      // Popup style
+      var style = document.createElement('style');
+      style.textContent = '.vildan-popup .leaflet-popup-content-wrapper{background:#fff;border-radius:4px;box-shadow:0 4px 20px rgba(0,0,0,0.2);border:none;padding:0}.vildan-popup .leaflet-popup-content{margin:14px 16px;min-width:220px}.vildan-popup .leaflet-popup-tip{background:#fff}.vildan-popup .leaflet-popup-close-button{color:#aaa;font-size:18px;top:6px;right:8px}';
+      document.head.appendChild(style);
+    }
+
+    // Init map when about page is opened
+    var checkInterval = setInterval(function() {
+      if (typeof window.showPage === 'function') {
+        var orig = window.showPage;
+        window.showPage = function(id) {
+          orig(id);
+          if (id === 'about') setTimeout(initMap, 150);
+        };
+        clearInterval(checkInterval);
+      }
+    }, 100);
+
+    document.addEventListener('DOMContentLoaded', function() {
+      if (document.getElementById('about')?.classList.contains('active')) {
+        setTimeout(initMap, 100);
+      }
+    });
+  })();
+  </script>
+
   <footer>
     <div class="footer-inner">
       <div class="footer-brand"><div class="name">Vildan<span>.</span></div><div class="sub">Independent Advisor</div><h3>Join The Success!</h3><input type="email" placeholder="Enter your email"><button>Enroll Now</button></div>
@@ -844,6 +1001,170 @@
 </div>
 
 <!-- ══════════════════════════════════════════ -->
+<!-- PAGE: PROJECTS -->
+<!-- ══════════════════════════════════════════ -->
+<div id="projects" class="site-page">
+<style>
+.prj-hero{background:var(--dark);padding:100px 60px 60px;text-align:center;position:relative;overflow:hidden}
+.prj-hero::before{content:'';position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=1400&q=80') center/cover no-repeat;opacity:.15}
+.prj-hero h1{position:relative;z-index:1;color:#fff;font-size:38px;font-weight:700;margin-bottom:10px}
+.prj-hero p{position:relative;z-index:1;color:var(--purple);font-size:14px;max-width:600px;margin:0 auto}
+.prj-intro{max-width:900px;margin:0 auto;padding:48px 60px;text-align:center}
+.prj-intro p{font-size:15px;line-height:1.8;color:#555}
+.prj-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;background:#f9f9f7}
+.prj-card{background:#fff;border:1px solid #eee;overflow:hidden;display:flex;flex-direction:column;transition:box-shadow .2s}
+.prj-card:hover{box-shadow:0 6px 28px rgba(107,70,193,0.13);z-index:1}
+.prj-img{width:100%;height:180px;display:block;position:relative;overflow:hidden}
+.prj-img-inner{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:56px}
+.prj-tag{display:inline-block;background:var(--purple);color:#fff;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:3px 10px;border-radius:2px;margin-bottom:10px}
+.prj-tag.hobby{background:#2d6a4f}
+.prj-tag.active{background:#c05621}
+.prj-body{padding:22px 24px 28px;flex:1;display:flex;flex-direction:column}
+.prj-body h3{font-size:17px;font-weight:700;color:var(--black);margin-bottom:10px;line-height:1.3}
+.prj-body p{font-size:13px;color:#555;line-height:1.7;flex:1}
+.prj-footer{padding:14px 24px;border-top:1px solid #f0eeea;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.prj-link{display:inline-flex;align-items:center;gap:5px;color:var(--purple);font-size:12px;font-weight:600;text-decoration:none;transition:color .2s}
+.prj-link:hover{color:var(--purple-light)}
+.prj-status{font-size:11px;color:#aaa;margin-left:auto}
+@media(max-width:900px){.prj-grid{grid-template-columns:1fr}.prj-intro,.prj-hero{padding:60px 24px}.prj-intro{padding:40px 24px}}
+</style>
+
+<div class="prj-hero">
+  <h1>My Digital Projects</h1>
+  <p>Applications built with AI and technology — my learning laboratory and real-world experiments</p>
+</div>
+
+<div class="prj-intro">
+  <p>Alongside my advisory work, in recent years I have developed a series of digital projects by applying AI to my own processes and various problem domains. These projects are a reflection of both my personal learning journey and my hands-on experience of how AI can solve real business problems.</p>
+</div>
+
+<div class="prj-grid">
+
+  <div class="prj-card">
+    <div class="prj-img" style="background:linear-gradient(135deg,#1a1a2e 0%,#16213e 50%,#0f3460 100%)">
+      <div class="prj-img-inner">📖</div>
+    </div>
+    <div class="prj-body">
+      <span class="prj-tag hobby">Side Project</span>
+      <h3>Yazbix — Digital Memory Journal</h3>
+      <p>A personal journal application that captures daily thoughts, memories, and notes with an AI-powered tool. A digital memory platform equipped with speech-to-text, sentiment analysis, and smart tagging features.</p>
+    </div>
+    <div class="prj-footer">
+      <a href="#" class="prj-link">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        Visit Project
+      </a>
+      <span class="prj-status">🟢 Active</span>
+    </div>
+  </div>
+
+  <div class="prj-card">
+    <div class="prj-img" style="background:linear-gradient(135deg,#0d4f2f 0%,#1a7a4a 50%,#27ae60 100%)">
+      <div class="prj-img-inner">🔤</div>
+    </div>
+    <div class="prj-body">
+      <span class="prj-tag hobby">Side Project</span>
+      <h3>English Words for Kids</h3>
+      <p>A fun and interactive English vocabulary learning platform for children. Supports natural English learning through visual cards, audio pronunciation, and a gamified repetition system. AI-powered personalised learning path.</p>
+    </div>
+    <div class="prj-footer">
+      <a href="#" class="prj-link">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        Visit Project
+      </a>
+      <span class="prj-status">🟢 Active</span>
+    </div>
+  </div>
+
+  <div class="prj-card">
+    <div class="prj-img" style="background:linear-gradient(135deg,#4a1a6e 0%,#7b2d9e 50%,#9b59b6 100%)">
+      <div class="prj-img-inner">📱</div>
+    </div>
+    <div class="prj-body">
+      <span class="prj-tag hobby">Side Project</span>
+      <h3>Social Media Agency</h3>
+      <p>An AI-powered social media content creation and management platform for small businesses and entrepreneurs. Automates social media management with content suggestions, scheduling optimisation, and performance analytics.</p>
+    </div>
+    <div class="prj-footer">
+      <a href="#" class="prj-link">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        Visit Project
+      </a>
+      <span class="prj-status">🟡 In Development</span>
+    </div>
+  </div>
+
+  <div class="prj-card">
+    <div class="prj-img" style="background:linear-gradient(135deg,#1a3a6e 0%,#2c5aa0 50%,#3498db 100%)">
+      <div class="prj-img-inner">📊</div>
+    </div>
+    <div class="prj-body">
+      <span class="prj-tag active">SAP Project</span>
+      <h3>SAP Activa — Programme Management</h3>
+      <p>A toolset that enhances programme management in SAP projects with AI. Integrates SAP Activate methodology with AI through project health scoring, risk prediction, resource optimisation, and automated status reporting.</p>
+    </div>
+    <div class="prj-footer">
+      <a href="#" class="prj-link">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        Visit Project
+      </a>
+      <span class="prj-status">🟢 Active</span>
+    </div>
+  </div>
+
+  <div class="prj-card">
+    <div class="prj-img" style="background:linear-gradient(135deg,#6e1a1a 0%,#a03a3a 50%,#e74c3c 100%)">
+      <div class="prj-img-inner">🎯</div>
+    </div>
+    <div class="prj-body">
+      <span class="prj-tag active">Analytics Project</span>
+      <h3>Segmentil — Customer Analytics</h3>
+      <p>An analytics platform that segments enterprise customer portfolios with AI and generates behaviour predictions. A decision-support tool for sales and customer success teams, automating RFM analysis, churn prediction, and customer lifetime value calculations.</p>
+    </div>
+    <div class="prj-footer">
+      <a href="#" class="prj-link">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        Visit Project
+      </a>
+      <span class="prj-status">🟡 In Development</span>
+    </div>
+  </div>
+
+  <div class="prj-card">
+    <div class="prj-img" style="background:linear-gradient(135deg,#1a4a3a 0%,#2d6e5a 50%,#1abc9c 100%)">
+      <div class="prj-img-inner">🔬</div>
+    </div>
+    <div class="prj-body">
+      <span class="prj-tag" style="background:#7f8c8d">In Progress</span>
+      <h3>A Project in the Works</h3>
+      <p>A new AI project currently in development. Aimed at solving a real problem encountered in enterprise transformation processes, this project will be shared soon. Stay connected if you are curious.</p>
+    </div>
+    <div class="prj-footer">
+      <a href="#" onclick="showPage('contact')" class="prj-link">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2,4 12,13 22,4"/></svg>
+        Get Notified
+      </a>
+      <span class="prj-status">🔵 Coming Soon</span>
+    </div>
+  </div>
+
+</div>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand"><div class="name">Vildan<span>.</span></div><div class="sub">Independent Advisor</div><h3>Join The Success!</h3><input type="email" placeholder="Enter your email"><button>Enroll Now</button></div>
+      <div class="footer-info">
+        <div class="footer-col"><h4>Info</h4><p>+90 553 296 55 75</p><a href="mailto:vildan@vildankara.com">vildan@vildankara.com</a></div>
+        <div class="footer-col"><h4>Address</h4><p>Istanbul, Türkiye</p></div>
+        <div class="footer-col"><h4>Pages</h4><a href="#" onclick="showPage('home')">Home</a><a href="#" onclick="showPage('services')">Services</a><a href="#" onclick="showPage('contact')">Contact</a></div>
+        <div class="footer-col"><h4>Follow</h4><a href="#">LinkedIn</a></div>
+      </div>
+    </div>
+    <div class="footer-bottom">© 2026 Vildan Kara Kayacan. All rights reserved.</div>
+  </footer>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
 <!-- PAGE: CONTACT -->
 <!-- ══════════════════════════════════════════ -->
 <div id="contact" class="site-page">
@@ -912,7 +1233,7 @@
   }
   function applyContent() {
     try {
-      const d = JSON.parse(localStorage.getItem('vildan_content'));
+      const d = JSON.parse(localStorage.getItem('vildan_content_en'));
       if (!d) return;
       // Stats
       if (d.stats) {
