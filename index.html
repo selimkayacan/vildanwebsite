@@ -1860,9 +1860,10 @@
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  // ── CONTENT LOADER (content.json → GitHub Pages) ──
-  function applyContent(d) {
+  // ── ADMIN CONTENT LOADER ──────────────────────
+  function applyContent() {
     try {
+      const d = JSON.parse(localStorage.getItem('vildan_content'));
       if (!d) return;
       function set(sel, val, attr) {
         document.querySelectorAll(sel).forEach(el => {
@@ -2005,19 +2006,7 @@
       }
     } catch(e) { console.warn('Content load error:', e); }
   }
-
-  // content.json'dan çek, başarısız olursa localStorage fallback
-  fetch('content.json?v=' + Date.now())
-    .then(r => r.ok ? r.json() : null)
-    .then(d => {
-      if (d) applyContent(d);
-      else {
-        try { applyContent(JSON.parse(localStorage.getItem('vildan_content'))); } catch(e) {}
-      }
-    })
-    .catch(() => {
-      try { applyContent(JSON.parse(localStorage.getItem('vildan_content'))); } catch(e) {}
-    });
+  applyContent();
 </script>
 </body>
 </html>
