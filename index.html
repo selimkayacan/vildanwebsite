@@ -719,31 +719,159 @@
   </div>
 </div>
 
-<!-- ÇALIŞILAN ÜLKELER / BAYRAKLAR -->
+<!-- ÇALIŞILAN ÜLKELER — İNTERAKTİF HARİTA -->
 <div class="ab-countries">
   <div class="ab-countries-inner">
     <div class="ab-countries-title">Çalıştığım Ülkeler</div>
-    <div class="ab-countries-sub">EMEA & META genelinde 16 farklı ülkede proje ve servis deneyimi</div>
-    <div class="ab-flags">
-      <div class="ab-flag-item"><div class="flag">🇹🇷</div><div class="name">Türkiye</div></div>
-      <div class="ab-flag-item"><div class="flag">🇩🇪</div><div class="name">Almanya</div></div>
-      <div class="ab-flag-item"><div class="flag">🇪🇬</div><div class="name">Mısır</div></div>
-      <div class="ab-flag-item"><div class="flag">🇰🇿</div><div class="name">Kazakistan</div></div>
-      <div class="ab-flag-item"><div class="flag">🇸🇰</div><div class="name">Slovakya</div></div>
-      <div class="ab-flag-item"><div class="flag">🇧🇪</div><div class="name">Belçika</div></div>
-      <div class="ab-flag-item"><div class="flag">🇪🇸</div><div class="name">İspanya</div></div>
-      <div class="ab-flag-item"><div class="flag">🇧🇬</div><div class="name">Bulgaristan</div></div>
-      <div class="ab-flag-item"><div class="flag">🇵🇰</div><div class="name">Pakistan</div></div>
-      <div class="ab-flag-item"><div class="flag">🇦🇹</div><div class="name">Avusturya</div></div>
-      <div class="ab-flag-item"><div class="flag">🇵🇱</div><div class="name">Polonya</div></div>
-      <div class="ab-flag-item"><div class="flag">🇨🇿</div><div class="name">Çekya</div></div>
-      <div class="ab-flag-item"><div class="flag">🇷🇴</div><div class="name">Romanya</div></div>
-      <div class="ab-flag-item"><div class="flag">🇺🇦</div><div class="name">Ukrayna</div></div>
-      <div class="ab-flag-item"><div class="flag">🇦🇪</div><div class="name">BAE</div></div>
-      <div class="ab-flag-item"><div class="flag">🇸🇦</div><div class="name">S. Arabistan</div></div>
-    </div>
+    <div class="ab-countries-sub">EMEA & META genelinde 16 farklı ülkede proje ve servis deneyimi — üzerine tıkla, detayları gör</div>
+    <div id="project-map" style="height:480px;border-radius:4px;overflow:hidden;"></div>
   </div>
 </div>
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+(function() {
+  function initMap() {
+    if (!document.getElementById('project-map') || window._mapInitialized) return;
+    window._mapInitialized = true;
+
+    var map = L.map('project-map', {
+      center: [30, 25],
+      zoom: 3,
+      scrollWheelZoom: false,
+      zoomControl: true
+    });
+
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+      attribution: '© OpenStreetMap © CARTO',
+      subdomains: 'abcd',
+      maxZoom: 10
+    }).addTo(map);
+
+    var countries = [
+      {
+        name: 'Türkiye', flag: '🇹🇷', lat: 39.9, lng: 32.8,
+        projects: ['Türk Hava Yolları — OCM Lideri (150+ kişi)', 'Eureko Sigorta — İlk SAP HANA FSI referans projesi', 'Arçelik — MDM Implementasyonu', 'Yapı Kredi Bankası — İlk bankacılık ERP projesi', 'NTT Data — EMEA & META Servis Yönetimi', 'Mercedes-Benz Türk — Shared Service Operasyonu']
+      },
+      {
+        name: 'Almanya', flag: '🇩🇪', lat: 51.2, lng: 10.4,
+        projects: ['Metro Group AG — Düsseldorf FCC (SAP FI Danışmanı)', 'Schnellecke Logistics — Global dönüşüm roll-out (onsite)', 'Air Berlin — Business Transformation (onsite)', 'Yaşar Holding — Almanya Lokalizasyon Projesi']
+      },
+      {
+        name: 'Mısır', flag: '🇪🇬', lat: 26.8, lng: 30.8,
+        projects: ['Metro Group — SAP Roll-out Projesi', 'Finansal süreç implementasyonu ve go-live desteği']
+      },
+      {
+        name: 'Kazakistan', flag: '🇰🇿', lat: 48.0, lng: 66.9,
+        projects: ['Metro Group — SAP Roll-out Projesi', 'Uluslararası SAP FI implementasyonu']
+      },
+      {
+        name: 'Slovakya', flag: '🇸🇰', lat: 48.7, lng: 19.7,
+        projects: ['Metro Group — SAP Roll-out Projesi', 'Yerel GAAP ve IFRS paralel raporlama']
+      },
+      {
+        name: 'Belçika', flag: '🇧🇪', lat: 50.5, lng: 4.4,
+        projects: ['Metro Group — SAP Roll-out Projesi', 'Çok şirket kodlu SAP FI kurulumu']
+      },
+      {
+        name: 'İspanya', flag: '🇪🇸', lat: 40.4, lng: -3.7,
+        projects: ['Metro Group — SAP Roll-out Projesi', 'Kullanıcı kabul testi ve go-live desteği']
+      },
+      {
+        name: 'Bulgaristan', flag: '🇧🇬', lat: 42.7, lng: 25.5,
+        projects: ['Metro Group — SAP Roll-out Projesi', 'SAP FI fonksiyonel destek ve eğitim']
+      },
+      {
+        name: 'Pakistan', flag: '🇵🇰', lat: 30.4, lng: 69.3,
+        projects: ['Metro Group — SAP Roll-out Projesi', 'Uluslararası SAP implementasyonu ve eğitim']
+      },
+      {
+        name: 'Avusturya', flag: '🇦🇹', lat: 47.5, lng: 14.5,
+        projects: ['NTT Data — EMEA Servis Koordinasyonu', 'Avrupa teslimat merkezleriyle entegrasyon']
+      },
+      {
+        name: 'Polonya', flag: '🇵🇱', lat: 51.9, lng: 19.1,
+        projects: ['NTT Data — EMEA Servis Yapılanması', 'Teslimat merkezi geliştirme ve entegrasyon']
+      },
+      {
+        name: 'Çekya', flag: '🇨🇿', lat: 49.8, lng: 15.5,
+        projects: ['NTT Data — EMEA Delivery Koordinasyonu', 'Merkezi servis modelinin yerel adaptasyonu']
+      },
+      {
+        name: 'Romanya', flag: '🇷🇴', lat: 45.9, lng: 24.9,
+        projects: ['NTT Data — EMEA Teslimat Genişletme', 'Yeni CoE kurulumu desteği']
+      },
+      {
+        name: 'Ukrayna', flag: '🇺🇦', lat: 48.4, lng: 31.2,
+        projects: ['NTT Data — Teslimat Merkezi Entegrasyonu', 'EMEA SAP servis organizasyonu kapsamında']
+      },
+      {
+        name: 'BAE', flag: '🇦🇪', lat: 24.5, lng: 54.4,
+        projects: ['NTT Data — META Bölgesi Servis Yönetimi', 'Orta Doğu & Afrika SAP yönetilen hizmetler']
+      },
+      {
+        name: 'Suudi Arabistan', flag: '🇸🇦', lat: 24.7, lng: 46.7,
+        projects: ['NTT Data — META Bölgesi Servis Genişlemesi', 'SAP yönetilen hizmetler stratejisi ve teslimat']
+      }
+    ];
+
+    var purpleIcon = L.divIcon({
+      className: '',
+      html: '<div style="width:14px;height:14px;background:#6b46c1;border:2px solid #fff;border-radius:50%;box-shadow:0 0 0 3px rgba(107,70,193,0.35);"></div>',
+      iconSize: [14, 14],
+      iconAnchor: [7, 7]
+    });
+
+    countries.forEach(function(c) {
+      var projectList = c.projects.map(function(p) {
+        return '<li style="padding:3px 0;border-bottom:1px solid #f0eeea;font-size:12px;color:#333;">' + p + '</li>';
+      }).join('');
+
+      var popup = L.popup({
+        maxWidth: 280,
+        className: 'vildan-popup'
+      }).setContent(
+        '<div style="padding:4px 0;">' +
+        '<div style="font-size:18px;margin-bottom:4px;">' + c.flag + ' <strong style="font-size:14px;">' + c.name + '</strong></div>' +
+        '<ul style="list-style:none;padding:0;margin:8px 0 0;">' + projectList + '</ul>' +
+        '</div>'
+      );
+
+      L.marker([c.lat, c.lng], { icon: purpleIcon })
+        .addTo(map)
+        .bindPopup(popup);
+    });
+
+    // Popup stil
+    var style = document.createElement('style');
+    style.textContent = '.vildan-popup .leaflet-popup-content-wrapper{background:#fff;border-radius:4px;box-shadow:0 4px 20px rgba(0,0,0,0.2);border:none;padding:0}.vildan-popup .leaflet-popup-content{margin:14px 16px;min-width:220px}.vildan-popup .leaflet-popup-tip{background:#fff}.vildan-popup .leaflet-popup-close-button{color:#aaa;font-size:18px;top:6px;right:8px}';
+    document.head.appendChild(style);
+  }
+
+  // Hakkımda sayfası açıldığında haritayı başlat
+  var origShowPage = window.showPage;
+  document.addEventListener('DOMContentLoaded', function() {
+    // Sayfa zaten about ise hemen başlat
+    if (document.getElementById('about')?.classList.contains('active')) {
+      setTimeout(initMap, 100);
+    }
+  });
+
+  // showPage override — about açıldığında haritayı başlat
+  var checkInterval = setInterval(function() {
+    if (typeof window.showPage === 'function') {
+      var orig = window.showPage;
+      window.showPage = function(id) {
+        orig(id);
+        if (id === 'about') setTimeout(initMap, 150);
+      };
+      clearInterval(checkInterval);
+    }
+  }, 100);
+})();
+</script>
+
 
 <!-- YETKİNLİKLER -->
 <div class="ab-skills">
