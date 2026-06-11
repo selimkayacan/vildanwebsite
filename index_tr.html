@@ -311,7 +311,6 @@
     <li><a href="#" onclick="showPage('about')">Hakkımda</a></li>
     <li><a href="#" onclick="showPage('services')">Hizmetlerim</a></li>
     <li><a href="#" onclick="showPage('resources')">Yazılarım</a></li>
-    <li><a href="#" onclick="showPage('team')">Deneyimim</a></li>
     <li><a href="#" onclick="showPage('contact')">İletişim</a></li>
     <li><a href="#" class="nav-cta" onclick="showPage('contact')">İletişime Geç</a></li>
   </ul>
@@ -577,59 +576,239 @@
 <!-- SAYFA: HAKKIMDA -->
 <!-- ══════════════════════════════════════════ -->
 <div id="about" class="site-page">
-  <section class="page-hero">
-    <div class="page-hero-left">
-      <h1>Vildan Kara Kayacan Hakkında</h1>
-      <p>Dönüşümü içeriden bilen bağımsız danışman</p>
-      <a href="#" class="btn-outline-white" onclick="showPage('contact')">İletişime Geç</a>
-    </div>
-    <div class="page-hero-right">
-      <p>Uzun yıllar boyunca dünyanın en büyük kurumlarının en kritik dönüşüm programlarını içeriden yönettim. Daimler için Türkiye'nin ilk SAP global destek merkezini kurdum — 100'den fazla kişilik çok uluslu bir ekiple.</p>
-      <p>Türk Hava Yolları'nın ülkenin en büyük ERP dönüşümünde organizasyonel değişimi liderlik ettim. NTT Data'da EMEA ve META genelinde servis stratejisi ve teslimat modellerini şekillendirdim.</p>
-    </div>
-  </section>
 
-  <section class="stats">
-    <div class="stats-inner">
-      <div class="stats-left">
-        <h2>Misyonum: Dönüşümü Gerçek Kılmak</h2>
-        <div class="stats-grid">
-          <div class="stat-item"><div class="num">20+</div><div class="label">Yıl Uluslararası Deneyim</div></div>
-          <div class="stat-item"><div class="num">16</div><div class="label">Farklı Ülkede Proje Deneyimi</div></div>
-          <div class="stat-item"><div class="num">€1M+</div><div class="label">Yönetilen Dönüşüm Programları</div></div>
-          <div class="stat-item"><div class="num">%35</div><div class="label">Operasyonel Maliyet Düşürümü</div></div>
+  <style>
+    .cv-hero { background: var(--dark); padding: 100px 60px 60px; position: relative; overflow: hidden; }
+    .cv-hero::before { content:''; position:absolute; inset:0; background:url('https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=1400&q=80') center/cover no-repeat; opacity:0.15; }
+    .cv-hero-inner { position:relative; z-index:1; display:grid; grid-template-columns:auto 1fr; gap:48px; align-items:start; max-width:1000px; margin:0 auto; }
+    .cv-photo { width:160px; height:160px; border-radius:50%; object-fit:cover; border:3px solid var(--purple); flex-shrink:0; background:url('https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&q=80') center/cover; }
+    .cv-hero-text h1 { color:#fff; font-size:34px; font-weight:800; margin-bottom:4px; }
+    .cv-hero-text .cv-title { color:var(--purple); font-size:15px; font-weight:600; margin-bottom:6px; }
+    .cv-hero-text .cv-tags { color:#aaa; font-size:13px; margin-bottom:16px; }
+    .cv-hero-text .cv-contact { display:flex; gap:20px; flex-wrap:wrap; }
+    .cv-hero-text .cv-contact a { color:#ccc; font-size:13px; text-decoration:none; }
+    .cv-hero-text .cv-contact a:hover { color:#fff; }
+    .cv-summary { background:#fff; padding:48px 60px; max-width:1000px; margin:0 auto; }
+    .cv-summary p { font-size:15px; line-height:1.8; color:#333; }
+    .cv-section { padding:48px 60px; max-width:1000px; margin:0 auto; }
+    .cv-section-title { font-size:11px; font-weight:700; letter-spacing:3px; text-transform:uppercase; color:var(--purple); border-bottom:2px solid var(--purple); padding-bottom:8px; margin-bottom:28px; }
+    .cv-achievements { display:grid; grid-template-columns:1fr 1fr; gap:12px 40px; }
+    .cv-achievement { display:flex; gap:10px; align-items:flex-start; font-size:14px; line-height:1.6; color:#333; }
+    .cv-achievement::before { content:'▪'; color:var(--purple); font-size:16px; flex-shrink:0; margin-top:1px; }
+    .cv-competencies { display:flex; flex-wrap:wrap; gap:10px; }
+    .cv-competency { background:#f3eeff; color:var(--purple); font-size:12px; font-weight:600; padding:5px 14px; border-radius:2px; }
+    .cv-job { margin-bottom:36px; padding-bottom:36px; border-bottom:1px solid #eee; }
+    .cv-job:last-child { border-bottom:none; }
+    .cv-job-header { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:4px; flex-wrap:wrap; gap:8px; }
+    .cv-job-company { font-size:16px; font-weight:800; color:var(--black); }
+    .cv-job-dates { font-size:12px; color:#999; font-style:italic; }
+    .cv-job-role { font-size:14px; font-weight:700; color:var(--purple); margin:8px 0 4px; }
+    .cv-job-desc { font-size:13px; color:#555; line-height:1.7; }
+    .cv-job ul { margin:8px 0 0 16px; }
+    .cv-job ul li { font-size:13px; color:#555; line-height:1.7; margin-bottom:4px; }
+    .cv-project { margin:10px 0 0 16px; }
+    .cv-project-name { font-size:13px; font-weight:700; color:#333; }
+    .cv-project-desc { font-size:12px; color:#777; }
+    .cv-edu-item { display:flex; justify-content:space-between; margin-bottom:12px; }
+    .cv-edu-item .left h4 { font-size:14px; font-weight:700; }
+    .cv-edu-item .left p { font-size:13px; color:#777; }
+    .cv-edu-item .right { font-size:12px; color:#999; text-align:right; }
+    .cv-certs { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+    .cv-cert { font-size:13px; color:#444; display:flex; gap:8px; align-items:center; }
+    .cv-cert::before { content:'·'; color:var(--purple); font-size:20px; line-height:1; }
+    .cv-langs { display:flex; gap:32px; flex-wrap:wrap; }
+    .cv-lang { text-align:center; }
+    .cv-lang .lang-name { font-size:14px; font-weight:700; }
+    .cv-lang .lang-level { font-size:12px; color:#999; }
+    .cv-bg { background:#f9f9f7; }
+    @media(max-width:700px) {
+      .cv-hero { padding:80px 24px 40px; }
+      .cv-hero-inner { grid-template-columns:1fr; }
+      .cv-photo { width:100px; height:100px; }
+      .cv-summary, .cv-section { padding:32px 24px; }
+      .cv-achievements { grid-template-columns:1fr; }
+      .cv-certs { grid-template-columns:1fr; }
+    }
+  </style>
+
+  <!-- HERO -->
+  <div class="cv-hero">
+    <div class="cv-hero-inner">
+      <div class="cv-photo"></div>
+      <div class="cv-hero-text">
+        <h1>Vildan Kara Kayacan</h1>
+        <div class="cv-title">İş, Teknoloji & Yapay Zeka Dönüşüm Yöneticisi</div>
+        <div class="cv-tags">Dönüşüm Direktörü · Yönetilen Hizmetler · SAP & Kurumsal Mimari · AI Dönüşümü</div>
+        <div class="cv-contact">
+          <a href="mailto:vildan@vildankara.com">vildan@vildankara.com</a>
+          <a href="tel:+905532965575">+90 553 296 55 75</a>
+          <span style="color:#666;">İstanbul, Türkiye</span>
         </div>
       </div>
-      <div class="stats-right">
-        <p>Managed services portföyünü iki katına çıkardım. Küresel servis operasyonlarında %35 maliyet düşürümü sağladım. €1M+ dönüşüm programlarını tutarlı biçimde zamanında ve bütçe dahilinde teslim ettim.</p>
-        <p>Tüm bu deneyim bana şunu öğretti: Teknoloji dönüşümü bir yazılım kurulum projesi değildir.</p>
+    </div>
+  </div>
+
+  <!-- EXECUTIVE PROFILE -->
+  <div class="cv-summary">
+    <p>EMEA ve META genelinde stratejik kurumlar için büyük ölçekli dönüşüm, yönetilen hizmetler ve global teslimat alanında 20+ yıllık deneyime sahip iş ve teknoloji dönüşüm yöneticisi. Servis portföyünü iki katına çıkarmış, faaliyet maliyetlerini üçte bir oranında düşürmüş ve sıfırdan çok ülkeli teslimat organizasyonları kurmuş somut bir sicile sahiptir. Kurumsal SAP dönüşümü ile yapay zeka benimsemenin nadir kesişim noktasında yer almakta; hem teknolojiyi hem de AI benimsemesinin arkasındaki organizasyonel dönüşümü yönetmektedir. CIO'lara ve yönetim ekiplerine dönüşüm stratejisini ölçülebilir iş değerine dönüştürmelerinde güvenilen danışmandır.</p>
+  </div>
+
+  <!-- BAŞARILLAR -->
+  <div class="cv-section">
+    <div class="cv-section-title">Öne Çıkan Başarılar</div>
+    <div class="cv-achievements">
+      <div class="cv-achievement">Global otomotiv devinin dünya geneli servis teslimatını merkezileştirmek için Türkiye'nin ilk SAP global destek merkezini kurdu (100+ FTE).</div>
+      <div class="cv-achievement">Global servis operasyonlarında servis kalitesini ve teslimat verimliliğini artırırken faaliyet maliyetlerini %35 düşürdü.</div>
+      <div class="cv-achievement">İlk günden itibaren zorlu SLA'ları karşılayarak üç ayda 75+ kişilik bölgesel IT servis organizasyonu kurdu.</div>
+      <div class="cv-achievement">Finansal hizmetler sektörünün ilk SAP HANA referans uygulamasını sektör referansı olarak yönetti.</div>
+      <div class="cv-achievement">Stratejik kurumsal hesaplarda önemli yinelenen gelir artışı sağlayarak yönetilen hizmetler portföyünü iki katına çıkardı.</div>
+      <div class="cv-achievement">€1M+ dönüşüm programlarını tutarlı biçimde zamanında ve bütçe dahilinde, stabil go-live'larla teslim etti.</div>
+      <div class="cv-achievement">Planlama, teslimat ve raporlamaya üretken AI ve otomasyon uygulayarak AI destekli proje yönetim sistemi geliştirdi.</div>
+    </div>
+  </div>
+
+  <!-- CORE COMPETENCIES -->
+  <div class="cv-section cv-bg">
+    <div class="cv-section-title">Temel Yetkinlikler</div>
+    <div class="cv-competencies">
+      <span class="cv-competency">Kurumsal & Org. Dönüşümü</span>
+      <span class="cv-competency">Yönetilen Hizmetler & P&L</span>
+      <span class="cv-competency">İşletme Modeli Tasarımı</span>
+      <span class="cv-competency">Global Çok Bölgeli Teslimat</span>
+      <span class="cv-competency">Yönetişim, Risk & Kalite</span>
+      <span class="cv-competency">Kurumsal Mimari (TOGAF)</span>
+      <span class="cv-competency">Teklif & Öneri Yönetimi</span>
+      <span class="cv-competency">SLA / KPI & Performans Yönetimi</span>
+      <span class="cv-competency">AI Benimseme & Değişim Yönetimi</span>
+      <span class="cv-competency">AI & Veri Odaklı Dönüşüm</span>
+      <span class="cv-competency">SAP / S/4HANA Dönüşümü</span>
+      <span class="cv-competency">Program & Portföy Liderliği</span>
+    </div>
+  </div>
+
+  <!-- PROFESSIONAL EXPERIENCE -->
+  <div class="cv-section">
+    <div class="cv-section-title">Profesyonel Deneyim</div>
+
+    <div class="cv-job">
+      <div class="cv-job-header">
+        <div class="cv-job-company">NTT DATA Business Solutions</div>
+        <div class="cv-job-dates">Kas 2014 – Günümüz</div>
+      </div>
+      <div style="font-size:13px;color:#888;margin-bottom:12px;font-style:italic;">EMEA & META'daki büyük kurumlar için servis stratejisi, global teslimat ve program yönetiminde aşamalı liderlik.</div>
+
+      <div class="cv-job-role">Direktör, Servis Satışı & Teslimat Stratejisi</div>
+      <ul>
+        <li>Stratejik IT ve yönetilen hizmet anlaşmaları için kazanma stratejisi, öneri geliştirme, çözüm tasarımı, teklif yönetimi, risk ve fiyatlandırma ile son aşama müzakerelere sahip olarak uçtan uca çok milyon euroluk RFP ve RFI süreçlerini yönetti.</li>
+        <li>Marj korumasını rekabetçi konumlandırmayla dengeleyen çok yıllı angajmanlar için ticari strateji şekillendirdi — fiyatlandırma çerçeveleri, finansal modelleme, maliyet yapıları ve sözleşme tasarımı.</li>
+        <li>Büyük hesaplarda istikrar, güvenilirlik ve sürekli iyileştirmeyi güvence altına alarak yönetilen hizmetler ve büyük ölçekli dönüşüm programları için servis stratejisi ve hedef işletme modelleri oluşturdu.</li>
+        <li>Çok bölgeli teslimat ekiplerinde performans yönetimi, SLA/KPI modelleri, finansal kontroller ve kalite güvencesini kapsayan yönetişim yapıları kurdu.</li>
+      </ul>
+
+      <div class="cv-job-role">Direktör, Global Servisler İş Entegrasyonu & Geliştirme</div>
+      <ul>
+        <li>EMEA ve META genelinde servis entegrasyonu ve genişlemesini yönetti; teslimat merkezlerini ölçeklendirerek yenilik, hesap verebilirlik ve yürütmeyi teşvik etmek için üst düzey liderlere mentörlük yaptı.</li>
+        <li>Pazar konumlandırmasını ve pazara hazırlığı güçlendiren yeni ticari mimariler tanıttı.</li>
+        <li>Operasyonel mükemmelliği ve uyumluluğu koruyarak global teslimatdan yerel teslimatava ve dış sağlayıcılardan iç Mükemmeliyet Merkezlerine stratejik geçişleri yönetti.</li>
+      </ul>
+
+      <div class="cv-job-role">PMO & Müşteri Katılım Ofisi Başkanı</div>
+      <ul>
+        <li>PMO'yu kurdu ve yönetti; proje yöneticileri ekibini yönlendirerek portföy genelinde teslimat metodolojisini standartlaştırdı.</li>
+        <li>Teslimat ekiplerinde yönetişim çerçevelerini ve performans yönetimini oluştururken öncelikli programlarda Program / Dönüşüm Lideri olarak görev yaptı.</li>
+      </ul>
+
+      <div class="cv-job-role">Bölgesel IT Servis Teslimat Lideri — B/S/H (Bosch-Siemens Ev Aletleri)</div>
+      <ul>
+        <li>Üç ayda 75+ kişilik IT servis organizasyonu kurdu; ilk günden itibaren yüksek müşteri memnuniyetiyle zorlu SLA'ları karşıladı.</li>
+        <li>Uçtan uca servis geçişini yönetti: işe alım, kapasite geliştirme ve insan yönetimi.</li>
+        <li>Finansal ve operasyonel hedefleri tutarlı biçimde karşılayarak karmaşık sözleşme çerçevesinde bütçe ve P&L'ye sahip oldu.</li>
+        <li>Operasyonları düzenlemek ve servis verimliliğini artırmak için kurumsal RPA otomasyon programını yönetti.</li>
+      </ul>
+
+      <div class="cv-job-role">Kıdemli Servis Yöneticisi — Daimler Bölgesel CoE Teslimat Merkezi</div>
+      <ul>
+        <li>Daimler iştirakleri için operasyonları merkezileştirerek birden fazla ülkede 100+ FTE'lik SAP global destek merkezi kurdu.</li>
+      </ul>
+    </div>
+
+    <div class="cv-job">
+      <div class="cv-job-header">
+        <div class="cv-job-company">SAP Türkiye</div>
+        <div class="cv-job-dates">May 2011 – Eki 2014</div>
+      </div>
+      <div class="cv-job-role">Kıdemli İş Dönüşümü Proje Yöneticisi</div>
+      <ul>
+        <li>İmalat, otomotiv, finansal hizmetler ve havacılık sektörlerindeki sektör liderlerine yönelik SAP S/4HANA dönüşüm programlarını yönetti.</li>
+        <li>CIO'lar ve kıdemli IT liderleriyle ortaklık içinde hedef işletme modelleri, yönetişim çerçeveleri ve dönüşüm yol haritaları tasarladı.</li>
+      </ul>
+      <div style="margin-top:12px;font-size:13px;font-weight:700;color:#333;">Seçili Programlar:</div>
+      <div class="cv-project" style="margin-top:8px;">
+        <div class="cv-project-name">Türk Hava Yolları (THY)</div>
+        <div class="cv-project-desc">~150 global ekip üyesiyle ülkenin en büyük ERP dönüşümünde Organizasyonel Değişim Yönetimi Lideri.</div>
+      </div>
+      <div class="cv-project">
+        <div class="cv-project-name">Eureko Sigorta</div>
+        <div class="cv-project-desc">22 kişilik ekiple finansal hizmetler sektörünün ilk SAP HANA referans uygulamasında Program Yöneticisi.</div>
+      </div>
+      <div class="cv-project">
+        <div class="cv-project-name">Arçelik</div>
+        <div class="cv-project-desc">12 kişilik ekiple ana veri mimarisini ve yönetişimini güçlendiren kapsamlı MDM uygulamalarından birinde Program Yöneticisi.</div>
+      </div>
+      <div class="cv-project">
+        <div class="cv-project-name">Yapı Kredi Bankası</div>
+        <div class="cv-project-desc">İlk bankacılık sektörü ERP referans uygulamasında güvenilen danışman rolüyle SAP uygulaması.</div>
       </div>
     </div>
-  </section>
 
-  <section class="values">
-    <h2>Temel İlkelerim</h2>
-    <p class="sub">Söylediğimi uygularım</p>
-    <div class="values-grid">
-      <div class="value-item"><div class="value-icon"></div><h4>Dürüstlük</h4><p>Her tavsiye, bağımsız ve tarafsız bir perspektiften verilir.</p></div>
-      <div class="value-item"><div class="value-icon"></div><h4>Sorumluluk</h4><p>Verilen taahhütler her koşulda yerine getirilir.</p></div>
-      <div class="value-item"><div class="value-icon"></div><h4>Bilgi</h4><p>20+ yıllık sahada kazanılmış, gerçek dünya bilgisi.</p></div>
-      <div class="value-item"><div class="value-icon"></div><h4>Kararlılık</h4><p>Sonuca ulaşana kadar sürecin her adımında yanınızda.</p></div>
-      <div class="value-item"><div class="value-icon"></div><h4>Tutku</h4><p>Dönüşümün insan boyutuna duyulan derin ilgi ve inanç.</p></div>
+    <div class="cv-job">
+      <div class="cv-job-header">
+        <div class="cv-job-company">Metro Group Information AG — Düsseldorf, Almanya</div>
+        <div class="cv-job-dates">Eki 2005 – Nis 2011</div>
+      </div>
+      <div class="cv-job-role">Kıdemli Finansal Danışman & Geliştirici</div>
+      <ul>
+        <li>ABAP geliştirme ve SAP Basis'ten finans danışmanlığına ilerledi; Mısır, Kazakistan, Slovakya, Türkiye, Belçika, İspanya, Bulgaristan ve Pakistan'da uluslararası SAP roll-out'ları gerçekleştirdi.</li>
+      </ul>
     </div>
-  </section>
+  </div>
 
-  <section class="partner-strip">
-    <h2>Deneyim Kazandığım Kurumlar</h2>
-    <div class="partner-logos">
-      <span class="partner-logo">NTT Data</span>
-      <span class="partner-logo">SAP</span>
-      <span class="partner-logo">Metro Group</span>
-      <span class="partner-logo">Daimler</span>
-      <span class="partner-logo">THY</span>
-      <span class="partner-logo">Arçelik</span>
+  <!-- EĞİTİM -->
+  <div class="cv-section cv-bg">
+    <div class="cv-section-title">Eğitim</div>
+    <div class="cv-edu-item">
+      <div class="left">
+        <h4>İşletme Bilgi Sistemleri Lisans (Wirtschaftsinformatik)</h4>
+        <p>Marmara Üniversitesi — Almanca program</p>
+      </div>
+      <div class="right">2000 – 2005</div>
     </div>
-  </section>
+  </div>
+
+  <!-- SERTİFİKALAR -->
+  <div class="cv-section">
+    <div class="cv-section-title">Sertifikalar</div>
+    <div class="cv-certs">
+      <div class="cv-cert">SAP İş Dönüşümü — SAP Akademisi</div>
+      <div class="cv-cert">Proje & İş Dönüşümü Yönetimi — SAP</div>
+      <div class="cv-cert">TOGAF® Kurumsal Mimari</div>
+      <div class="cv-cert">SAP Kurumsal Mimari</div>
+      <div class="cv-cert">Çevik Proje Yönetimi (SAP Activate) — Sertifikalı</div>
+      <div class="cv-cert">Risk Yönetimi Uzmanı (PMI-RMP)® — PMI</div>
+      <div class="cv-cert">ITIL® Foundation</div>
+      <div class="cv-cert">Finansal Raporlama & Analiz — Deloitte</div>
+    </div>
+  </div>
+
+  <!-- DİLLER -->
+  <div class="cv-section cv-bg">
+    <div class="cv-section-title">Diller</div>
+    <div class="cv-langs">
+      <div class="cv-lang"><div class="lang-name">Türkçe</div><div class="lang-level">Anadil</div></div>
+      <div class="cv-lang"><div class="lang-name">İngilizce</div><div class="lang-level">İleri (yazılı & sözlü)</div></div>
+      <div class="cv-lang"><div class="lang-name">Almanca</div><div class="lang-level">İleri (yazılı & okuma; konuşma pratik gerektirir)</div></div>
+    </div>
+  </div>
 
   <footer>
     <div class="footer-inner">
@@ -655,47 +834,86 @@
 <!-- SAYFA: HİZMETLERİM -->
 <!-- ══════════════════════════════════════════ -->
 <div id="services" class="site-page">
-  <section class="resources-page-hero">
+
+  <style>
+    .svc-hero { background:var(--dark); padding:100px 60px 60px; text-align:center; position:relative; overflow:hidden; }
+    .svc-hero::before { content:''; position:absolute; inset:0; background:url('https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1400&q=80') center/cover no-repeat; opacity:.15; }
+    .svc-hero h1 { position:relative; z-index:1; color:#fff; font-size:38px; font-weight:700; margin-bottom:10px; }
+    .svc-hero p { position:relative; z-index:1; color:var(--purple); font-size:14px; }
+    .svc-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:0; background:var(--white); }
+    .svc-item { border:1px solid #eee; overflow:hidden; cursor:pointer; transition:box-shadow 0.2s; }
+    .svc-item:hover { box-shadow:0 4px 24px rgba(107,70,193,0.12); z-index:1; }
+    .svc-img { width:100%; height:200px; object-fit:cover; display:block; }
+    .svc-body { padding:24px 24px 28px; }
+    .svc-body h3 { font-size:17px; font-weight:700; color:var(--black); margin-bottom:10px; line-height:1.3; }
+    .svc-body p { font-size:13px; color:#555; line-height:1.7; margin-bottom:12px; }
+    .svc-scope { font-size:12px; color:#888; border-top:1px solid #f0eeea; padding-top:12px; margin-top:4px; }
+    .svc-scope strong { color:var(--purple); }
+    @media(max-width:900px){ .svc-grid { grid-template-columns:1fr; } .svc-hero { padding:80px 24px 40px; } }
+  </style>
+
+  <div class="svc-hero">
     <h1>Hizmetlerim</h1>
     <p>Dönüşüm sürecinin her aşamasında bağımsız danışmanlık</p>
-  </section>
+  </div>
 
-  <section class="academics" style="padding-top:60px;">
-    <div class="academics-inner">
-      <div class="services-grid">
-        <div class="service-card">
-          <h3>SAP & S/4HANA Dönüşümü</h3>
-          <p>SAP S/4HANA geçişleri; strateji, mimari, veri, organizasyon ve yönetişim boyutlarının eş zamanlı yönetilmesini gerektiren karmaşık dönüşüm programlarıdır. THY, Eureko Sigorta, Arçelik ve Yapı Kredi gibi kurumların bu yolculuklarına eşlik ettim.</p>
-          <p style="color:#aaa;font-size:12px;margin-top:8px;"><strong style="color:#ccc;">Kapsam:</strong> Geçiş stratejisi, RFP/tedarikçi seçimi, program yönetimi, hedef işletme modeli, go-live ve stabilizasyon.</p>
-        </div>
-        <div class="service-card">
-          <h3>Yönetilen Hizmetler & İşletme Modeli Tasarımı</h3>
-          <p>NTT Data'da 10+ yıl boyunca EMEA ve META genelinde büyük kurumlar için ITIL tabanlı servis modelleri tasarladım ve yönettim. B/S/H için 3 ayda 75+ kişilik servis organizasyonu kurdum.</p>
-          <p style="color:#aaa;font-size:12px;margin-top:8px;"><strong style="color:#ccc;">Kapsam:</strong> Servis model tasarımı, SLA/KPI, organizasyon yapısı, yönetişim, geçiş planlaması.</p>
-        </div>
-        <div class="service-card">
-          <h3>Tedarikçi Seçimi & RFP Yönetimi</h3>
-          <p>Teknoloji tedarikçileri güçlü satış ekipleriyle gelir. Bağımsız bir değerlendirici olarak teknik, ticari ve organizasyonel boyutları bir arada ele alarak en iyi kararı vermenize destek olurum.</p>
-          <p style="color:#aaa;font-size:12px;margin-top:8px;"><strong style="color:#ccc;">Kapsam:</strong> RFP/RFI tasarımı, değerlendirme kriterleri, bağımsız analiz raporu, müzakere desteği.</p>
-        </div>
-        <div class="service-card">
-          <h3>Program & Portföy Yönetimi</h3>
-          <p>NTT Data'da PMO'yu kurdum ve yönettim. SAP Türkiye'de THY, Arçelik ve Eureko Sigorta gibi ülkenin en büyük dönüşüm programlarını yönettim. €1M+ programları zamanında teslim ettim.</p>
-          <p style="color:#aaa;font-size:12px;margin-top:8px;"><strong style="color:#ccc;">Kapsam:</strong> PMO kurulumu, portföy yönetimi, yönetişim çerçeveleri, program liderliği.</p>
-        </div>
-        <div class="service-card">
-          <h3>Yapay Zeka Benimseme & Değişim Yönetimi</h3>
-          <p>Hem kurumsal dönüşüm deneyimime hem de AI destekli araçları aktif olarak geliştirip kullanan bir pratisyen perspektifine sahibim. AI yatırımını değere dönüştürmek için hazırlık şart.</p>
-          <p style="color:#aaa;font-size:12px;margin-top:8px;"><strong style="color:#ccc;">Kapsam:</strong> AI hazırlık değerlendirmesi, strateji, değişim yönetimi, çalışan hazırlığı, yönetişim.</p>
-        </div>
-        <div class="service-card">
-          <h3>Kurumsal Mimari & Yönetişim</h3>
-          <p>TOGAF sertifikalı kurumsal mimar olarak teknoloji mimarisi ile iş stratejisini hizalamak için bütünsel bir yaklaşım getiriyorum. Kurumsal çaplı benimsenen yönetişim çerçeveleri tasarladım.</p>
-          <p style="color:#aaa;font-size:12px;margin-top:8px;"><strong style="color:#ccc;">Kapsam:</strong> Mimari değerlendirme, hedef mimari tasarımı, yönetişim modeli, risk yönetimi.</p>
-        </div>
+  <div class="svc-grid">
+
+    <div class="svc-item">
+      <div class="svc-img" style="background:url('https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=600&q=80') center/cover;"></div>
+      <div class="svc-body">
+        <h3>SAP & S/4HANA Dönüşümü</h3>
+        <p>SAP S/4HANA geçişleri; strateji, mimari, veri, organizasyon ve yönetişim boyutlarının eş zamanlı yönetilmesini gerektiren karmaşık dönüşüm programlarıdır. THY, Eureko Sigorta, Arçelik ve Yapı Kredi gibi kurumların bu yolculuklarına eşlik ettim. Teknoloji entegratörünüzün bağımsız karşı ağırlığı olarak — sizin tarafınızda, sizin çıkarlarınız için çalışırım.</p>
+        <div class="svc-scope"><strong>Kapsam:</strong> Geçiş stratejisi, RFP/tedarikçi seçimi, program yönetimi, hedef işletme modeli, go-live ve stabilizasyon.</div>
       </div>
     </div>
-  </section>
+
+    <div class="svc-item">
+      <div class="svc-img" style="background:url('https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=600&q=80') center/cover;"></div>
+      <div class="svc-body">
+        <h3>Yönetilen Hizmetler & İşletme Modeli Tasarımı</h3>
+        <p>NTT Data'da 10+ yıl boyunca EMEA ve META genelinde büyük kurumlar için ITIL tabanlı servis modelleri tasarladım, kurdum ve yönettim. B/S/H için 3 ayda 75+ kişilik servis organizasyonu kurarak SLA taahhütlerini ilk günden karşıladım.</p>
+        <div class="svc-scope"><strong>Kapsam:</strong> Servis model tasarımı, SLA/KPI çerçevesi, organizasyon yapısı, yönetişim, geçiş planlaması, sürekli iyileştirme.</div>
+      </div>
+    </div>
+
+    <div class="svc-item">
+      <div class="svc-img" style="background:url('https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=600&q=80') center/cover;"></div>
+      <div class="svc-body">
+        <h3>Tedarikçi Seçimi & RFP Yönetimi</h3>
+        <p>Teknoloji tedarikçileri güçlü satış ekipleriyle gelir. Bağımsız bir değerlendirici olarak teknik, ticari ve organizasyonel boyutları bir arada ele alarak en iyi kararı vermenize destek olurum. NTT Data'daki RFP deneyimimi artık müşteri tarafında kullanıyorum.</p>
+        <div class="svc-scope"><strong>Kapsam:</strong> RFP/RFI tasarımı, değerlendirme kriterleri ve ağırlıklandırma, bağımsız analiz raporu, müzakere desteği.</div>
+      </div>
+    </div>
+
+    <div class="svc-item">
+      <div class="svc-img" style="background:url('https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?w=600&q=80') center/cover;"></div>
+      <div class="svc-body">
+        <h3>Program & Portföy Yönetimi</h3>
+        <p>NTT Data'da PMO'yu kurdum ve yönettim. SAP Türkiye'de THY, Arçelik ve Eureko Sigorta gibi ülkenin en büyük ve en karmaşık dönüşüm programlarını yönettim. €1M+ programları tutarlı biçimde zamanında ve bütçe dahilinde teslim ettim.</p>
+        <div class="svc-scope"><strong>Kapsam:</strong> PMO kurulumu, portföy yönetimi ve önceliklendirme, yönetişim çerçeveleri, program/dönüşüm liderliği, sağlık izleme ve raporlama.</div>
+      </div>
+    </div>
+
+    <div class="svc-item">
+      <div class="svc-img" style="background:url('https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=600&q=80') center/cover;"></div>
+      <div class="svc-body">
+        <h3>Yapay Zeka Benimseme & Değişim Yönetimi</h3>
+        <p>Hem kurumsal dönüşüm deneyimime hem de AI destekli araçları aktif olarak geliştirip kullanan bir pratisyen perspektifine sahibim. Kendi süreçlerimde yapay zeka destekli proje yönetim sistemleri kurdum. Teknolojiyi satın almak değil, kurumu hazırlamak belirleyici faktördür.</p>
+        <div class="svc-scope"><strong>Kapsam:</strong> AI hazırlık değerlendirmesi, strateji ve yol haritası, değişim yönetimi, çalışan hazırlığı, AI yönetişim çerçevesi, pilot uygulama yönetimi.</div>
+      </div>
+    </div>
+
+    <div class="svc-item">
+      <div class="svc-img" style="background:url('https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&q=80') center/cover;"></div>
+      <div class="svc-body">
+        <h3>Kurumsal Mimari & Yönetişim</h3>
+        <p>TOGAF sertifikalı kurumsal mimar olarak teknoloji mimarisi ile iş stratejisini hizalamak için bütünsel bir yaklaşım getiriyorum. NTT Data'da ve SAP Türkiye'de kurumsal çaplı benimsenen yönetişim ve teslimat çerçeveleri tasarladım.</p>
+        <div class="svc-scope"><strong>Kapsam:</strong> Mevcut mimari değerlendirmesi, hedef mimari tasarımı, yönetişim model tasarımı, risk ve kalite yönetimi çerçeveleri, mimari ilkeler.</div>
+      </div>
+    </div>
+
+  </div>
 
   <footer>
     <div class="footer-inner">
@@ -721,9 +939,38 @@
 <!-- SAYFA: YAZILARIM (RESOURCES) -->
 <!-- ══════════════════════════════════════════ -->
 <div id="resources" class="site-page">
+
+  <style>
+    .blog-detail-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.85); z-index:500; overflow-y:auto; padding:40px 20px; }
+    .blog-detail-overlay.open { display:flex; align-items:flex-start; justify-content:center; }
+    .blog-detail-box { background:#fff; max-width:780px; width:100%; padding:48px; position:relative; margin:auto; }
+    .blog-detail-close { position:absolute; top:16px; right:20px; background:none; border:none; font-size:28px; cursor:pointer; color:#999; line-height:1; }
+    .blog-detail-close:hover { color:#000; }
+    .blog-detail-img { width:100%; height:280px; object-fit:cover; background:#eee; margin-bottom:28px; }
+    .blog-detail-meta { font-size:12px; color:#999; margin-bottom:10px; }
+    .blog-detail-title { font-size:26px; font-weight:800; line-height:1.3; margin-bottom:20px; color:#111; }
+    .blog-detail-body { font-size:15px; line-height:1.9; color:#333; }
+    .blog-detail-body p { margin-bottom:16px; }
+    .blog-detail-body h4 { font-size:16px; font-weight:700; margin:24px 0 8px; color:#111; }
+    .blog-card { cursor:pointer; transition:transform 0.2s; }
+    .blog-card:hover { transform:translateY(-4px); }
+    .blog-card:hover h3 { color:#805ad5; }
+  </style>
+
+  <!-- Detay overlay -->
+  <div id="blog-detail-overlay" class="blog-detail-overlay" onclick="closeBlogDetail(event)">
+    <div class="blog-detail-box">
+      <button class="blog-detail-close" onclick="closeBlogDetail(null, true)">×</button>
+      <div id="blog-detail-img" class="blog-detail-img"></div>
+      <div id="blog-detail-meta" class="blog-detail-meta"></div>
+      <div id="blog-detail-title" class="blog-detail-title"></div>
+      <div id="blog-detail-body" class="blog-detail-body"></div>
+    </div>
+  </div>
+
   <section class="resources-page-hero">
     <h1>Yazılarım</h1>
-    <p>Dönüşüm ve teknoloji dünyasından en güvenilir perspektifler</p>
+    <p>Dönüşüm ve teknoloji dünyasından perspektifler</p>
   </section>
   <div class="blog-filter">
     <button class="active">Tüm Yazılar</button>
@@ -731,44 +978,166 @@
   </div>
   <section class="blog-full">
     <div class="blog-full-grid">
-      <div class="blog-card">
+
+      <div class="blog-card" onclick="openBlog(0)">
         <div class="blog-img" style="background:url('https://images.unsplash.com/photo-1551434678-e076c223a692?w=600&q=80') center/cover;height:220px;"></div>
         <div class="blog-meta">Makale · 5 dk okuma</div>
         <h3>SAP S/4HANA Geçişlerinde Neden Başarısız Olunur?</h3>
         <p>Teknoloji değil, insan ve süreç boyutundaki eksiklikler başarısızlığın temel nedeni...</p>
       </div>
-      <div class="blog-card">
+
+      <div class="blog-card" onclick="openBlog(1)">
         <div class="blog-img" style="background:url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&q=80') center/cover;height:220px;"></div>
         <div class="blog-meta">Makale · 4 dk okuma</div>
         <h3>Yapay Zeka Kurumları Nasıl Dönüştürüyor?</h3>
         <p>AI sadece teknoloji değil, organizasyonel bir dönüşüm meselesi...</p>
       </div>
-      <div class="blog-card">
+
+      <div class="blog-card" onclick="openBlog(2)">
         <div class="blog-img" style="background:url('https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=600&q=80') center/cover;height:220px;"></div>
         <div class="blog-meta">Makale · 3 dk okuma</div>
         <h3>Sektörün Önünde Kalmak</h3>
         <p>Değişim hızlanıyor. CIO'ların bugün hazırlanması gereken üç kritik alan...</p>
       </div>
-      <div class="blog-card">
+
+      <div class="blog-card" onclick="openBlog(3)">
         <div class="blog-img" style="background:url('https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&q=80') center/cover;height:220px;"></div>
         <div class="blog-meta">Makale · 6 dk okuma</div>
         <h3>Tedarikçi Seçiminde 10 Kritik Hata</h3>
         <p>Yanlış tedarikçi seçimi bir dönüşüm programının en büyük riski olabilir...</p>
       </div>
-      <div class="blog-card">
+
+      <div class="blog-card" onclick="openBlog(4)">
         <div class="blog-img" style="background:url('https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=600&q=80') center/cover;height:220px;"></div>
         <div class="blog-meta">Makale · 4 dk okuma</div>
         <h3>Yönetilen Hizmetlerde Değer Yaratma</h3>
         <p>ITIL sadece bir çerçeve değil, operasyonel mükemmelliğin temelidir...</p>
       </div>
-      <div class="blog-card">
+
+      <div class="blog-card" onclick="openBlog(5)">
         <div class="blog-img" style="background:url('https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=600&q=80') center/cover;height:220px;"></div>
         <div class="blog-meta">Makale · 5 dk okuma</div>
         <h3>İş Trendleri mi, Kalıcı Değişim mi?</h3>
         <p>Her yeni teknolojiyi trend olarak mı görmeli? İşte ayırt etmenin yolu...</p>
       </div>
+
     </div>
   </section>
+
+  <script>
+  const BLOG_POSTS_TR = [
+    {
+      img: 'https://images.unsplash.com/photo-1551434678-e076c223a692?w=900&q=80',
+      meta: 'Makale · 5 dk okuma',
+      title: 'SAP S/4HANA Geçişlerinde Neden Başarısız Olunur?',
+      body: `<p>SAP S/4HANA geçişleri, kurumların karşılaştığı en karmaşık ve riskli dönüşüm programlarından birini oluşturmaktadır. Ancak çoğu başarısızlık hikayesinde ortak bir paydaş vardır: sorun teknoloji değil, insandır.</p>
+<h4>1. Hazırlık Eksikliği</h4>
+<p>Pek çok kurum, teknik gereksinimleri karşılamadan geçişe başlar. Veri kalitesi sorunları, mimari boşluklar ve yetersiz test süreçleri, go-live aşamasında kritik aksamalara yol açar. Hazırlık değerlendirmesi olmadan başlanan her proje, ilerleyen aşamalarda katlanarak büyüyen riskler taşır.</p>
+<h4>2. Yönetişim Çerçevesinin Yokluğu</h4>
+<p>Büyük dönüşüm programları, güçlü bir yönetişim yapısı olmadan raydan çıkar. Kim karar alır? Hangi süreçte? Kimin onayı gerekir? Bu soruların yanıtları baştan netleştirilmediğinde, program yönetimden çıkar.</p>
+<h4>3. Organizasyonel Değişim Yönetiminin Hafife Alınması</h4>
+<p>Teknoloji kurulabilir, ancak insanlar benimsemezse yatırım değer üretemez. Çalışanların yeni sisteme hazırlanması, süreç değişikliklerinin anlatılması ve direncin yönetilmesi, teknik kurulum kadar kritiktir.</p>
+<h4>4. Tedarikçi ile Müşteri Arasındaki Denge</h4>
+<p>Teknoloji entegratörleri kendi metodolojilerini ve ürünlerini ön plana çıkarır. Müşteri tarafında bağımsız bir perspektif olmadığında, kararlar müşterinin değil tedarikçinin çıkarlarına hizmet edebilir. Bağımsız danışmanlık tam da bu noktada kritik bir denge unsuru sağlar.</p>
+<p>Başarılı bir S/4HANA geçişi; doğru hazırlık, güçlü yönetişim, etkin değişim yönetimi ve tarafsız bir dış perspektifin birleşimiyle mümkündür.</p>`
+    },
+    {
+      img: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=900&q=80',
+      meta: 'Makale · 4 dk okuma',
+      title: 'Yapay Zeka Kurumları Nasıl Dönüştürüyor?',
+      body: `<p>Yapay zeka, son birkaç yılda iş dünyasının gündeminde üst sıralara tırmanmıştır. Ancak gerçek şu ki: AI sadece bir teknoloji meselesi değil, köklü bir organizasyonel dönüşüm meselesidir.</p>
+<h4>Teknoloji Satın Almak Yeterli Değil</h4>
+<p>Pek çok kurum, AI araçlarına yatırım yapmakta ancak bu araçların benimsenmesi için gereken organizasyonel altyapıyı kurmakta başarısız olmaktadır. Süreç yeniden tasarımı, çalışan yetkinlik geliştirme, veri yönetişimi ve liderlik uyumu olmadan, AI projeleri değer üretemez.</p>
+<h4>Üç Kritik Boyut</h4>
+<p><strong>İnsan:</strong> Çalışanlar yeni araçları nasıl kullanacak? Hangi rollerin dönüşmesi gerekiyor? Yetkinlik açıkları nasıl kapatılacak?</p>
+<p><strong>Süreç:</strong> Hangi süreçler AI ile yeniden tasarlanmalı? Hangileri otomasyona hazır, hangilerinde insan yargısı vazgeçilmez?</p>
+<p><strong>Yönetişim:</strong> AI kararları nasıl denetlenecek? Veri gizliliği ve etik çerçevesi nasıl kurulacak?</p>
+<h4>Pratisyen Perspektifi</h4>
+<p>Kendi danışmanlık süreçlerimde AI destekli proje yönetim sistemleri kurdum. Bu deneyim bana şunu öğretti: AI'ı en iyi kullananlar, onu bir araç olarak gören değil, iş modelinin bir parçası olarak tasarlayanlardır.</p>
+<p>Kurumunuzun AI yolculuğunda nerede olduğunu anlamak için hazırlık değerlendirmesiyle başlamak en sağlıklı adımdır.</p>`
+    },
+    {
+      img: 'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=900&q=80',
+      meta: 'Makale · 3 dk okuma',
+      title: 'Sektörün Önünde Kalmak',
+      body: `<p>Teknoloji dönüşümünün hızı, kurumların adaptasyon kapasitesini zorlamaya devam ediyor. CIO'lar ve IT liderleri için "güncel kalmak" artık yeterli değil — ileriye bakmak zorunlu.</p>
+<h4>1. SAP'ın Yol Haritasını Takip Edin</h4>
+<p>SAP 2027 sonrasında ECC desteğini kaldırıyor. Bu geçiş için hazırlık yapmamış kurumlar ciddi risklerle karşı karşıya. Strateji geliştirmek için zaman daralıyor.</p>
+<h4>2. AI Hazırlığını Gerçekçi Değerlendirin</h4>
+<p>Her kurumun "AI stratejisi" olduğu iddia ediliyor, ancak gerçek hazırlık düzeyi çok daha düşük. Veri kalitesi, altyapı ve insan yetkinliği olmadan AI yatırımları boşa gider.</p>
+<h4>3. Tedarikçi Bağımlılığını Yönetin</h4>
+<p>Tek bir tedarikçiye aşırı bağımlılık, uzun vadede kurumun pazarlık gücünü ve esnekliğini zayıflatır. Bağımsız bir değerlendirme ile mevcut tedarikçi portföyünüzü düzenli olarak gözden geçirmek kritik bir rekabet avantajı sağlar.</p>`
+    },
+    {
+      img: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=900&q=80',
+      meta: 'Makale · 6 dk okuma',
+      title: 'Tedarikçi Seçiminde 10 Kritik Hata',
+      body: `<p>Yanlış tedarikçi seçimi, bir dönüşüm programının en büyük ve en pahalı riski olabilir. Bu hatalar yalnızca para kaybettirmez — yıllarca süren bağımlılıklar yaratır.</p>
+<h4>1. Sadece Fiyata Odaklanmak</h4>
+<p>En düşük teklif, en düşük toplam maliyeti her zaman anlamaz. Uygulama sonrası destek, lisans yapıları ve gizli maliyetler tabloyu tamamen değiştirebilir.</p>
+<h4>2. Referans Kontrolü Yapmamak</h4>
+<p>Tedarikçinin verdiği referanslar onun seçtikleri. Bağımsız olarak ulaşabileceğiniz müşterilerle konuşun.</p>
+<h4>3. Teknik Yetkinliği Satış Yetkinliğiyle Karıştırmak</h4>
+<p>Güçlü bir satış ekibi, güçlü bir uygulama ekibi anlamına gelmez. Teklif sunumundaki ekibin projeyi yürütecek ekiple aynı olduğundan emin olun.</p>
+<h4>4. Değerlendirme Kriterlerini Önceden Netleştirmemek</h4>
+<p>Sunum sonrası kriterler koymak, değerlendirmeyi sübjektif hale getirir. Ağırlıklı değerlendirme matrisi, teklifler gelmeden hazır olmalıdır.</p>
+<h4>5. Müzakereyi Erken Sonlandırmak</h4>
+<p>İlk teklife razı olmak, masa üzerinde bırakılan değeri kaçırmaktır. Profesyonel müzakere desteği, sözleşme değerinin önemli bir bölümünü kurtarabilir.</p>
+<p>Tedarikçi seçiminde bağımsız bir danışman, tarafsız bir değerlendirme ve güçlü bir müzakere ortağı sağlar.</p>`
+    },
+    {
+      img: 'https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=900&q=80',
+      meta: 'Makale · 4 dk okuma',
+      title: 'Yönetilen Hizmetlerde Değer Yaratma',
+      body: `<p>Yönetilen hizmet modelleri, kurumların IT operasyonlarını daha verimli yönetmelerini sağlamanın en güçlü araçlarından biridir. Ancak bu modeller doğru kurulmadığında, beklenen değeri üretemez.</p>
+<h4>Servis Modeli Tasarımı Her Şeyden Önce Gelir</h4>
+<p>ITIL çerçevesi iyi bir başlangıç noktasıdır, ancak tek başına yeterli değildir. Kurumun özel ihtiyaçlarına, olgunluk düzeyine ve hedeflerine göre uyarlanmış bir servis modeli tasarlamak, başarının temel koşuludur.</p>
+<h4>SLA'lar Gerçekçi Olmalıdır</h4>
+<p>Ulaşılamayacak SLA hedefleri, sürekli ihlal kültürü yaratır. Doğru hedefler, hem tedarikçiyi hem de müşteriyi motive eden, ölçülebilir ve gerçekçi değerler içermelidir.</p>
+<h4>Sürekli İyileştirme Bir Proje Değil, Bir Kültürdür</h4>
+<p>B/S/H için kurduğum servis organizasyonunda en önemli başarı faktörlerinden biri, sürekli iyileştirme mekanizmalarını organizasyonun DNA'sına işlemekti. Aylık servis değerlendirmeleri, trend analizleri ve proaktif problem yönetimi bu kültürün temel taşlarıdır.</p>
+<p>Yönetilen hizmet modelinizi gözden geçirmek veya sıfırdan kurmak için bağımsız bir perspektif değer katabilir.</p>`
+    },
+    {
+      img: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=900&q=80',
+      meta: 'Makale · 5 dk okuma',
+      title: 'İş Trendleri mi, Kalıcı Değişim mi?',
+      body: `<p>Her yıl yeni bir teknoloji "oyun değiştirici" olarak ilan edilir. Blockchain, metaverse, Web3... ve şimdi yapay zeka. Bu dalgaları nasıl okumalı?</p>
+<h4>Trend ile Dönüşüm Arasındaki Fark</h4>
+<p>Bir trend, mevcut iş modellerini kolaylaştırır veya hızlandırır. Gerçek bir dönüşüm ise iş modellerini kökten değiştirir. AI ikinci kategoriye girer — ancak her AI uygulaması dönüştürücü değildir.</p>
+<h4>Doğru Soruları Sormak</h4>
+<p>Yeni bir teknolojiyi değerlendirirken sorulması gereken sorular: Bu teknoloji müşterime nasıl değer katıyor? Organizasyonum bunu benimsemeye hazır mı? Uzun vadeli maliyet yapısı nasıl şekilleniyor? Rakiplerim bu teknolojiyle ne yapıyor?</p>
+<h4>Erken Benimseyici mi, Takipçi mi?</h4>
+<p>Her kurumun erken benimseyici olması gerekmiyor. Ancak rakiplerinizin 2-3 yıl önünde olmasına izin vermeyin. İzleme, değerlendirme ve zamanında harekete geçme döngüsü, sektörün önünde kalmak için yeterlidir.</p>
+<p>Teknoloji yatırım kararlarınızda bağımsız bir değerlendirme, pahalı hatalardan kaçınmanızı sağlayabilir.</p>`
+    }
+  ];
+
+  function openBlog(idx) {
+    const stored = (() => { try { const d = JSON.parse(localStorage.getItem('vildan_content')); return d?.blog?.items; } catch { return null; } })();
+    const post = BLOG_POSTS_TR[idx];
+    if (!post) return;
+    const title = stored?.[idx]?.title || post.title;
+    const meta  = stored?.[idx]?.meta  || post.meta;
+    const body  = stored?.[idx]?.body  || post.body;
+    document.getElementById('blog-detail-img').style.background = `url('${post.img}') center/cover`;
+    document.getElementById('blog-detail-meta').textContent = meta;
+    document.getElementById('blog-detail-title').textContent = title;
+    document.getElementById('blog-detail-body').innerHTML = body;
+    const overlay = document.getElementById('blog-detail-overlay');
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeBlogDetail(e, force) {
+    if (!force && e && e.target !== document.getElementById('blog-detail-overlay')) return;
+    document.getElementById('blog-detail-overlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeBlogDetail(null, true); });
+  </script>
+
   <footer>
     <div class="footer-inner">
       <div class="footer-brand">
@@ -883,9 +1252,18 @@
       <button class="btn-purple-sm" style="padding:11px 32px;font-size:13px;">Gönder</button>
 
       <div class="chat-box">
-        <h3>Destek Ekibimizle Sohbet Edin</h3>
+        <h3>Doğrudan İletişim</h3>
         <p>Dönüşüm sürecinizin herhangi bir aşamasında — nereden başlayacağınızdan emin olmadığınızda da dahil — bağlanmaktan memnuniyet duyarım.</p>
-        <a href="mailto:vildan@vildankara.com" class="btn-outline-sm">Mesaj Gönderin</a>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:16px;">
+          <a href="mailto:vildan@vildankara.com" class="btn-outline-sm" style="display:flex;align-items:center;gap:6px;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2,4 12,13 22,4"/></svg>
+            vildan@vildankara.com
+          </a>
+          <a href="https://wa.me/905532965575?text=Merhaba%20Vildan%20Han%C4%B1m%2C%20dan%C4%B1%C5%9Fanl%C4%B1k%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum." target="_blank" class="btn-outline-sm" style="display:flex;align-items:center;gap:6px;border-color:#25D366;color:#25D366;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            WhatsApp ile Yaz
+          </a>
+        </div>
       </div>
     </div>
     <div class="contact-right"></div>

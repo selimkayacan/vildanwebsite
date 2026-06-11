@@ -478,7 +478,8 @@ function renderBlog(items) {
       <div class="field-row">
         <div class="field"><label>Meta (tarih/süre)</label><input id="blg${i}-meta" type="text" value="${esc(b.meta)}"></div>
       </div>
-      <div class="field"><label>Özet Metin</label><textarea id="blg${i}-text">${esc(b.text)}</textarea></div>
+      <div class="field"><label>Özet Metin (kart önizleme)</label><textarea id="blg${i}-text" style="min-height:60px;">${esc(b.text)}</textarea></div>
+      <div class="field"><label>Uzun Metin (yazıya tıklayınca açılan tam içerik — HTML girebilirsiniz)</label><textarea id="blg${i}-body" style="min-height:180px;font-family:monospace;font-size:12px;">${esc(b.body||'')}</textarea></div>
     </div>`).join('');
 }
 
@@ -601,7 +602,7 @@ function saveAll() {
   d.services.items = d.services.items.map((_, i) => ({ title: getVal(`svc${i}-title`), text: getVal(`svc${i}-text`) }));
 
   d.blog.title = getVal('bl-title'); d.blog.sub = getVal('bl-sub');
-  d.blog.items = d.blog.items.map((_, i) => ({ title: getVal(`blg${i}-title`), meta: getVal(`blg${i}-meta`), text: getVal(`blg${i}-text`) }));
+  d.blog.items = d.blog.items.map((_, i) => ({ title: getVal(`blg${i}-title`), meta: getVal(`blg${i}-meta`), text: getVal(`blg${i}-text`), body: getVal(`blg${i}-body`) }));
 
   d.quote.text = getVal('q-text'); d.quote.source = getVal('q-source');
 

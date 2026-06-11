@@ -204,7 +204,6 @@
     <li><a href="#" onclick="showPage('about')">About</a></li>
     <li><a href="#" onclick="showPage('services')">Services</a></li>
     <li><a href="#" onclick="showPage('resources')">Insights</a></li>
-    <li><a href="#" onclick="showPage('team')">Experience</a></li>
     <li><a href="#" onclick="showPage('contact')">Contact</a></li>
     <li><a href="#" class="nav-cta" onclick="showPage('contact')">Get in Touch</a></li>
   </ul>
@@ -411,52 +410,221 @@
 <!-- PAGE: ABOUT (WHO WE ARE) -->
 <!-- ══════════════════════════════════════════ -->
 <div id="about" class="site-page">
-  <section class="page-hero">
-    <div class="page-hero-left">
-      <h1>About Vildan Kara Kayacan</h1>
-      <p>An independent advisor who knows transformation from the inside</p>
-      <a href="#" class="btn-outline-white" onclick="showPage('contact')">Get in Touch</a>
-    </div>
-    <div class="page-hero-right">
-      <p>For over two decades, I led the most critical transformation programs at some of the world's largest enterprises. I built Turkey's first SAP global support hub for Daimler, with a multinational team of 100+.</p>
-      <p>I led organizational change for Turkish Airlines' largest-ever ERP transformation. At NTT Data, I shaped service strategy and delivery models across EMEA and META. I doubled a managed services portfolio and cut operating costs by 35%.</p>
-    </div>
-  </section>
 
-  <section class="stats">
-    <div class="stats-inner">
-      <div class="stats-left">
-        <h2>Our Mission Is to Empower</h2>
-        <div class="stats-grid">
-          <div class="stat-item"><div class="num">20+</div><div class="label">Years of International Experience</div></div>
-          <div class="stat-item"><div class="num">16</div><div class="label">Countries with Project Experience</div></div>
-          <div class="stat-item"><div class="num">€1M+</div><div class="label">Transformation Programs Managed</div></div>
-          <div class="stat-item"><div class="num">35%</div><div class="label">Operational Cost Reduction</div></div>
+  <style>
+    .cv-hero{background:var(--dark);padding:100px 60px 60px;position:relative;overflow:hidden}
+    .cv-hero::before{content:'';position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=1400&q=80') center/cover no-repeat;opacity:.15}
+    .cv-hero-inner{position:relative;z-index:1;display:grid;grid-template-columns:auto 1fr;gap:48px;align-items:start;max-width:1000px;margin:0 auto}
+    .cv-photo{width:160px;height:160px;border-radius:50%;object-fit:cover;border:3px solid var(--purple);flex-shrink:0;background:url('https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&q=80') center/cover}
+    .cv-hero-text h1{color:#fff;font-size:34px;font-weight:800;margin-bottom:4px}
+    .cv-hero-text .cv-title{color:var(--purple);font-size:15px;font-weight:600;margin-bottom:6px}
+    .cv-hero-text .cv-tags{color:#aaa;font-size:13px;margin-bottom:16px}
+    .cv-hero-text .cv-contact{display:flex;gap:20px;flex-wrap:wrap}
+    .cv-hero-text .cv-contact a{color:#ccc;font-size:13px;text-decoration:none}
+    .cv-hero-text .cv-contact a:hover{color:#fff}
+    .cv-summary{background:#fff;padding:48px 60px;max-width:1000px;margin:0 auto}
+    .cv-summary p{font-size:15px;line-height:1.8;color:#333}
+    .cv-section{padding:48px 60px;max-width:1000px;margin:0 auto}
+    .cv-section-title{font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--purple);border-bottom:2px solid var(--purple);padding-bottom:8px;margin-bottom:28px}
+    .cv-achievements{display:grid;grid-template-columns:1fr 1fr;gap:12px 40px}
+    .cv-achievement{display:flex;gap:10px;align-items:flex-start;font-size:14px;line-height:1.6;color:#333}
+    .cv-achievement::before{content:'▪';color:var(--purple);font-size:16px;flex-shrink:0;margin-top:1px}
+    .cv-competencies{display:flex;flex-wrap:wrap;gap:10px}
+    .cv-competency{background:#f3eeff;color:var(--purple);font-size:12px;font-weight:600;padding:5px 14px;border-radius:2px}
+    .cv-job{margin-bottom:36px;padding-bottom:36px;border-bottom:1px solid #eee}
+    .cv-job:last-child{border-bottom:none}
+    .cv-job-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:4px;flex-wrap:wrap;gap:8px}
+    .cv-job-company{font-size:16px;font-weight:800;color:var(--black)}
+    .cv-job-dates{font-size:12px;color:#999;font-style:italic}
+    .cv-job-role{font-size:14px;font-weight:700;color:var(--purple);margin:8px 0 4px}
+    .cv-job ul{margin:8px 0 0 16px}
+    .cv-job ul li{font-size:13px;color:#555;line-height:1.7;margin-bottom:4px}
+    .cv-project{margin:10px 0 0 16px}
+    .cv-project-name{font-size:13px;font-weight:700;color:#333}
+    .cv-project-desc{font-size:12px;color:#777}
+    .cv-edu-item{display:flex;justify-content:space-between;margin-bottom:12px}
+    .cv-edu-item .left h4{font-size:14px;font-weight:700}
+    .cv-edu-item .left p{font-size:13px;color:#777}
+    .cv-edu-item .right{font-size:12px;color:#999;text-align:right}
+    .cv-certs{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+    .cv-cert{font-size:13px;color:#444;display:flex;gap:8px;align-items:center}
+    .cv-cert::before{content:'·';color:var(--purple);font-size:20px;line-height:1}
+    .cv-langs{display:flex;gap:32px;flex-wrap:wrap}
+    .cv-lang{text-align:center}
+    .cv-lang .lang-name{font-size:14px;font-weight:700}
+    .cv-lang .lang-level{font-size:12px;color:#999}
+    .cv-bg{background:#f9f9f7}
+    @media(max-width:700px){.cv-hero{padding:80px 24px 40px}.cv-hero-inner{grid-template-columns:1fr}.cv-photo{width:100px;height:100px}.cv-summary,.cv-section{padding:32px 24px}.cv-achievements{grid-template-columns:1fr}.cv-certs{grid-template-columns:1fr}}
+  </style>
+
+  <div class="cv-hero">
+    <div class="cv-hero-inner">
+      <div class="cv-photo"></div>
+      <div class="cv-hero-text">
+        <h1>Vildan Kara Kayacan</h1>
+        <div class="cv-title">Business, Technology & AI Transformation Executive</div>
+        <div class="cv-tags">Transformation Director · Managed Services · SAP & Enterprise Architecture · AI Transformation</div>
+        <div class="cv-contact">
+          <a href="mailto:vildan@vildankara.com">vildan@vildankara.com</a>
+          <a href="tel:+905532965575">+90 553 296 55 75</a>
+          <span style="color:#666;">Istanbul, Türkiye</span>
         </div>
       </div>
-      <div class="stats-right">
-        <p>What all of this taught me: technology transformation is not a software installation project. Without the right strategy, governance, processes, and people, even the largest technology investment will fall short.</p>
-        <p>Today I work as an independent advisor — because the most valuable guidance comes from standing outside any product, technology firm, or sales agenda.</p>
+    </div>
+  </div>
+
+  <div class="cv-summary">
+    <p>Business and technology transformation executive with 20+ years leading large-scale change, managed services, and global delivery for strategic enterprises across EMEA and META. Repeated record of doubling service portfolios, reducing operating costs by a third, and standing up multi-country delivery organizations from the ground up. Sits at the rare intersection of enterprise SAP transformation and hands-on AI, leading both the technology and the organizational transformation behind AI adoption. A trusted advisor to CIOs and executive teams turning transformation strategy into measurable business value.</p>
+  </div>
+
+  <div class="cv-section">
+    <div class="cv-section-title">Signature Achievements</div>
+    <div class="cv-achievements">
+      <div class="cv-achievement">Established Türkiye's first SAP global support hub (100+ FTE), consolidating worldwide service delivery for a global automotive enterprise.</div>
+      <div class="cv-achievement">Cut operating costs 35% across global service operations while improving service quality and delivery efficiency.</div>
+      <div class="cv-achievement">Built a 75+ person regional IT service organization in three months, meeting demanding SLAs from day one.</div>
+      <div class="cv-achievement">Led Türkiye's first SAP HANA program in financial services as a sector reference implementation.</div>
+      <div class="cv-achievement">Doubled the managed services portfolio, driving significant recurring-revenue growth across strategic enterprise accounts.</div>
+      <div class="cv-achievement">Delivered €1M+ transformation programs consistently on time and on budget, with stable, reliable go-lives.</div>
+      <div class="cv-achievement">Built an AI-powered project management system, applying generative AI and automation to planning, delivery, and reporting.</div>
+    </div>
+  </div>
+
+  <div class="cv-section cv-bg">
+    <div class="cv-section-title">Core Competencies</div>
+    <div class="cv-competencies">
+      <span class="cv-competency">Enterprise & Org Transformation</span>
+      <span class="cv-competency">Managed Services & P&L</span>
+      <span class="cv-competency">Operating Model Design</span>
+      <span class="cv-competency">Global Multi-Region Delivery</span>
+      <span class="cv-competency">Governance, Risk & Quality</span>
+      <span class="cv-competency">Enterprise Architecture (TOGAF)</span>
+      <span class="cv-competency">Bid & Proposal Management</span>
+      <span class="cv-competency">SLA / KPI & Performance Mgmt</span>
+      <span class="cv-competency">AI Adoption & Change Mgmt</span>
+      <span class="cv-competency">AI- & Data-Driven Transformation</span>
+      <span class="cv-competency">SAP / S/4HANA Transformation</span>
+      <span class="cv-competency">Program & Portfolio Leadership</span>
+    </div>
+  </div>
+
+  <div class="cv-section">
+    <div class="cv-section-title">Professional Experience</div>
+
+    <div class="cv-job">
+      <div class="cv-job-header">
+        <div class="cv-job-company">NTT DATA Business Solutions</div>
+        <div class="cv-job-dates">Nov 2014 – Present</div>
+      </div>
+      <div style="font-size:13px;color:#888;margin-bottom:12px;font-style:italic;">Progressive leadership across service strategy, global delivery, and program management for large enterprises in EMEA & META.</div>
+
+      <div class="cv-job-role">Director, Service Sales & Delivery Strategy</div>
+      <ul>
+        <li>Led complex, multi-million-euro RFP and RFI pursuits end to end — owning win strategy, proposal development, solution design, bid governance, risk and pricing, and final-stage negotiations for strategic IT and managed-services deals.</li>
+        <li>Shaped commercial strategy for multi-year engagements — pricing frameworks, financial modeling, cost-to-serve structures, and contract design — balancing margin protection with competitive positioning.</li>
+        <li>Set service strategy and target operating models for managed services and large-scale transformation programs, ensuring stability, reliability, and continuous improvement across major accounts.</li>
+        <li>Built governance structures — performance management, SLA/KPI models, financial controls, and quality assurance — across multi-region delivery teams.</li>
+      </ul>
+
+      <div class="cv-job-role">Director, Global Services Business Integration & Development</div>
+      <ul>
+        <li>Led service integration and expansion across EMEA and META, scaling delivery centers and mentoring senior leaders to drive innovation, accountability, and execution.</li>
+        <li>Introduced new commercial architectures that strengthened market positioning and go-to-market readiness.</li>
+        <li>Directed strategic transitions from global to local delivery and from external providers to in-house Centers of Excellence, protecting operational excellence and compliance.</li>
+      </ul>
+
+      <div class="cv-job-role">Head of Project Management & Customer Engagement Office (PMO)</div>
+      <ul>
+        <li>Built and led the PMO, directing a team of project managers and standardizing delivery methodology across the portfolio.</li>
+        <li>Served as Program / Transformation Lead on priority programs while establishing governance frameworks and performance management across delivery teams.</li>
+      </ul>
+
+      <div class="cv-job-role">Regional IT Service Delivery Lead — B/S/H (Bosch-Siemens Home Appliances)</div>
+      <ul>
+        <li>Stood up a 75+ person IT service organization within three months, meeting stringent SLAs with high customer satisfaction.</li>
+        <li>Directed end-to-end service transition: onboarding, capability build, and people management.</li>
+        <li>Owned budget and P&L under a complex contractual framework, consistently meeting financial and operational targets.</li>
+        <li>Led an enterprise RPA automation program, applying intelligent automation to streamline operations and lift service efficiency.</li>
+      </ul>
+
+      <div class="cv-job-role">Senior Service Manager — Daimler Regional CoE Delivery Center</div>
+      <ul>
+        <li>Established a 100+ FTE SAP global support hub across multiple countries, centralizing operations for Daimler subsidiaries worldwide.</li>
+      </ul>
+    </div>
+
+    <div class="cv-job">
+      <div class="cv-job-header">
+        <div class="cv-job-company">SAP Türkiye</div>
+        <div class="cv-job-dates">May 2011 – Oct 2014</div>
+      </div>
+      <div class="cv-job-role">Senior Business Transformation Project Manager</div>
+      <ul>
+        <li>Led SAP S/4HANA transformation programs for industry-leading enterprises across manufacturing, automotive, financial services, and aviation.</li>
+        <li>Designed target operating models, governance frameworks, and transformation roadmaps in partnership with CIOs and senior IT leaders.</li>
+      </ul>
+      <div style="margin-top:12px;font-size:13px;font-weight:700;color:#333;">Selected Programs:</div>
+      <div class="cv-project" style="margin-top:8px;">
+        <div class="cv-project-name">Turkish Airlines (THY)</div>
+        <div class="cv-project-desc">Organizational Change Management Lead on the country's largest ERP transformation (~150 global team members).</div>
+      </div>
+      <div class="cv-project">
+        <div class="cv-project-name">Eureko Sigorta</div>
+        <div class="cv-project-desc">Program Manager for the financial-services sector's first SAP HANA reference implementation (22-person team).</div>
+      </div>
+      <div class="cv-project">
+        <div class="cv-project-name">Arçelik</div>
+        <div class="cv-project-desc">Program Manager for one of the most comprehensive Master Data Management implementations (12-person team).</div>
+      </div>
+      <div class="cv-project">
+        <div class="cv-project-name">Yapı Kredi Bankası</div>
+        <div class="cv-project-desc">Trusted advisory role for the first banking-sector SAP ERP reference implementation.</div>
       </div>
     </div>
-  </section>
 
-  <section class="values">
-    <h2>Our Core Values</h2>
-    <p class="sub">We practice what we preach</p>
-    <div class="values-grid">
-      <div class="value-item"><div class="value-icon"></div><h4>Integrity</h4><p>Every recommendation from an independent, unbiased perspective.</p></div>
-      <div class="value-item"><div class="value-icon"></div><h4>Accountability</h4><p>Commitments honored under all circumstances.</p></div>
-      <div class="value-item"><div class="value-icon"></div><h4>Knowledge</h4><p>Real-world expertise earned over 20+ years in the field.</p></div>
-      <div class="value-item"><div class="value-icon"></div><h4>Commitment</h4><p>By your side at every step until the outcome is achieved.</p></div>
-      <div class="value-item"><div class="value-icon"></div><h4>Passion</h4><p>A deep belief in the human dimension of transformation.</p></div>
+    <div class="cv-job">
+      <div class="cv-job-header">
+        <div class="cv-job-company">Metro Group Information AG — Düsseldorf, Germany</div>
+        <div class="cv-job-dates">Oct 2005 – Apr 2011</div>
+      </div>
+      <div class="cv-job-role">Senior Financials Consultant & Developer</div>
+      <ul>
+        <li>Progressed from ABAP development and SAP Basis into finance consulting, delivering international SAP roll-outs across Egypt, Kazakhstan, Slovakia, Türkiye, Belgium, Spain, Bulgaria, and Pakistan.</li>
+      </ul>
     </div>
-  </section>
+  </div>
 
-  <div class="partner-strip">
-    <h2>We Work With the Very Best</h2>
-    <div class="partner-logos">
-      <span class="partner-logo">NTT Data</span><span class="partner-logo">SAP</span><span class="partner-logo">Metro Group</span><span class="partner-logo">Daimler</span><span class="partner-logo">THY</span><span class="partner-logo">Arçelik</span>
+  <div class="cv-section cv-bg">
+    <div class="cv-section-title">Education</div>
+    <div class="cv-edu-item">
+      <div class="left">
+        <h4>B.Sc., Business Information Systems (Wirtschaftsinformatik)</h4>
+        <p>Marmara University — German-medium program</p>
+      </div>
+      <div class="right">2000 – 2005</div>
+    </div>
+  </div>
+
+  <div class="cv-section">
+    <div class="cv-section-title">Certifications</div>
+    <div class="cv-certs">
+      <div class="cv-cert">SAP Business Transformation — SAP Academy</div>
+      <div class="cv-cert">Project & Business Transformation Mgmt — SAP</div>
+      <div class="cv-cert">TOGAF® Enterprise Architecture</div>
+      <div class="cv-cert">SAP Enterprise Architecture</div>
+      <div class="cv-cert">Agile Project Mgmt (SAP Activate) — Certified</div>
+      <div class="cv-cert">Risk Management Professional (PMI-RMP)® — PMI</div>
+      <div class="cv-cert">ITIL® Foundation</div>
+      <div class="cv-cert">Financial Reporting & Analysis — Deloitte</div>
+    </div>
+  </div>
+
+  <div class="cv-section cv-bg">
+    <div class="cv-section-title">Languages</div>
+    <div class="cv-langs">
+      <div class="cv-lang"><div class="lang-name">Turkish</div><div class="lang-level">Native</div></div>
+      <div class="cv-lang"><div class="lang-name">English</div><div class="lang-level">Advanced (written & spoken)</div></div>
+      <div class="cv-lang"><div class="lang-name">German</div><div class="lang-level">Advanced (written & reading; conversational)</div></div>
     </div>
   </div>
 
@@ -475,49 +643,90 @@
 </div>
 
 <!-- ══════════════════════════════════════════ -->
-<!-- PAGE: SERVICES (LEARNING MODULES) -->
+<!-- PAGE: SERVICES -->
 <!-- ══════════════════════════════════════════ -->
 <div id="services" class="site-page">
-  <section class="resources-page-hero">
-    <h1>Online Learning Modules</h1>
-    <p>Learn about our flagship advisory services</p>
-  </section>
-  <section class="academics" style="padding-top:60px;">
-    <div class="academics-inner">
-      <div class="services-grid">
-        <div class="service-card">
-          <h3>SAP & S/4HANA Transformation</h3>
-          <p>SAP S/4HANA transitions are complex transformation programs requiring the simultaneous management of strategy, architecture, data, organization, and governance. I have accompanied institutions such as THY, Eureko Sigorta, Arçelik, and Yapı Kredi on this journey.</p>
-          <p style="color:#aaa;font-size:12px;margin-top:8px;"><strong style="color:#ccc;">Scope:</strong> Transition strategy, RFP/vendor selection, program management, target operating model, go-live & stabilization.</p>
-        </div>
-        <div class="service-card">
-          <h3>Managed Services & Operating Model Design</h3>
-          <p>Over 10+ years at NTT Data, I designed, built, and managed ITIL-based service models for large enterprises across EMEA and META. For B/S/H, I stood up a 75+ person service organization in three months.</p>
-          <p style="color:#aaa;font-size:12px;margin-top:8px;"><strong style="color:#ccc;">Scope:</strong> Service model design, SLA/KPI framework, organizational structure, governance, transition planning.</p>
-        </div>
-        <div class="service-card">
-          <h3>Vendor Selection & RFP Management</h3>
-          <p>Technology vendors come with strong sales teams. As an independent evaluator, I address the technical, commercial, and organizational dimensions together to help you make the best decision.</p>
-          <p style="color:#aaa;font-size:12px;margin-top:8px;"><strong style="color:#ccc;">Scope:</strong> RFP/RFI design, evaluation criteria & weighting, independent assessment report, negotiation support.</p>
-        </div>
-        <div class="service-card">
-          <h3>Program & Portfolio Management</h3>
-          <p>At NTT Data, I established and led the PMO. At SAP Turkey, I managed the country's largest and most complex transformation programs — including THY, Arçelik, and Eureko Sigorta — on time and on budget.</p>
-          <p style="color:#aaa;font-size:12px;margin-top:8px;"><strong style="color:#ccc;">Scope:</strong> PMO setup, portfolio management, governance frameworks, program leadership.</p>
-        </div>
-        <div class="service-card">
-          <h3>AI Adoption & Change Management</h3>
-          <p>I bring both deep enterprise transformation experience and the perspective of a practitioner who actively builds and uses AI-enabled tools. I have built AI-powered project management systems in my own practice.</p>
-          <p style="color:#aaa;font-size:12px;margin-top:8px;"><strong style="color:#ccc;">Scope:</strong> AI readiness assessment, strategy, change management, workforce readiness, governance.</p>
-        </div>
-        <div class="service-card">
-          <h3>Enterprise Architecture & Governance</h3>
-          <p>As a TOGAF-certified enterprise architect, I bring a holistic approach to aligning technology architecture with business strategy. I designed governance frameworks adopted enterprise-wide at NTT Data and SAP Turkey.</p>
-          <p style="color:#aaa;font-size:12px;margin-top:8px;"><strong style="color:#ccc;">Scope:</strong> Architecture assessment, target architecture design, governance model, risk management.</p>
-        </div>
+
+  <style>
+    .svc-hero{background:var(--dark);padding:100px 60px 60px;text-align:center;position:relative;overflow:hidden}
+    .svc-hero::before{content:'';position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1400&q=80') center/cover no-repeat;opacity:.15}
+    .svc-hero h1{position:relative;z-index:1;color:#fff;font-size:38px;font-weight:700;margin-bottom:10px}
+    .svc-hero p{position:relative;z-index:1;color:var(--purple);font-size:14px}
+    .svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;background:var(--white)}
+    .svc-item{border:1px solid #eee;overflow:hidden;cursor:default;transition:box-shadow 0.2s}
+    .svc-item:hover{box-shadow:0 4px 24px rgba(107,70,193,0.12);z-index:1}
+    .svc-img{width:100%;height:200px;object-fit:cover;display:block}
+    .svc-body{padding:24px 24px 28px}
+    .svc-body h3{font-size:17px;font-weight:700;color:var(--black);margin-bottom:10px;line-height:1.3}
+    .svc-body p{font-size:13px;color:#555;line-height:1.7;margin-bottom:12px}
+    .svc-scope{font-size:12px;color:#888;border-top:1px solid #f0eeea;padding-top:12px;margin-top:4px}
+    .svc-scope strong{color:var(--purple)}
+    @media(max-width:900px){.svc-grid{grid-template-columns:1fr}.svc-hero{padding:80px 24px 40px}}
+  </style>
+
+  <div class="svc-hero">
+    <h1>My Services</h1>
+    <p>Independent advisory across every phase of transformation</p>
+  </div>
+
+  <div class="svc-grid">
+
+    <div class="svc-item">
+      <div class="svc-img" style="background:url('https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=600&q=80') center/cover;"></div>
+      <div class="svc-body">
+        <h3>SAP & S/4HANA Transformation</h3>
+        <p>SAP S/4HANA transitions are complex transformation programs requiring the simultaneous management of strategy, architecture, data, organization, and governance. I have accompanied institutions such as THY, Eureko Sigorta, Arçelik, and Yapı Kredi on this journey — on your side, for your interests.</p>
+        <div class="svc-scope"><strong>Scope:</strong> Transition strategy, RFP/vendor selection, program management, target operating model, go-live & stabilization.</div>
       </div>
     </div>
-  </section>
+
+    <div class="svc-item">
+      <div class="svc-img" style="background:url('https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=600&q=80') center/cover;"></div>
+      <div class="svc-body">
+        <h3>Managed Services & Operating Model Design</h3>
+        <p>Over 10+ years at NTT Data, I designed, built, and managed ITIL-based service models for large enterprises across EMEA and META. For B/S/H, I stood up a 75+ person service organization in three months, meeting SLAs from day one.</p>
+        <div class="svc-scope"><strong>Scope:</strong> Service model design, SLA/KPI framework, organizational structure, governance, transition planning, continuous improvement.</div>
+      </div>
+    </div>
+
+    <div class="svc-item">
+      <div class="svc-img" style="background:url('https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=600&q=80') center/cover;"></div>
+      <div class="svc-body">
+        <h3>Vendor Selection & RFP Management</h3>
+        <p>Technology vendors come with strong sales teams. As an independent evaluator, I address the technical, commercial, and organizational dimensions together. I now bring my NTT Data RFP experience to the client side — working for your interests.</p>
+        <div class="svc-scope"><strong>Scope:</strong> RFP/RFI design, evaluation criteria & weighting, independent assessment report, negotiation support.</div>
+      </div>
+    </div>
+
+    <div class="svc-item">
+      <div class="svc-img" style="background:url('https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?w=600&q=80') center/cover;"></div>
+      <div class="svc-body">
+        <h3>Program & Portfolio Management</h3>
+        <p>At NTT Data I established and led the PMO. At SAP Turkey I managed the country's largest transformation programs — THY, Arçelik, Eureko Sigorta. I consistently delivered €1M+ programs on time and on budget.</p>
+        <div class="svc-scope"><strong>Scope:</strong> PMO setup, portfolio management & prioritization, governance frameworks, program/transformation leadership, health monitoring & reporting.</div>
+      </div>
+    </div>
+
+    <div class="svc-item">
+      <div class="svc-img" style="background:url('https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=600&q=80') center/cover;"></div>
+      <div class="svc-body">
+        <h3>AI Adoption & Change Management</h3>
+        <p>I bring both deep enterprise transformation experience and the perspective of a practitioner who actively builds and uses AI-enabled tools. I have built AI-powered project management systems in my own practice. Buying technology is not enough — preparing the organization is what matters.</p>
+        <div class="svc-scope"><strong>Scope:</strong> AI readiness assessment, strategy & roadmap, change management, workforce readiness, AI governance framework, pilot program management.</div>
+      </div>
+    </div>
+
+    <div class="svc-item">
+      <div class="svc-img" style="background:url('https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&q=80') center/cover;"></div>
+      <div class="svc-body">
+        <h3>Enterprise Architecture & Governance</h3>
+        <p>As a TOGAF-certified enterprise architect, I bring a holistic approach to aligning technology architecture with business strategy. At NTT Data and SAP Turkey I designed governance and delivery frameworks adopted enterprise-wide.</p>
+        <div class="svc-scope"><strong>Scope:</strong> Architecture assessment, target architecture design, governance model design, risk & quality management frameworks, architecture principles.</div>
+      </div>
+    </div>
+
+  </div>
+
   <footer>
     <div class="footer-inner">
       <div class="footer-brand"><div class="name">Vildan<span>.</span></div><div class="sub">Independent Advisor</div><h3>Join The Success!</h3><input type="email" placeholder="Enter your email"><button>Enroll Now</button></div>
@@ -655,8 +864,18 @@
       </div>
       <button class="btn-purple-sm" style="padding:11px 32px;font-size:13px;">Submit</button>
       <div class="chat-box">
-        <h3>Chat with our support team</h3>
+        <h3>Direct Contact</h3>
         <p>I would be glad to connect at any stage of your transformation journey — including when you are not yet sure where to start.</p>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:16px;">
+          <a href="mailto:vildan@vildankara.com" class="btn-outline-sm" style="display:flex;align-items:center;gap:6px;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2,4 12,13 22,4"/></svg>
+            vildan@vildankara.com
+          </a>
+          <a href="https://wa.me/905532965575?text=Hello%20Vildan%2C%20I%20would%20like%20to%20learn%20more%20about%20your%20advisory%20services." target="_blank" class="btn-outline-sm" style="display:flex;align-items:center;gap:6px;border-color:#25D366;color:#25D366;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            WhatsApp
+          </a>
+        </div>
         <a href="mailto:vildan@vildankara.com" class="btn-outline-sm">Message us</a>
       </div>
     </div>
