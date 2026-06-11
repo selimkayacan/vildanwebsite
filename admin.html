@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Paneli — Vildan Kara Kayacan</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root { --purple: #6b46c1; --purple-light: #805ad5; --dark: #1a1a1a; --white: #fff; --gray: #f4f4f4; --border: #e0e0e0; --text: #222; --success: #38a169; --danger: #e53e3e; }
+  body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; background: var(--gray); color: var(--text); font-size: 14px; }
+  #login-screen { display: none; }
+
+  /* HEADER */
+  header { background: var(--dark); padding: 0 32px; height: 56px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
+  header .brand { color: #fff; font-size: 15px; font-weight: 700; }
+  header .brand span { color: var(--purple); }
+  header .actions { display: flex; gap: 10px; }
+  .btn { padding: 8px 18px; font-size: 13px; font-weight: 600; border: none; cursor: pointer; border-radius: 3px; transition: all 0.2s; }
+  .btn-purple { background: var(--purple); color: #fff; }
+  .btn-purple:hover { background: var(--purple-light); }
+  .btn-outline { background: transparent; border: 1.5px solid #555; color: #ccc; }
+  .btn-outline:hover { border-color: #fff; color: #fff; }
+  .btn-danger { background: var(--danger); color: #fff; }
+  .btn-success { background: var(--success); color: #fff; }
+  .btn-sm { padding: 5px 12px; font-size: 12px; }
+
+  /* LAYOUT */
+  .layout { display: grid; grid-template-columns: 220px 1fr; min-height: calc(100vh - 56px); }
+
+  /* SIDEBAR */
+  aside { background: #fff; border-right: 1px solid var(--border); padding: 20px 0; }
+  .nav-group { margin-bottom: 8px; }
+  .nav-group-title { font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: #999; padding: 8px 20px 4px; }
+  .nav-item { display: block; padding: 9px 20px; font-size: 13px; color: #444; cursor: pointer; border-left: 3px solid transparent; transition: all 0.15s; text-decoration: none; }
+  .nav-item:hover { background: #f8f6ff; color: var(--purple); }
+  .nav-item.active { background: #f3eeff; color: var(--purple); border-left-color: var(--purple); font-weight: 600; }
+
+  /* MAIN */
+  main { padding: 32px; overflow-y: auto; }
+  .page-section { display: none; }
+  .page-section.active { display: block; }
+  .section-title { font-size: 20px; font-weight: 700; margin-bottom: 6px; }
+  .section-desc { color: #777; font-size: 13px; margin-bottom: 24px; }
+
+  /* CARDS */
+  .card { background: #fff; border: 1px solid var(--border); border-radius: 6px; padding: 24px; margin-bottom: 20px; }
+  .card-title { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #888; margin-bottom: 16px; padding-bottom: 10px; border-bottom: 1px solid var(--border); }
+
+  /* FORM */
+  .field { margin-bottom: 16px; }
+  .field label { display: block; font-size: 12px; font-weight: 600; color: #555; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .field input, .field textarea, .field select { width: 100%; border: 1px solid var(--border); border-radius: 3px; padding: 9px 12px; font-size: 13px; color: var(--text); outline: none; transition: border 0.2s; font-family: inherit; background: #fff; }
+  .field input:focus, .field textarea:focus { border-color: var(--purple); box-shadow: 0 0 0 2px rgba(107,70,193,0.1); }
+  .field textarea { min-height: 90px; resize: vertical; }
+  .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .field-hint { font-size: 11px; color: #aaa; margin-top: 4px; }
+
+  /* STATS GRID */
+  .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 24px; }
+  .stat-box { background: #fff; border: 1px solid var(--border); border-radius: 6px; padding: 16px; text-align: center; }
+  .stat-box .num { font-size: 28px; font-weight: 800; color: var(--purple); }
+  .stat-box .lbl { font-size: 11px; color: #999; margin-top: 4px; }
+
+  /* TOAST */
+  #toast { position: fixed; bottom: 24px; right: 24px; background: var(--success); color: #fff; padding: 12px 24px; border-radius: 4px; font-size: 13px; font-weight: 600; opacity: 0; transition: opacity 0.3s; z-index: 999; pointer-events: none; }
+  #toast.show { opacity: 1; }
+
+  /* SERVICE ITEMS */
+  .service-item { border: 1px solid var(--border); border-radius: 4px; padding: 16px; margin-bottom: 12px; background: #fafafa; }
+  .service-item-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+  .service-item-header span { font-weight: 700; font-size: 13px; }
+
+  /* BLOG ITEMS */
+  .blog-item { border: 1px solid var(--border); border-radius: 4px; padding: 16px; margin-bottom: 12px; background: #fafafa; }
+  .blog-item-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+
+  /* PREVIEW LINK */
+  .preview-bar { background: #f3eeff; border: 1px solid #d6c8f7; border-radius: 4px; padding: 10px 16px; margin-bottom: 24px; display: flex; align-items: center; justify-content: space-between; }
+  .preview-bar span { font-size: 13px; color: var(--purple); }
+  .preview-bar a { font-size: 12px; font-weight: 600; color: var(--purple); text-decoration: none; border: 1px solid var(--purple); padding: 4px 12px; border-radius: 2px; }
+
+  /* DIVIDER */
+  hr { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
+</style>
+</head>
+<body>
+
+
+<header>
+  <div class="brand">Vildan<span>.</span> &nbsp;Admin Paneli</div>
+  <div class="actions">
+    <button class="btn btn-outline btn-sm" onclick="resetAll()">Sıfırla</button>
+    <button class="btn btn-purple btn-sm" onclick="saveAll()">Kaydet &amp; GitHub'a Gönder</button>
+  </div>
+</header>
+
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <aside>
+    <div class="nav-group">
+      <div class="nav-group-title">Genel</div>
+      <div class="nav-item active" onclick="showSection('dashboard', this)">Özet</div>
+      <div class="nav-item" onclick="showSection('brand', this)">Marka & Menü</div>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">Sayfalar</div>
+      <div class="nav-item" onclick="showSection('hero', this)">Ana Sayfa — Hero</div>
+      <div class="nav-item" onclick="showSection('why', this)">Neden Bağımsız</div>
+      <div class="nav-item" onclick="showSection('stats', this)">İstatistikler</div>
+      <div class="nav-item" onclick="showSection('values', this)">Temel İlkeler</div>
+      <div class="nav-item" onclick="showSection('about', this)">Hakkımda</div>
+      <div class="nav-item" onclick="showSection('services', this)">Hizmetlerim</div>
+      <div class="nav-item" onclick="showSection('blog', this)">Yazılarım</div>
+      <div class="nav-item" onclick="showSection('quote', this)">Alıntı</div>
+      <div class="nav-item" onclick="showSection('contact', this)">İletişim</div>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">Diğer</div>
+      <div class="nav-item" onclick="showSection('footer', this)">Footer</div>
+      <div class="nav-item" onclick="showSection('github', this)">⚙ GitHub Ayarları</div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main>
+
+    <!-- DASHBOARD -->
+    <div id="s-dashboard" class="page-section active">
+      <div class="section-title">Hoş Geldiniz</div>
+      <div class="section-desc">Sol menüden düzenlemek istediğiniz bölümü seçin. <strong>Kaydet &amp; GitHub'a Gönder</strong> butonuna basın — site otomatik güncellenir.</div>
+
+      <div class="preview-bar">
+        <span>Site önizlemesi</span>
+        <div>
+          <a href="index.html" target="_blank">TR Siteyi Aç</a>
+          &nbsp;
+          <a href="index_en.html" target="_blank">EN Siteyi Aç</a>
+        </div>
+      </div>
+
+      <div id="github-status-box" class="card" style="margin-bottom:20px;display:none;">
+        <div id="github-status-msg" style="font-size:13px;padding:4px 0;"></div>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-box"><div class="num" id="d-services">6</div><div class="lbl">Hizmet</div></div>
+        <div class="stat-box"><div class="num" id="d-blog">6</div><div class="lbl">Blog Yazısı</div></div>
+        <div class="stat-box"><div class="num" id="d-values">5</div><div class="lbl">Temel İlke</div></div>
+        <div class="stat-box"><div class="num" id="d-stats">4</div><div class="lbl">İstatistik</div></div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Hızlı Kılavuz</div>
+        <ul style="padding-left:18px;line-height:2.2;font-size:13px;color:#555;">
+          <li>Sol menüden düzenlemek istediğin bölümü seç</li>
+          <li>Metinleri değiştir</li>
+          <li>Sağ üstte <strong>Kaydet &amp; Uygula</strong> butonuna bas</li>
+          <li>Siteyi yeni sekmede aç (yukarıdaki linkler) ve <strong>F5</strong>'e bas</li>
+          <li>Değişiklikler anında görünür</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- MARKA -->
+    <div id="s-brand" class="page-section">
+      <div class="section-title">Marka & Menü</div>
+      <div class="section-desc">Logo metni ve navigasyon menüsü isimleri</div>
+      <div class="card">
+        <div class="card-title">Logo</div>
+        <div class="field-row">
+          <div class="field"><label>İsim (büyük metin)</label><input id="b-name" type="text"></div>
+          <div class="field"><label>Alt başlık</label><input id="b-sub" type="text"></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Menü Linkleri (TR)</div>
+        <div class="field-row">
+          <div class="field"><label>Hakkımda</label><input id="m-about" type="text"></div>
+          <div class="field"><label>Hizmetlerim</label><input id="m-services" type="text"></div>
+        </div>
+        <div class="field-row">
+          <div class="field"><label>Yazılarım</label><input id="m-resources" type="text"></div>
+          <div class="field"><label>Deneyimim</label><input id="m-team" type="text"></div>
+        </div>
+        <div class="field-row">
+          <div class="field"><label>İletişim</label><input id="m-contact" type="text"></div>
+          <div class="field"><label>CTA Butonu</label><input id="m-cta" type="text"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- HERO -->
+    <div id="s-hero" class="page-section">
+      <div class="section-title">Ana Sayfa — Hero Bölümü</div>
+      <div class="section-desc">Sayfanın ilk görünen büyük bölümü</div>
+      <div class="card">
+        <div class="card-title">Başlık & Metin</div>
+        <div class="field"><label>Büyük Başlık</label><textarea id="h-title"></textarea></div>
+        <div class="field"><label>Alt Metin</label><textarea id="h-sub"></textarea></div>
+        <div class="field"><label>Buton Metni</label><input id="h-btn" type="text"></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Bülten Kutusu (Sağ)</div>
+        <div class="field"><label>Başlık</label><input id="h-nl-title" type="text"></div>
+        <div class="field"><label>Buton Metni</label><input id="h-nl-btn" type="text"></div>
+        <div class="field"><label>Checkbox Metni</label><input id="h-nl-check" type="text"></div>
+      </div>
+    </div>
+
+    <!-- WHY -->
+    <div id="s-why" class="page-section">
+      <div class="section-title">Neden Bağımsız Danışmanlık</div>
+      <div class="section-desc">4 kutulu bölüm</div>
+      <div class="card">
+        <div class="card-title">Bölüm Başlığı</div>
+        <div class="field"><label>Başlık</label><input id="w-title" type="text"></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Kutu 1</div>
+        <div class="field-row">
+          <div class="field"><label>Başlık</label><input id="w1-title" type="text"></div>
+          <div class="field"><label>Metin</label><input id="w1-text" type="text"></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Kutu 2</div>
+        <div class="field-row">
+          <div class="field"><label>Başlık</label><input id="w2-title" type="text"></div>
+          <div class="field"><label>Metin</label><input id="w2-text" type="text"></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Kutu 3</div>
+        <div class="field-row">
+          <div class="field"><label>Başlık</label><input id="w3-title" type="text"></div>
+          <div class="field"><label>Metin</label><input id="w3-text" type="text"></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Kutu 4</div>
+        <div class="field-row">
+          <div class="field"><label>Başlık</label><input id="w4-title" type="text"></div>
+          <div class="field"><label>Metin</label><input id="w4-text" type="text"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STATS -->
+    <div id="s-stats" class="page-section">
+      <div class="section-title">İstatistikler</div>
+      <div class="section-desc">Sayısal başarı göstergeleri</div>
+      <div class="card">
+        <div class="card-title">Bölüm Başlığı</div>
+        <div class="field"><label>Başlık</label><input id="st-title" type="text"></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Sağ Metin</div>
+        <div class="field"><label>Paragraf 1</label><textarea id="st-p1"></textarea></div>
+        <div class="field"><label>Paragraf 2</label><textarea id="st-p2"></textarea></div>
+      </div>
+      <div class="card">
+        <div class="card-title">İstatistik 1</div>
+        <div class="field-row">
+          <div class="field"><label>Sayı</label><input id="s1-num" type="text"></div>
+          <div class="field"><label>Etiket</label><input id="s1-lbl" type="text"></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">İstatistik 2</div>
+        <div class="field-row">
+          <div class="field"><label>Sayı</label><input id="s2-num" type="text"></div>
+          <div class="field"><label>Etiket</label><input id="s2-lbl" type="text"></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">İstatistik 3</div>
+        <div class="field-row">
+          <div class="field"><label>Sayı</label><input id="s3-num" type="text"></div>
+          <div class="field"><label>Etiket</label><input id="s3-lbl" type="text"></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">İstatistik 4</div>
+        <div class="field-row">
+          <div class="field"><label>Sayı</label><input id="s4-num" type="text"></div>
+          <div class="field"><label>Etiket</label><input id="s4-lbl" type="text"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- VALUES -->
+    <div id="s-values" class="page-section">
+      <div class="section-title">Temel İlkeler</div>
+      <div class="section-desc">5 değer kutusu</div>
+      <div class="card">
+        <div class="card-title">Bölüm</div>
+        <div class="field-row">
+          <div class="field"><label>Başlık</label><input id="v-title" type="text"></div>
+          <div class="field"><label>Alt Başlık</label><input id="v-sub" type="text"></div>
+        </div>
+      </div>
+      <div id="values-list"></div>
+    </div>
+
+    <!-- ABOUT -->
+    <div id="s-about" class="page-section">
+      <div class="section-title">Hakkımda</div>
+      <div class="section-desc">About sayfası ve ana sayfa hakkımda bölümü</div>
+      <div class="card">
+        <div class="card-title">Koyu Bölüm (Ana Sayfa)</div>
+        <div class="field"><label>Başlık</label><input id="a-title" type="text"></div>
+        <div class="field"><label>Alt Başlık</label><input id="a-sub" type="text"></div>
+        <div class="field"><label>Paragraf 1</label><textarea id="a-p1"></textarea></div>
+        <div class="field"><label>Paragraf 2</label><textarea id="a-p2"></textarea></div>
+        <div class="field"><label>Buton Metni</label><input id="a-btn" type="text"></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Hakkımda Sayfası — Manifesto</div>
+        <div class="field"><label>Sol Başlık</label><input id="ap-title" type="text"></div>
+        <div class="field"><label>Sol Alt Başlık</label><input id="ap-sub" type="text"></div>
+        <div class="field"><label>Sağ Paragraf 1</label><textarea id="ap-p1"></textarea></div>
+        <div class="field"><label>Sağ Paragraf 2</label><textarea id="ap-p2"></textarea></div>
+      </div>
+    </div>
+
+    <!-- SERVICES -->
+    <div id="s-services" class="page-section">
+      <div class="section-title">Hizmetlerim</div>
+      <div class="section-desc">6 hizmet kartı</div>
+      <div class="card">
+        <div class="card-title">Bölüm Başlığı</div>
+        <div class="field-row">
+          <div class="field"><label>Başlık</label><input id="sv-title" type="text"></div>
+          <div class="field"><label>Alt Başlık</label><input id="sv-sub" type="text"></div>
+        </div>
+      </div>
+      <div id="services-list"></div>
+    </div>
+
+    <!-- BLOG -->
+    <div id="s-blog" class="page-section">
+      <div class="section-title">Yazılarım</div>
+      <div class="section-desc">Blog yazıları — ana sayfa ve yazılarım sayfası</div>
+      <div class="card">
+        <div class="card-title">Bölüm Başlığı</div>
+        <div class="field-row">
+          <div class="field"><label>Başlık</label><input id="bl-title" type="text"></div>
+          <div class="field"><label>Alt Başlık</label><input id="bl-sub" type="text"></div>
+        </div>
+      </div>
+      <div id="blog-list"></div>
+    </div>
+
+    <!-- QUOTE -->
+    <div id="s-quote" class="page-section">
+      <div class="section-title">Alıntı Bölümü</div>
+      <div class="section-desc">Koyu arka planlı büyük alıntı</div>
+      <div class="card">
+        <div class="field"><label>Alıntı Metni</label><textarea id="q-text" style="min-height:120px;"></textarea></div>
+        <div class="field"><label>Kaynak (isim)</label><input id="q-source" type="text"></div>
+      </div>
+    </div>
+
+    <!-- CONTACT -->
+    <div id="s-contact" class="page-section">
+      <div class="section-title">İletişim Sayfası</div>
+      <div class="section-desc">İletişim formu bölümü</div>
+      <div class="card">
+        <div class="field"><label>Başlık</label><input id="c-title" type="text"></div>
+        <div class="field"><label>Tagline (mor metin)</label><input id="c-tag" type="text"></div>
+        <div class="field"><label>Gönder Butonu</label><input id="c-btn" type="text"></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Chat Kutusu</div>
+        <div class="field"><label>Başlık</label><input id="c-chat-title" type="text"></div>
+        <div class="field"><label>Metin</label><textarea id="c-chat-text"></textarea></div>
+        <div class="field"><label>Buton</label><input id="c-chat-btn" type="text"></div>
+      </div>
+      <div class="card">
+        <div class="card-title">SSS</div>
+        <div class="field"><label>Soru 1</label><input id="faq1-q" type="text"></div>
+        <div class="field"><label>Cevap 1</label><textarea id="faq1-a"></textarea></div>
+        <div class="field"><label>Soru 2</label><input id="faq2-q" type="text"></div>
+        <div class="field"><label>Cevap 2</label><textarea id="faq2-a"></textarea></div>
+        <div class="field"><label>Soru 3</label><input id="faq3-q" type="text"></div>
+        <div class="field"><label>Cevap 3</label><textarea id="faq3-a"></textarea></div>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div id="s-footer" class="page-section">
+      <div class="section-title">Footer</div>
+      <div class="section-desc">Tüm sayfalarda görünen alt bilgi</div>
+      <div class="card">
+        <div class="field"><label>Büyük Başlık (Katıl)</label><input id="f-title" type="text"></div>
+        <div class="field"><label>E-posta Butonu</label><input id="f-btn" type="text"></div>
+      </div>
+      <div class="card">
+        <div class="card-title">İletişim Bilgileri</div>
+        <div class="field-row">
+          <div class="field"><label>Telefon</label><input id="f-phone" type="text"></div>
+          <div class="field"><label>E-posta</label><input id="f-email" type="text"></div>
+        </div>
+        <div class="field-row">
+          <div class="field"><label>Konum</label><input id="f-location" type="text"></div>
+          <div class="field"><label>LinkedIn URL</label><input id="f-linkedin" type="text"></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="field"><label>Copyright</label><input id="f-copy" type="text"></div>
+      </div>
+    </div>
+
+    <!-- GITHUB AYARLARI -->
+    <div id="s-github" class="page-section">
+      <div class="section-title">GitHub Ayarları</div>
+      <div class="section-desc">Bu bilgiler sadece tarayıcınızda saklanır, hiçbir yere gönderilmez.</div>
+      <div class="card">
+        <div class="card-title">Bağlantı Bilgileri</div>
+        <div class="field">
+          <label>GitHub Kullanıcı Adı</label>
+          <input id="gh-user" type="text" placeholder="selimkayacan">
+        </div>
+        <div class="field">
+          <label>Repo Adı</label>
+          <input id="gh-repo" type="text" placeholder="vildanwebsite">
+        </div>
+        <div class="field">
+          <label>Branch</label>
+          <input id="gh-branch" type="text" placeholder="main">
+        </div>
+        <div class="field">
+          <label>Personal Access Token</label>
+          <input id="gh-token" type="password" placeholder="ghp_xxxxxxxxxxxx">
+          <div class="field-hint">GitHub → Settings → Developer settings → Personal access tokens → Fine-grained token → repo içerik izni verin</div>
+        </div>
+        <button class="btn btn-purple" onclick="saveGithubSettings()">Ayarları Kaydet</button>
+      </div>
+      <div class="card">
+        <div class="card-title">Token Nasıl Alınır?</div>
+        <ol style="padding-left:18px;line-height:2.4;font-size:13px;color:#555;">
+          <li>GitHub.com'a giriş yap</li>
+          <li>Sağ üst profil → <strong>Settings</strong></li>
+          <li>Sol altta <strong>Developer settings</strong></li>
+          <li><strong>Personal access tokens → Fine-grained tokens → Generate new token</strong></li>
+          <li>Repository access: <strong>vildanwebsite</strong> reposunu seç</li>
+          <li>Permissions → Repository permissions → <strong>Contents: Read and write</strong></li>
+          <li>Token'ı kopyala, buraya yapıştır</li>
+        </ol>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<div id="toast">Kaydedildi!</div>
+
+<script>
+// ── DEFAULT CONTENT ──────────────────────────────
+const DEFAULTS = {
+  brand: { name: 'Vildan', sub: 'Bağımsız Danışman' },
+  menu: { about: 'Hakkımda', services: 'Hizmetlerim', resources: 'Yazılarım', team: 'Deneyimim', contact: 'İletişim', cta: 'İletişime Geç' },
+  hero: { title: 'Dönüşüm Stratejisini Gerçek İş Değerine Dönüştürün', sub: '20+ yıllık EMEA ve META deneyimiyle SAP dönüşümü, yönetilen hizmetler ve yapay zeka benimseme alanlarında bağımsız danışmanlık.', btn: 'İletişime Geç', nl_title: 'Bültenime Abone Olun', nl_btn: 'Abone Ol', nl_check: 'Evet, bültene abone olmak istiyorum.' },
+  why: { title: 'Neden Bağımsız Danışmanlık?', w1: { title: 'Kendi Hızınızda İlerleme', text: 'Kurumunuzun ihtiyacına ve takvime göre şekillenen esnek danışmanlık modeli.' }, w2: { title: 'Sektör Uzmanı Perspektifi', text: '20+ yıl NTT Data, SAP ve Metro Group deneyimiyle gerçek dünya bilgisi.' }, w3: { title: 'Bağımsız ve Tarafsız', text: 'Hiçbir ürün ya da satıcı gündeminden bağımsız, yalnızca sizin çıkarlarınız için.' }, w4: { title: 'Kanıtlanmış Sonuçlar', text: '€1M+ programlar, %35 maliyet düşürümü, 100+ kişilik global ekip kurulumları.' } },
+  stats: { title: 'Misyonum: Dönüşümü Gerçek Kılmak', p1: 'SAP dönüşümünden yapay zeka benimsemesine, tedarikçi seçiminden yönetilen hizmet modellerine kadar — stratejiyi uygulamaya bağlayan köprüyü kuruyoruz.', p2: 'CIO\'lara ve üst düzey IT liderlerine bağımsız, tarafsız ve sonuç odaklı bir perspektif sunuyorum.', s1: { num: '20+', lbl: 'Yıl Uluslararası Deneyim' }, s2: { num: '3', lbl: 'Global Kurum' }, s3: { num: '%35', lbl: 'Operasyonel Maliyet Düşürümü' }, s4: { num: '100+', lbl: 'Kişilik Global Ekip Kurulumu' } },
+  values: { title: 'Temel İlkelerim', sub: 'Söylediğimi uygularım', items: [ { title: 'Dürüstlük', text: 'Her tavsiye, bağımsız ve tarafsız bir perspektiften verilir.' }, { title: 'Sorumluluk', text: 'Verilen taahhütler her koşulda yerine getirilir.' }, { title: 'Bilgi', text: '20+ yıllık sahada kazanılmış, gerçek dünya bilgisi.' }, { title: 'Kararlılık', text: 'Sonuca ulaşana kadar sürecin her adımında yanınızda.' }, { title: 'Tutku', text: 'Dönüşümün insan boyutuna duyulan derin ilgi ve inanç.' } ] },
+  about: { title: 'Vildan Bağımsız Danışmanlık Okulu Hakkında', sub: 'Dönüşümü içeriden bilen bir danışman', p1: 'Uzun yıllar boyunca dünyanın en büyük kurumlarının en kritik dönüşüm programlarını içeriden yönettim. Daimler için Türkiye\'nin ilk SAP global destek merkezini kurdum.', p2: 'Bugün bağımsız bir danışman olarak çalışıyorum — çünkü en değerli rehberlik, herhangi bir ürünün, teknoloji firmasının ya da satış gündeminin dışında durabilmekten geçiyor.', btn: 'Daha Fazla', ap_title: 'Vildan Kara Kayacan Hakkında', ap_sub: 'Dönüşümü içeriden bilen bağımsız danışman', ap_p1: 'Uzun yıllar boyunca dünyanın en büyük kurumlarının en kritik dönüşüm programlarını içeriden yönettim. Daimler için Türkiye\'nin ilk SAP global destek merkezini kurdum — 100\'den fazla kişilik çok uluslu bir ekiple.', ap_p2: 'Türk Hava Yolları\'nın ülkenin en büyük ERP dönüşümünde organizasyonel değişimi liderlik ettim. NTT Data\'da EMEA ve META genelinde servis stratejisi ve teslimat modellerini şekillendirdim.' },
+  services: { title: 'Hizmetlerim', sub: 'Dönüşüm sürecinin her aşamasında bağımsız danışmanlık', items: [ { title: 'SAP & S/4HANA Dönüşümü', text: 'S/4HANA geçiş stratejisi, program yönetimi, hedef işletme modeli tasarımı ve go-live sonrası stabilizasyon.' }, { title: 'Yönetilen Hizmetler & İşletme Modeli', text: 'ITIL tabanlı servis modeli tasarımı, SLA/KPI çerçeveleri, çok bölgeli teslimat organizasyonu.' }, { title: 'Tedarikçi Seçimi & RFP Yönetimi', text: 'Bağımsız tedarikçi değerlendirmesi, RFP/RFI süreci tasarımı, teknik ve ticari değerlendirme.' }, { title: 'Program & Portföy Yönetimi', text: 'PMO kurulumu, proje portföyü yönetimi, yönetişim çerçeveleri ve dönüşüm programı liderliği.' }, { title: 'Yapay Zeka Benimseme & Değişim Yönetimi', text: 'Kurumsal AI stratejisi, organizasyonel değişim yönetimi, çalışan hazırlığı ve AI yönetişimi.' }, { title: 'Kurumsal Mimari & Yönetişim', text: 'TOGAF tabanlı kurumsal mimari değerlendirmesi, yönetişim model tasarımı, risk ve kalite yönetimi.' } ] },
+  blog: { title: 'Yazılarım', sub: 'Dönüşüm ve teknoloji dünyasından düşünceler', items: [ { title: 'SAP S/4HANA Geçişlerinde Neden Başarısız Olunur?', meta: 'Makale · 5 dk okuma', text: 'Teknoloji değil, insan ve süreç boyutundaki eksiklikler başarısızlığın temel nedeni...', body: '' }, { title: 'Yapay Zeka Kurumları Nasıl Dönüştürüyor?', meta: 'Makale · 4 dk okuma', text: 'AI sadece teknoloji değil, organizasyonel bir dönüşüm meselesi...', body: '' }, { title: 'Sektörün Önünde Kalmak', meta: 'Makale · 3 dk okuma', text: 'Değişim hızlanıyor. CIO\'ların bugün hazırlanması gereken üç kritik alan...', body: '' }, { title: 'Tedarikçi Seçiminde 10 Kritik Hata', meta: 'Makale · 6 dk okuma', text: 'Yanlış tedarikçi seçimi bir dönüşüm programının en büyük riski olabilir...', body: '' }, { title: 'Yönetilen Hizmetlerde Değer Yaratma', meta: 'Makale · 4 dk okuma', text: 'ITIL sadece bir çerçeve değil, operasyonel mükemmelliğin temelidir...', body: '' }, { title: 'İş Trendleri mi, Kalıcı Değişim mi?', meta: 'Makale · 5 dk okuma', text: 'Her yeni teknolojiyi trend olarak mı görmeli? İşte ayırt etmenin yolu...', body: '' } ] },
+  quote: { text: '"Başarı kalıcı değildir, başarısızlık ölümcül değildir: önemli olan devam etme cesaredidir."', source: '— Winston Churchill' },
+  contact: { title: 'Bize Ulaşın', tag: 'Sorularınız veya danışmanlık için buradayız', btn: 'Gönder', chat_title: 'Doğrudan İletişim', chat_text: 'Dönüşüm sürecinizin herhangi bir aşamasında — nereden başlayacağınızdan emin olmadığınızda da dahil — bağlanmaktan memnuniyet duyarım.', chat_btn: 'Mesaj Gönderin', faq1_q: 'Bağımsız danışmanlık ne anlama gelir?', faq1_a: 'Herhangi bir teknoloji firması, ürün ya da satıcı ile bağı olmaksızın, yalnızca müşterinin çıkarları doğrultusunda verilen tarafsız danışmanlık hizmetidir.', faq2_q: 'Hangi sektörlerde deneyiminiz var?', faq2_a: 'Üretim, otomotiv, finans, havacılık, perakende, lojistik ve enerji sektörlerinde EMEA ve META genelinde 20+ yıllık deneyim.', faq3_q: 'Uzaktan danışmanlık sunuyor musunuz?', faq3_a: 'Evet. Hem uzaktan hem de yüz yüze çalışma modellerine uyum sağlanabilir. Konum: İstanbul, Türkiye.' },
+  footer: { title: 'Başarıya Katılın!', btn: 'Abone Ol', phone: '+90 553 296 55 75', email: 'vildan@vildankara.com', location: 'İstanbul, Türkiye', linkedin: '#', copy: '© 2026 Vildan Kara Kayacan. Tüm hakları saklıdır.' }
+};
+
+// ── GITHUB AYARLARI ──────────────────────────────
+function loadGithubSettings() {
+  return {
+    user:   localStorage.getItem('gh_user')   || 'selimkayacan',
+    repo:   localStorage.getItem('gh_repo')   || 'vildanwebsite',
+    branch: localStorage.getItem('gh_branch') || 'main',
+    token:  localStorage.getItem('gh_token')  || ''
+  };
+}
+function saveGithubSettings() {
+  localStorage.setItem('gh_user',   getVal('gh-user'));
+  localStorage.setItem('gh_repo',   getVal('gh-repo'));
+  localStorage.setItem('gh_branch', getVal('gh-branch'));
+  localStorage.setItem('gh_token',  getVal('gh-token'));
+  showToast('GitHub ayarları kaydedildi!');
+}
+function loadGithubForm() {
+  const g = loadGithubSettings();
+  setVal('gh-user', g.user);
+  setVal('gh-repo', g.repo);
+  setVal('gh-branch', g.branch);
+  setVal('gh-token', g.token);
+}
+
+// ── GITHUB API: content.json'u commit et ─────────
+async function pushToGithub(content) {
+  const g = loadGithubSettings();
+  if (!g.token) {
+    showStatus('error', '⚠ GitHub token girilmemiş. Sol menüden "⚙ GitHub Ayarları" bölümüne girin.');
+    return false;
+  }
+
+  const filePath = 'content.json';
+  const apiBase  = `https://api.github.com/repos/${g.user}/${g.repo}/contents/${filePath}`;
+  const headers  = { 'Authorization': `token ${g.token}`, 'Content-Type': 'application/json' };
+
+  showStatus('info', '⏳ GitHub\'a gönderiliyor...');
+
+  // Mevcut dosyanın SHA'sını al (güncelleme için gerekli)
+  let sha = null;
+  try {
+    const res = await fetch(`${apiBase}?ref=${g.branch}`, { headers });
+    if (res.ok) { const data = await res.json(); sha = data.sha; }
+  } catch(e) {}
+
+  // Dosyayı yaz
+  const body = {
+    message: 'Admin panelinden içerik güncellendi',
+    content: btoa(unescape(encodeURIComponent(content))),
+    branch:  g.branch
+  };
+  if (sha) body.sha = sha;
+
+  try {
+    const res = await fetch(apiBase, { method: 'PUT', headers, body: JSON.stringify(body) });
+    if (res.ok) {
+      showStatus('success', '✓ GitHub\'a gönderildi! Site 1-2 dakika içinde güncellenir.');
+      return true;
+    } else {
+      const err = await res.json();
+      showStatus('error', `✗ Hata: ${err.message || res.status}`);
+      return false;
+    }
+  } catch(e) {
+    showStatus('error', `✗ Bağlantı hatası: ${e.message}`);
+    return false;
+  }
+}
+
+function showStatus(type, msg) {
+  const box = document.getElementById('github-status-box');
+  const el  = document.getElementById('github-status-msg');
+  if (!box || !el) return;
+  box.style.display = 'block';
+  el.style.color = type === 'success' ? '#38a169' : type === 'error' ? '#e53e3e' : '#6b46c1';
+  el.textContent = msg;
+  // Dashboard'a geç
+  showSection('dashboard', document.querySelector('.nav-item'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.querySelector('.nav-item').classList.add('active');
+}
+
+// ── STATE ────────────────────────────────────────
+function loadState() {
+  try { return JSON.parse(localStorage.getItem('vildan_content')) || JSON.parse(JSON.stringify(DEFAULTS)); }
+  catch { return JSON.parse(JSON.stringify(DEFAULTS)); }
+}
+function saveState(state) {
+  localStorage.setItem('vildan_content', JSON.stringify(state));
+}
+
+// ── NAVIGATION ───────────────────────────────────
+function showSection(id, el) {
+  document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('s-' + id).classList.add('active');
+  if (el) el.classList.add('active');
+}
+
+// ── RENDER DYNAMIC LISTS ─────────────────────────
+function renderValues(items) {
+  const c = document.getElementById('values-list');
+  c.innerHTML = items.map((v, i) => `
+    <div class="service-item">
+      <div class="service-item-header"><span>İlke ${i+1}</span></div>
+      <div class="field-row">
+        <div class="field"><label>Başlık</label><input id="val${i}-title" type="text" value="${esc(v.title)}"></div>
+        <div class="field"><label>Metin</label><input id="val${i}-text" type="text" value="${esc(v.text)}"></div>
+      </div>
+    </div>`).join('');
+}
+
+function renderServices(items) {
+  const c = document.getElementById('services-list');
+  c.innerHTML = items.map((s, i) => `
+    <div class="service-item">
+      <div class="service-item-header"><span>Hizmet ${i+1}</span></div>
+      <div class="field"><label>Başlık</label><input id="svc${i}-title" type="text" value="${esc(s.title)}"></div>
+      <div class="field"><label>Metin</label><textarea id="svc${i}-text">${esc(s.text)}</textarea></div>
+    </div>`).join('');
+}
+
+function renderBlog(items) {
+  const c = document.getElementById('blog-list');
+  c.innerHTML = items.map((b, i) => `
+    <div class="blog-item">
+      <div class="blog-item-header"><span>Yazı ${i+1}</span></div>
+      <div class="field"><label>Başlık</label><input id="blg${i}-title" type="text" value="${esc(b.title)}"></div>
+      <div class="field-row">
+        <div class="field"><label>Meta (tarih/süre)</label><input id="blg${i}-meta" type="text" value="${esc(b.meta)}"></div>
+      </div>
+      <div class="field"><label>Özet Metin (kart önizleme)</label><textarea id="blg${i}-text" style="min-height:60px;">${esc(b.text)}</textarea></div>
+      <div class="field"><label>Uzun Metin (yazıya tıklayınca açılan tam içerik — HTML girebilirsiniz)</label><textarea id="blg${i}-body" style="min-height:180px;font-family:monospace;font-size:12px;">${esc(b.body||'')}</textarea></div>
+    </div>`).join('');
+}
+
+function esc(s) { return (s||'').replace(/"/g,'&quot;').replace(/</g,'&lt;'); }
+
+// ── LOAD INTO FORM ───────────────────────────────
+function loadForm() {
+  const d = loadState();
+
+  setVal('b-name', d.brand.name);
+  setVal('b-sub', d.brand.sub);
+  setVal('m-about', d.menu.about);
+  setVal('m-services', d.menu.services);
+  setVal('m-resources', d.menu.resources);
+  setVal('m-team', d.menu.team);
+  setVal('m-contact', d.menu.contact);
+  setVal('m-cta', d.menu.cta);
+
+  setVal('h-title', d.hero.title);
+  setVal('h-sub', d.hero.sub);
+  setVal('h-btn', d.hero.btn);
+  setVal('h-nl-title', d.hero.nl_title);
+  setVal('h-nl-btn', d.hero.nl_btn);
+  setVal('h-nl-check', d.hero.nl_check);
+
+  setVal('w-title', d.why.title);
+  setVal('w1-title', d.why.w1.title); setVal('w1-text', d.why.w1.text);
+  setVal('w2-title', d.why.w2.title); setVal('w2-text', d.why.w2.text);
+  setVal('w3-title', d.why.w3.title); setVal('w3-text', d.why.w3.text);
+  setVal('w4-title', d.why.w4.title); setVal('w4-text', d.why.w4.text);
+
+  setVal('st-title', d.stats.title);
+  setVal('st-p1', d.stats.p1); setVal('st-p2', d.stats.p2);
+  setVal('s1-num', d.stats.s1.num); setVal('s1-lbl', d.stats.s1.lbl);
+  setVal('s2-num', d.stats.s2.num); setVal('s2-lbl', d.stats.s2.lbl);
+  setVal('s3-num', d.stats.s3.num); setVal('s3-lbl', d.stats.s3.lbl);
+  setVal('s4-num', d.stats.s4.num); setVal('s4-lbl', d.stats.s4.lbl);
+
+  setVal('v-title', d.values.title); setVal('v-sub', d.values.sub);
+  renderValues(d.values.items);
+
+  setVal('a-title', d.about.title); setVal('a-sub', d.about.sub);
+  setVal('a-p1', d.about.p1); setVal('a-p2', d.about.p2); setVal('a-btn', d.about.btn);
+  setVal('ap-title', d.about.ap_title); setVal('ap-sub', d.about.ap_sub);
+  setVal('ap-p1', d.about.ap_p1); setVal('ap-p2', d.about.ap_p2);
+
+  setVal('sv-title', d.services.title); setVal('sv-sub', d.services.sub);
+  renderServices(d.services.items);
+
+  setVal('bl-title', d.blog.title); setVal('bl-sub', d.blog.sub);
+  renderBlog(d.blog.items);
+
+  setVal('q-text', d.quote.text); setVal('q-source', d.quote.source);
+
+  setVal('c-title', d.contact.title); setVal('c-tag', d.contact.tag); setVal('c-btn', d.contact.btn);
+  setVal('c-chat-title', d.contact.chat_title); setVal('c-chat-text', d.contact.chat_text); setVal('c-chat-btn', d.contact.chat_btn);
+  setVal('faq1-q', d.contact.faq1_q); setVal('faq1-a', d.contact.faq1_a);
+  setVal('faq2-q', d.contact.faq2_q); setVal('faq2-a', d.contact.faq2_a);
+  setVal('faq3-q', d.contact.faq3_q); setVal('faq3-a', d.contact.faq3_a);
+
+  setVal('f-title', d.footer.title); setVal('f-btn', d.footer.btn);
+  setVal('f-phone', d.footer.phone); setVal('f-email', d.footer.email);
+  setVal('f-location', d.footer.location); setVal('f-linkedin', d.footer.linkedin);
+  setVal('f-copy', d.footer.copy);
+}
+
+function setVal(id, val) {
+  const el = document.getElementById(id);
+  if (el) el.value = val || '';
+}
+function getVal(id) {
+  const el = document.getElementById(id);
+  return el ? el.value : '';
+}
+
+// ── SAVE ALL ─────────────────────────────────────
+async function saveAll() {
+  const d = loadState();
+
+  d.brand.name = getVal('b-name'); d.brand.sub = getVal('b-sub');
+  d.menu.about = getVal('m-about'); d.menu.services = getVal('m-services');
+  d.menu.resources = getVal('m-resources'); d.menu.team = getVal('m-team');
+  d.menu.contact = getVal('m-contact'); d.menu.cta = getVal('m-cta');
+
+  d.hero.title = getVal('h-title'); d.hero.sub = getVal('h-sub'); d.hero.btn = getVal('h-btn');
+  d.hero.nl_title = getVal('h-nl-title'); d.hero.nl_btn = getVal('h-nl-btn'); d.hero.nl_check = getVal('h-nl-check');
+
+  d.why.title = getVal('w-title');
+  d.why.w1 = { title: getVal('w1-title'), text: getVal('w1-text') };
+  d.why.w2 = { title: getVal('w2-title'), text: getVal('w2-text') };
+  d.why.w3 = { title: getVal('w3-title'), text: getVal('w3-text') };
+  d.why.w4 = { title: getVal('w4-title'), text: getVal('w4-text') };
+
+  d.stats.title = getVal('st-title'); d.stats.p1 = getVal('st-p1'); d.stats.p2 = getVal('st-p2');
+  d.stats.s1 = { num: getVal('s1-num'), lbl: getVal('s1-lbl') };
+  d.stats.s2 = { num: getVal('s2-num'), lbl: getVal('s2-lbl') };
+  d.stats.s3 = { num: getVal('s3-num'), lbl: getVal('s3-lbl') };
+  d.stats.s4 = { num: getVal('s4-num'), lbl: getVal('s4-lbl') };
+
+  d.values.title = getVal('v-title'); d.values.sub = getVal('v-sub');
+  d.values.items = d.values.items.map((_, i) => ({ title: getVal(`val${i}-title`), text: getVal(`val${i}-text`) }));
+
+  d.about.title = getVal('a-title'); d.about.sub = getVal('a-sub');
+  d.about.p1 = getVal('a-p1'); d.about.p2 = getVal('a-p2'); d.about.btn = getVal('a-btn');
+  d.about.ap_title = getVal('ap-title'); d.about.ap_sub = getVal('ap-sub');
+  d.about.ap_p1 = getVal('ap-p1'); d.about.ap_p2 = getVal('ap-p2');
+
+  d.services.title = getVal('sv-title'); d.services.sub = getVal('sv-sub');
+  d.services.items = d.services.items.map((_, i) => ({ title: getVal(`svc${i}-title`), text: getVal(`svc${i}-text`) }));
+
+  d.blog.title = getVal('bl-title'); d.blog.sub = getVal('bl-sub');
+  d.blog.items = d.blog.items.map((_, i) => ({ title: getVal(`blg${i}-title`), meta: getVal(`blg${i}-meta`), text: getVal(`blg${i}-text`), body: getVal(`blg${i}-body`) }));
+
+  d.quote.text = getVal('q-text'); d.quote.source = getVal('q-source');
+
+  d.contact.title = getVal('c-title'); d.contact.tag = getVal('c-tag'); d.contact.btn = getVal('c-btn');
+  d.contact.chat_title = getVal('c-chat-title'); d.contact.chat_text = getVal('c-chat-text'); d.contact.chat_btn = getVal('c-chat-btn');
+  d.contact.faq1_q = getVal('faq1-q'); d.contact.faq1_a = getVal('faq1-a');
+  d.contact.faq2_q = getVal('faq2-q'); d.contact.faq2_a = getVal('faq2-a');
+  d.contact.faq3_q = getVal('faq3-q'); d.contact.faq3_a = getVal('faq3-a');
+
+  d.footer.title = getVal('f-title'); d.footer.btn = getVal('f-btn');
+  d.footer.phone = getVal('f-phone'); d.footer.email = getVal('f-email');
+  d.footer.location = getVal('f-location'); d.footer.linkedin = getVal('f-linkedin');
+  d.footer.copy = getVal('f-copy');
+
+  saveState(d);
+  await pushToGithub(JSON.stringify(d, null, 2));
+}
+
+function resetAll() {
+  if (!confirm('Tüm değişiklikleri sıfırlamak istediğinize emin misiniz?')) return;
+  localStorage.removeItem('vildan_content');
+  loadForm();
+  showToast('Varsayılan içeriklere döndü.');
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+// ── INIT ─────────────────────────────────────────
+loadForm();
+loadGithubForm();
+</script>
+  brand: { name: 'Vildan', sub: 'Bağımsız Danışman' },
+  menu: { about: 'Hakkımda', services: 'Hizmetlerim', resources: 'Yazılarım', team: 'Deneyimim', contact: 'İletişim', cta: 'İletişime Geç' },
+  hero: { title: 'Dönüşüm Stratejisini Gerçek İş Değerine Dönüştürün', sub: '20+ yıllık EMEA ve META deneyimiyle SAP dönüşümü, yönetilen hizmetler ve yapay zeka benimseme alanlarında bağımsız danışmanlık.', btn: 'İletişime Geç', nl_title: 'Bültenime Abone Olun', nl_btn: 'Abone Ol', nl_check: 'Evet, bültene abone olmak istiyorum.' },
+  why: { title: 'Neden Bağımsız Danışmanlık?', w1: { title: 'Kendi Hızınızda İlerleme', text: 'Kurumunuzun ihtiyacına ve takvime göre şekillenen esnek danışmanlık modeli.' }, w2: { title: 'Sektör Uzmanı Perspektifi', text: '20+ yıl NTT Data, SAP ve Metro Group deneyimiyle gerçek dünya bilgisi.' }, w3: { title: 'Bağımsız ve Tarafsız', text: 'Hiçbir ürün ya da satıcı gündeminden bağımsız, yalnızca sizin çıkarlarınız için.' }, w4: { title: 'Kanıtlanmış Sonuçlar', text: '€1M+ programlar, %35 maliyet düşürümü, 100+ kişilik global ekip kurulumları.' } },
+  stats: { title: 'Misyonum: Dönüşümü Gerçek Kılmak', p1: 'SAP dönüşümünden yapay zeka benimsemesine, tedarikçi seçiminden yönetilen hizmet modellerine kadar — stratejiyi uygulamaya bağlayan köprüyü kuruyoruz.', p2: 'CIO\'lara ve üst düzey IT liderlerine bağımsız, tarafsız ve sonuç odaklı bir perspektif sunuyorum.', s1: { num: '20+', lbl: 'Yıl Uluslararası Deneyim' }, s2: { num: '3', lbl: 'Global Kurum' }, s3: { num: '%35', lbl: 'Operasyonel Maliyet Düşürümü' }, s4: { num: '100+', lbl: 'Kişilik Global Ekip Kurulumu' } },
+  values: { title: 'Temel İlkelerim', sub: 'Söylediğimi uygularım', items: [ { title: 'Dürüstlük', text: 'Her tavsiye, bağımsız ve tarafsız bir perspektiften verilir.' }, { title: 'Sorumluluk', text: 'Verilen taahhütler her koşulda yerine getirilir.' }, { title: 'Bilgi', text: '20+ yıllık sahada kazanılmış, gerçek dünya bilgisi.' }, { title: 'Kararlılık', text: 'Sonuca ulaşana kadar sürecin her adımında yanınızda.' }, { title: 'Tutku', text: 'Dönüşümün insan boyutuna duyulan derin ilgi ve inanç.' } ] },
+  about: { title: 'Vildan Bağımsız Danışmanlık Okulu Hakkında', sub: 'Dönüşümü içeriden bilen bir danışman', p1: 'Uzun yıllar boyunca dünyanın en büyük kurumlarının en kritik dönüşüm programlarını içeriden yönettim. Daimler için Türkiye\'nin ilk SAP global destek merkezini kurdum.', p2: 'Bugün bağımsız bir danışman olarak çalışıyorum — çünkü en değerli rehberlik, herhangi bir ürünün, teknoloji firmasının ya da satış gündeminin dışında durabilmekten geçiyor.', btn: 'Daha Fazla', ap_title: 'Vildan Kara Kayacan Hakkında', ap_sub: 'Dönüşümü içeriden bilen bağımsız danışman', ap_p1: 'Uzun yıllar boyunca dünyanın en büyük kurumlarının en kritik dönüşüm programlarını içeriden yönettim. Daimler için Türkiye\'nin ilk SAP global destek merkezini kurdum — 100\'den fazla kişilik çok uluslu bir ekiple.', ap_p2: 'Türk Hava Yolları\'nın ülkenin en büyük ERP dönüşümünde organizasyonel değişimi liderlik ettim. NTT Data\'da EMEA ve META genelinde servis stratejisi ve teslimat modellerini şekillendirdim.' },
+  services: { title: 'Hizmetlerim', sub: 'Dönüşüm sürecinin her aşamasında bağımsız danışmanlık', items: [ { title: 'SAP & S/4HANA Dönüşümü', text: 'S/4HANA geçiş stratejisi, program yönetimi, hedef işletme modeli tasarımı ve go-live sonrası stabilizasyon.' }, { title: 'Yönetilen Hizmetler & İşletme Modeli', text: 'ITIL tabanlı servis modeli tasarımı, SLA/KPI çerçeveleri, çok bölgeli teslimat organizasyonu.' }, { title: 'Tedarikçi Seçimi & RFP Yönetimi', text: 'Bağımsız tedarikçi değerlendirmesi, RFP/RFI süreci tasarımı, teknik ve ticari değerlendirme.' }, { title: 'Program & Portföy Yönetimi', text: 'PMO kurulumu, proje portföyü yönetimi, yönetişim çerçeveleri ve dönüşüm programı liderliği.' }, { title: 'Yapay Zeka Benimseme & Değişim Yönetimi', text: 'Kurumsal AI stratejisi, organizasyonel değişim yönetimi, çalışan hazırlığı ve AI yönetişimi.' }, { title: 'Kurumsal Mimari & Yönetişim', text: 'TOGAF tabanlı kurumsal mimari değerlendirmesi, yönetişim model tasarımı, risk ve kalite yönetimi.' } ] },
+  blog: { title: 'Yazılarım', sub: 'Dönüşüm ve teknoloji dünyasından düşünceler', items: [ { title: 'SAP S/4HANA Geçişlerinde Neden Başarısız Olunur?', meta: 'Makale · 5 dk okuma', text: 'Teknoloji değil, insan ve süreç boyutundaki eksiklikler başarısızlığın temel nedeni...' }, { title: 'Yapay Zeka Kurumları Nasıl Dönüştürüyor?', meta: 'Makale · 4 dk okuma', text: 'AI sadece teknoloji değil, organizasyonel bir dönüşüm meselesi...' }, { title: 'Sektörün Önünde Kalmak', meta: 'Makale · 3 dk okuma', text: 'Değişim hızlanıyor. CIO\'ların bugün hazırlanması gereken üç kritik alan...' }, { title: 'Tedarikçi Seçiminde 10 Kritik Hata', meta: 'Makale · 6 dk okuma', text: 'Yanlış tedarikçi seçimi bir dönüşüm programının en büyük riski olabilir...' }, { title: 'Yönetilen Hizmetlerde Değer Yaratma', meta: 'Makale · 4 dk okuma', text: 'ITIL sadece bir çerçeve değil, operasyonel mükemmelliğin temelidir...' }, { title: 'İş Trendleri mi, Kalıcı Değişim mi?', meta: 'Makale · 5 dk okuma', text: 'Her yeni teknolojiyi trend olarak mı görmeli? İşte ayırt etmenin yolu...' } ] },
+  quote: { text: '"Başarı kalıcı değildir, başarısızlık ölümcül değildir: önemli olan devam etme cesaredidir."', source: '— Winston Churchill' },
+  contact: { title: 'Bize Ulaşın', tag: 'Sorularınız veya danışmanlık için buradayız', btn: 'Gönder', chat_title: 'Destek Ekibimizle Sohbet Edin', chat_text: 'Dönüşüm sürecinizin herhangi bir aşamasında — nereden başlayacağınızdan emin olmadığınızda da dahil — bağlanmaktan memnuniyet duyarım.', chat_btn: 'Mesaj Gönderin', faq1_q: 'Bağımsız danışmanlık ne anlama gelir?', faq1_a: 'Herhangi bir teknoloji firması, ürün ya da satıcı ile bağı olmaksızın, yalnızca müşterinin çıkarları doğrultusunda verilen tarafsız danışmanlık hizmetidir.', faq2_q: 'Hangi sektörlerde deneyiminiz var?', faq2_a: 'Üretim, otomotiv, finans, havacılık, perakende, lojistik ve enerji sektörlerinde EMEA ve META genelinde 20+ yıllık deneyim.', faq3_q: 'Uzaktan danışmanlık sunuyor musunuz?', faq3_a: 'Evet. Hem uzaktan hem de yüz yüze çalışma modellerine uyum sağlanabilir. Konum: İstanbul, Türkiye.' },
+  footer: { title: 'Başarıya Katılın!', btn: 'Abone Ol', phone: '+90 553 296 55 75', email: 'vildan@vildankara.com', location: 'İstanbul, Türkiye', linkedin: '#', copy: '© 2026 Vildan Kara Kayacan. Tüm hakları saklıdır.' }
+};
+
+// ── STATE ────────────────────────────────────────
+function loadState() {
+  try { return JSON.parse(localStorage.getItem('vildan_content')) || JSON.parse(JSON.stringify(DEFAULTS)); }
+  catch { return JSON.parse(JSON.stringify(DEFAULTS)); }
+}
+function saveState(state) {
+  localStorage.setItem('vildan_content', JSON.stringify(state));
+}
+
+// ── NAVIGATION ───────────────────────────────────
+function showSection(id, el) {
+  document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('s-' + id).classList.add('active');
+  el.classList.add('active');
+}
+
+// ── RENDER DYNAMIC LISTS ─────────────────────────
+function renderValues(items) {
+  const c = document.getElementById('values-list');
+  c.innerHTML = items.map((v, i) => `
+    <div class="service-item">
+      <div class="service-item-header"><span>İlke ${i+1}</span></div>
+      <div class="field-row">
+        <div class="field"><label>Başlık</label><input id="val${i}-title" type="text" value="${esc(v.title)}"></div>
+        <div class="field"><label>Metin</label><input id="val${i}-text" type="text" value="${esc(v.text)}"></div>
+      </div>
+    </div>`).join('');
+}
+
+function renderServices(items) {
+  const c = document.getElementById('services-list');
+  c.innerHTML = items.map((s, i) => `
+    <div class="service-item">
+      <div class="service-item-header"><span>Hizmet ${i+1}</span></div>
+      <div class="field"><label>Başlık</label><input id="svc${i}-title" type="text" value="${esc(s.title)}"></div>
+      <div class="field"><label>Metin</label><textarea id="svc${i}-text">${esc(s.text)}</textarea></div>
+    </div>`).join('');
+}
+
+function renderBlog(items) {
+  const c = document.getElementById('blog-list');
+  c.innerHTML = items.map((b, i) => `
+    <div class="blog-item">
+      <div class="blog-item-header"><span>Yazı ${i+1}</span></div>
+      <div class="field"><label>Başlık</label><input id="blg${i}-title" type="text" value="${esc(b.title)}"></div>
+      <div class="field-row">
+        <div class="field"><label>Meta (tarih/süre)</label><input id="blg${i}-meta" type="text" value="${esc(b.meta)}"></div>
+      </div>
+      <div class="field"><label>Özet Metin (kart önizleme)</label><textarea id="blg${i}-text" style="min-height:60px;">${esc(b.text)}</textarea></div>
+      <div class="field"><label>Uzun Metin (yazıya tıklayınca açılan tam içerik — HTML girebilirsiniz)</label><textarea id="blg${i}-body" style="min-height:180px;font-family:monospace;font-size:12px;">${esc(b.body||'')}</textarea></div>
+    </div>`).join('');
+}
+
+function esc(s) { return (s||'').replace(/"/g,'&quot;').replace(/</g,'&lt;'); }
+
+// ── LOAD INTO FORM ───────────────────────────────
+function loadForm() {
+  const d = loadState();
+
+  // Brand
+  setVal('b-name', d.brand.name);
+  setVal('b-sub', d.brand.sub);
+  setVal('m-about', d.menu.about);
+  setVal('m-services', d.menu.services);
+  setVal('m-resources', d.menu.resources);
+  setVal('m-team', d.menu.team);
+  setVal('m-contact', d.menu.contact);
+  setVal('m-cta', d.menu.cta);
+
+  // Hero
+  setVal('h-title', d.hero.title);
+  setVal('h-sub', d.hero.sub);
+  setVal('h-btn', d.hero.btn);
+  setVal('h-nl-title', d.hero.nl_title);
+  setVal('h-nl-btn', d.hero.nl_btn);
+  setVal('h-nl-check', d.hero.nl_check);
+
+  // Why
+  setVal('w-title', d.why.title);
+  setVal('w1-title', d.why.w1.title); setVal('w1-text', d.why.w1.text);
+  setVal('w2-title', d.why.w2.title); setVal('w2-text', d.why.w2.text);
+  setVal('w3-title', d.why.w3.title); setVal('w3-text', d.why.w3.text);
+  setVal('w4-title', d.why.w4.title); setVal('w4-text', d.why.w4.text);
+
+  // Stats
+  setVal('st-title', d.stats.title);
+  setVal('st-p1', d.stats.p1); setVal('st-p2', d.stats.p2);
+  setVal('s1-num', d.stats.s1.num); setVal('s1-lbl', d.stats.s1.lbl);
+  setVal('s2-num', d.stats.s2.num); setVal('s2-lbl', d.stats.s2.lbl);
+  setVal('s3-num', d.stats.s3.num); setVal('s3-lbl', d.stats.s3.lbl);
+  setVal('s4-num', d.stats.s4.num); setVal('s4-lbl', d.stats.s4.lbl);
+
+  // Values
+  setVal('v-title', d.values.title); setVal('v-sub', d.values.sub);
+  renderValues(d.values.items);
+
+  // About
+  setVal('a-title', d.about.title); setVal('a-sub', d.about.sub);
+  setVal('a-p1', d.about.p1); setVal('a-p2', d.about.p2); setVal('a-btn', d.about.btn);
+  setVal('ap-title', d.about.ap_title); setVal('ap-sub', d.about.ap_sub);
+  setVal('ap-p1', d.about.ap_p1); setVal('ap-p2', d.about.ap_p2);
+
+  // Services
+  setVal('sv-title', d.services.title); setVal('sv-sub', d.services.sub);
+  renderServices(d.services.items);
+
+  // Blog
+  setVal('bl-title', d.blog.title); setVal('bl-sub', d.blog.sub);
+  renderBlog(d.blog.items);
+
+  // Quote
+  setVal('q-text', d.quote.text); setVal('q-source', d.quote.source);
+
+  // Contact
+  setVal('c-title', d.contact.title); setVal('c-tag', d.contact.tag); setVal('c-btn', d.contact.btn);
+  setVal('c-chat-title', d.contact.chat_title); setVal('c-chat-text', d.contact.chat_text); setVal('c-chat-btn', d.contact.chat_btn);
+  setVal('faq1-q', d.contact.faq1_q); setVal('faq1-a', d.contact.faq1_a);
+  setVal('faq2-q', d.contact.faq2_q); setVal('faq2-a', d.contact.faq2_a);
+  setVal('faq3-q', d.contact.faq3_q); setVal('faq3-a', d.contact.faq3_a);
+
+  // Footer
+  setVal('f-title', d.footer.title); setVal('f-btn', d.footer.btn);
+  setVal('f-phone', d.footer.phone); setVal('f-email', d.footer.email);
+  setVal('f-location', d.footer.location); setVal('f-linkedin', d.footer.linkedin);
+  setVal('f-copy', d.footer.copy);
+}
+
+function setVal(id, val) {
+  const el = document.getElementById(id);
+  if (el) el.value = val || '';
+}
+function getVal(id) {
+  const el = document.getElementById(id);
+  return el ? el.value : '';
+}
+
+// ── SAVE ALL ─────────────────────────────────────
+function saveAll() {
+  const d = loadState();
+
+  d.brand.name = getVal('b-name'); d.brand.sub = getVal('b-sub');
+  d.menu.about = getVal('m-about'); d.menu.services = getVal('m-services');
+  d.menu.resources = getVal('m-resources'); d.menu.team = getVal('m-team');
+  d.menu.contact = getVal('m-contact'); d.menu.cta = getVal('m-cta');
+
+  d.hero.title = getVal('h-title'); d.hero.sub = getVal('h-sub'); d.hero.btn = getVal('h-btn');
+  d.hero.nl_title = getVal('h-nl-title'); d.hero.nl_btn = getVal('h-nl-btn'); d.hero.nl_check = getVal('h-nl-check');
+
+  d.why.title = getVal('w-title');
+  d.why.w1 = { title: getVal('w1-title'), text: getVal('w1-text') };
+  d.why.w2 = { title: getVal('w2-title'), text: getVal('w2-text') };
+  d.why.w3 = { title: getVal('w3-title'), text: getVal('w3-text') };
+  d.why.w4 = { title: getVal('w4-title'), text: getVal('w4-text') };
+
+  d.stats.title = getVal('st-title'); d.stats.p1 = getVal('st-p1'); d.stats.p2 = getVal('st-p2');
+  d.stats.s1 = { num: getVal('s1-num'), lbl: getVal('s1-lbl') };
+  d.stats.s2 = { num: getVal('s2-num'), lbl: getVal('s2-lbl') };
+  d.stats.s3 = { num: getVal('s3-num'), lbl: getVal('s3-lbl') };
+  d.stats.s4 = { num: getVal('s4-num'), lbl: getVal('s4-lbl') };
+
+  d.values.title = getVal('v-title'); d.values.sub = getVal('v-sub');
+  d.values.items = d.values.items.map((_, i) => ({ title: getVal(`val${i}-title`), text: getVal(`val${i}-text`) }));
+
+  d.about.title = getVal('a-title'); d.about.sub = getVal('a-sub');
+  d.about.p1 = getVal('a-p1'); d.about.p2 = getVal('a-p2'); d.about.btn = getVal('a-btn');
+  d.about.ap_title = getVal('ap-title'); d.about.ap_sub = getVal('ap-sub');
+  d.about.ap_p1 = getVal('ap-p1'); d.about.ap_p2 = getVal('ap-p2');
+
+  d.services.title = getVal('sv-title'); d.services.sub = getVal('sv-sub');
+  d.services.items = d.services.items.map((_, i) => ({ title: getVal(`svc${i}-title`), text: getVal(`svc${i}-text`) }));
+
+  d.blog.title = getVal('bl-title'); d.blog.sub = getVal('bl-sub');
+  d.blog.items = d.blog.items.map((_, i) => ({ title: getVal(`blg${i}-title`), meta: getVal(`blg${i}-meta`), text: getVal(`blg${i}-text`), body: getVal(`blg${i}-body`) }));
+
+  d.quote.text = getVal('q-text'); d.quote.source = getVal('q-source');
+
+  d.contact.title = getVal('c-title'); d.contact.tag = getVal('c-tag'); d.contact.btn = getVal('c-btn');
+  d.contact.chat_title = getVal('c-chat-title'); d.contact.chat_text = getVal('c-chat-text'); d.contact.chat_btn = getVal('c-chat-btn');
+  d.contact.faq1_q = getVal('faq1-q'); d.contact.faq1_a = getVal('faq1-a');
+  d.contact.faq2_q = getVal('faq2-q'); d.contact.faq2_a = getVal('faq2-a');
+  d.contact.faq3_q = getVal('faq3-q'); d.contact.faq3_a = getVal('faq3-a');
+
+  d.footer.title = getVal('f-title'); d.footer.btn = getVal('f-btn');
+  d.footer.phone = getVal('f-phone'); d.footer.email = getVal('f-email');
+  d.footer.location = getVal('f-location'); d.footer.linkedin = getVal('f-linkedin');
+  d.footer.copy = getVal('f-copy');
+
+  saveState(d);
+  showToast('Kaydedildi! Siteyi açıp F5\'e basın.');
+}
+
+function resetAll() {
+  if (!confirm('Tüm değişiklikleri sıfırlamak istediğinize emin misiniz?')) return;
+  localStorage.removeItem('vildan_content');
+  loadForm();
+  showToast('Varsayılan içeriklere döndü.');
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+// ── INIT ─────────────────────────────────────────
+loadForm();
+</script>
+</body>
+</html>
