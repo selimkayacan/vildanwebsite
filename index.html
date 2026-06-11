@@ -2,10 +2,1464 @@
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="refresh" content="0; url=index_tr.html">
-<title>Vildan Kara Kayacan</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vildan Kara Kayacan — Bağımsız Danışman</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --black: #0a0a0a;
+    --dark: #141414;
+    --dark2: #1e1e1e;
+    --dark3: #2a2a2a;
+    --white: #ffffff;
+    --off-white: #f0eeea;
+    --purple: #6b46c1;
+    --purple-light: #805ad5;
+    --gray: #888888;
+    --light-gray: #cccccc;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; background: var(--white); color: var(--black); font-size: 15px; line-height: 1.7; }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--black);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 40px; height: 60px;
+  }
+  .nav-brand { display: flex; flex-direction: column; }
+  .nav-brand .name { color: var(--white); font-size: 16px; font-weight: 700; letter-spacing: 0.5px; }
+  .nav-brand .name span { color: var(--purple); }
+  .nav-brand .sub { color: var(--gray); font-size: 11px; letter-spacing: 1px; }
+  .nav-links { display: flex; align-items: center; gap: 32px; list-style: none; }
+  .nav-links a { color: var(--light-gray); text-decoration: none; font-size: 13px; letter-spacing: 0.5px; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--white); }
+  .nav-cta { background: var(--purple); color: var(--white) !important; padding: 9px 22px; border-radius: 2px; font-size: 13px !important; font-weight: 600; transition: background 0.2s !important; }
+  .nav-cta:hover { background: var(--purple-light) !important; }
+
+  /* ── SECTIONS ── */
+  section { scroll-margin-top: 60px; }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh; background: var(--black);
+    display: grid; grid-template-columns: 1fr 1fr;
+    padding-top: 60px; position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: ''; position: absolute; inset: 0;
+    background: url('https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1600&q=80') center/cover no-repeat;
+    opacity: 0.25;
+  }
+  .hero-left { padding: 100px 40px 60px 60px; display: flex; flex-direction: column; justify-content: center; position: relative; z-index: 1; }
+  .hero-left h1 { color: var(--white); font-size: 52px; font-weight: 700; line-height: 1.15; margin-bottom: 20px; }
+  .hero-left p { color: #aaa; font-size: 16px; margin-bottom: 36px; max-width: 440px; }
+  .btn-primary { display: inline-block; background: transparent; color: var(--white); border: 1.5px solid var(--white); padding: 13px 30px; font-size: 14px; font-weight: 600; letter-spacing: 1px; cursor: pointer; transition: all 0.2s; text-decoration: none; }
+  .btn-primary:hover { background: var(--white); color: var(--black); }
+  .btn-purple { background: var(--purple); border-color: var(--purple); }
+  .btn-purple:hover { background: var(--purple-light); border-color: var(--purple-light); color: var(--white); }
+  .hero-right { display: flex; align-items: center; justify-content: center; padding: 100px 60px 60px 40px; position: relative; z-index: 1; }
+  .subscribe-box { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); padding: 36px; width: 100%; max-width: 360px; }
+  .subscribe-box h3 { color: var(--white); font-size: 18px; margin-bottom: 20px; }
+  .subscribe-box input { width: 100%; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.2); color: var(--white); padding: 10px 14px; font-size: 14px; margin-bottom: 12px; outline: none; }
+  .subscribe-box input::placeholder { color: #888; }
+  .subscribe-box button { background: var(--purple); color: var(--white); border: none; padding: 11px 24px; font-size: 14px; font-weight: 600; cursor: pointer; width: 100%; transition: background 0.2s; }
+  .subscribe-box button:hover { background: var(--purple-light); }
+  .subscribe-box label { color: #888; font-size: 12px; display: flex; align-items: center; gap: 8px; margin-top: 10px; cursor: pointer; }
+
+  /* ── WHY SECTION ── */
+  .why { display: grid; grid-template-columns: 1fr 1fr; min-height: 500px; }
+  .why-left { padding: 80px 60px; background: var(--white); display: flex; align-items: center; }
+  .why-left h2 { font-size: 42px; font-weight: 700; line-height: 1.2; color: var(--black); }
+  .why-right { padding: 60px 60px 60px 40px; background: var(--white); display: grid; grid-template-columns: 1fr 1fr; gap: 40px 40px; align-content: center; }
+  .why-item { }
+  .why-icon { width: 44px; height: 44px; border: 2px solid var(--purple); position: relative; margin-bottom: 16px; }
+  .why-icon::after { content: ''; position: absolute; width: 22px; height: 22px; background: var(--purple); bottom: -8px; right: -8px; }
+  .why-item h4 { font-size: 16px; font-weight: 700; margin-bottom: 8px; color: var(--black); }
+  .why-item p { font-size: 13px; color: #555; line-height: 1.6; }
+
+  /* ── ABOUT DARK ── */
+  .about-dark {
+    background: var(--dark); min-height: 400px;
+    display: grid; grid-template-columns: 1fr 1fr;
+    position: relative; overflow: hidden;
+  }
+  .about-dark::before {
+    content: ''; position: absolute; inset: 0;
+    background: url('https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=1400&q=80') center/cover no-repeat;
+    opacity: 0.18;
+  }
+  .about-left { padding: 80px 40px 80px 60px; position: relative; z-index: 1; }
+  .about-left h2 { color: var(--white); font-size: 38px; font-weight: 700; line-height: 1.2; margin-bottom: 12px; }
+  .about-left p { color: #aaa; font-size: 15px; margin-bottom: 32px; }
+  .about-right { padding: 80px 60px 80px 40px; position: relative; z-index: 1; display: flex; flex-direction: column; justify-content: center; }
+  .about-right p { color: #bbb; font-size: 14px; line-height: 1.8; margin-bottom: 16px; }
+  .btn-outline-white { display: inline-block; border: 1.5px solid var(--white); color: var(--white); padding: 11px 28px; font-size: 13px; font-weight: 600; letter-spacing: 1px; cursor: pointer; transition: all 0.2s; text-decoration: none; }
+  .btn-outline-white:hover { background: var(--white); color: var(--black); }
+
+  /* ── STATS ── */
+  .stats { background: var(--dark2); position: relative; overflow: hidden; }
+  .stats::before {
+    content: ''; position: absolute; inset: 0;
+    background: url('https://images.unsplash.com/photo-1518770660439-4636190af475?w=1400&q=80') center/cover no-repeat;
+    opacity: 0.12;
+  }
+  .stats-inner { position: relative; z-index: 1; display: grid; grid-template-columns: 1fr 1fr; min-height: 380px; }
+  .stats-left { padding: 70px 40px 70px 60px; }
+  .stats-left h2 { color: var(--white); font-size: 32px; font-weight: 700; margin-bottom: 40px; }
+  .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+  .stat-item .num { font-size: 40px; font-weight: 800; color: var(--purple); line-height: 1; margin-bottom: 6px; }
+  .stat-item .label { color: #aaa; font-size: 13px; line-height: 1.4; }
+  .stats-right { padding: 70px 60px 70px 40px; display: flex; flex-direction: column; justify-content: center; }
+  .stats-right p { color: #bbb; font-size: 14px; line-height: 1.8; margin-bottom: 14px; }
+
+  /* ── CORE VALUES ── */
+  .values { padding: 80px 60px; background: var(--white); }
+  .values h2 { font-size: 36px; font-weight: 700; text-align: center; margin-bottom: 8px; }
+  .values .sub { text-align: center; color: #888; margin-bottom: 50px; font-size: 14px; }
+  .values-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 32px; }
+  .value-item { text-align: center; }
+  .value-icon { width: 40px; height: 40px; border: 2px solid var(--black); position: relative; margin: 0 auto 16px; }
+  .value-icon::after { content: ''; position: absolute; width: 20px; height: 20px; background: var(--purple); opacity: 0.3; bottom: -6px; right: -6px; }
+  .value-item h4 { font-size: 14px; font-weight: 700; margin-bottom: 8px; }
+  .value-item p { font-size: 12px; color: #666; line-height: 1.6; }
+
+  /* ── ACADEMICS / SERVICES ── */
+  .academics {
+    padding: 80px 60px; background: var(--dark);
+    position: relative; overflow: hidden;
+  }
+  .academics::before {
+    content: ''; position: absolute; inset: 0;
+    background: url('https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1400&q=80') center/cover no-repeat;
+    opacity: 0.15;
+  }
+  .academics-inner { position: relative; z-index: 1; }
+  .academics h2 { color: var(--white); font-size: 38px; font-weight: 700; text-align: center; margin-bottom: 10px; }
+  .academics .sub { color: #aaa; text-align: center; font-size: 14px; margin-bottom: 50px; }
+  .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
+  .service-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); padding: 36px 28px; transition: background 0.2s; }
+  .service-card:hover { background: rgba(255,255,255,0.07); }
+  .service-card h3 { color: var(--white); font-size: 17px; font-weight: 600; margin-bottom: 12px; }
+  .service-card p { color: #888; font-size: 13px; line-height: 1.7; margin-bottom: 20px; }
+  .btn-purple-sm { display: inline-block; background: var(--purple); color: var(--white); padding: 8px 20px; font-size: 12px; font-weight: 600; letter-spacing: 0.5px; text-decoration: none; border: none; cursor: pointer; transition: background 0.2s; }
+  .btn-purple-sm:hover { background: var(--purple-light); }
+
+  /* ── RESOURCES / BLOG ── */
+  .resources { padding: 80px 60px; background: var(--white); }
+  .resources-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
+  .resources h2 { font-size: 32px; font-weight: 700; }
+  .resources .sub { color: #666; font-size: 14px; margin-bottom: 40px; max-width: 300px; }
+  .btn-outline { display: inline-block; border: 1.5px solid var(--black); color: var(--black); padding: 10px 24px; font-size: 13px; font-weight: 600; text-decoration: none; transition: all 0.2s; }
+  .btn-outline:hover { background: var(--black); color: var(--white); }
+  .blog-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+  .blog-card { cursor: pointer; }
+  .blog-img { width: 100%; height: 200px; object-fit: cover; display: block; background: #eee; }
+  .blog-meta { font-size: 12px; color: #999; margin: 14px 0 8px; }
+  .blog-card h3 { font-size: 16px; font-weight: 700; color: var(--purple); margin-bottom: 10px; line-height: 1.4; }
+  .blog-card p { font-size: 13px; color: #555; line-height: 1.6; }
+
+  /* ── QUOTE ── */
+  .quote {
+    padding: 100px 60px; text-align: center;
+    background: var(--dark3); position: relative; overflow: hidden;
+  }
+  .quote::before {
+    content: ''; position: absolute; inset: 0;
+    background: url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=1400&q=80') center/cover no-repeat;
+    opacity: 0.15;
+  }
+  .quote blockquote { position: relative; z-index: 1; color: var(--white); font-size: 32px; font-weight: 700; line-height: 1.5; max-width: 820px; margin: 0 auto 20px; }
+  .quote cite { position: relative; z-index: 1; color: #aaa; font-size: 14px; font-style: normal; }
+
+  /* ── PARTNERS ── */
+  .partners { padding: 60px; background: var(--white); text-align: center; border-top: 1px solid #eee; }
+  .partners h2 { font-size: 28px; font-weight: 700; margin-bottom: 40px; }
+  .partner-logos { display: flex; justify-content: center; align-items: center; gap: 60px; flex-wrap: wrap; }
+  .partner-logo { color: #bbb; font-size: 18px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; }
+
+  /* ── FOOTER ── */
+  footer { background: var(--black); padding: 60px; }
+  .footer-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+  .footer-brand .name { color: var(--white); font-size: 20px; font-weight: 700; margin-bottom: 4px; }
+  .footer-brand .name span { color: var(--purple); }
+  .footer-brand .sub { color: var(--gray); font-size: 12px; margin-bottom: 24px; }
+  .footer-brand h3 { color: var(--white); font-size: 28px; font-weight: 700; margin-bottom: 20px; }
+  .footer-brand input { background: transparent; border: none; border-bottom: 1px solid #444; color: var(--white); padding: 8px 0; font-size: 14px; width: 220px; outline: none; display: block; margin-bottom: 12px; }
+  .footer-brand input::placeholder { color: #555; }
+  .footer-brand button { border: 1.5px solid var(--white); background: transparent; color: var(--white); padding: 9px 24px; font-size: 13px; cursor: pointer; transition: all 0.2s; }
+  .footer-brand button:hover { background: var(--white); color: var(--black); }
+  .footer-info { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+  .footer-col h4 { color: var(--white); font-size: 14px; font-weight: 700; margin-bottom: 12px; }
+  .footer-col p, .footer-col a { color: var(--gray); font-size: 13px; line-height: 1.8; display: block; text-decoration: none; }
+  .footer-col a:hover { color: var(--white); }
+  .footer-bottom { border-top: 1px solid #222; margin-top: 40px; padding-top: 20px; color: #444; font-size: 12px; }
+
+  /* ── WHO WE ARE PAGE ── */
+  .page-hero {
+    min-height: 100vh; background: var(--dark); padding-top: 60px;
+    display: grid; grid-template-columns: 1fr 1fr; position: relative; overflow: hidden;
+  }
+  .page-hero::before {
+    content: ''; position: absolute; inset: 0;
+    background: url('https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=1200&q=80') right/cover no-repeat;
+    opacity: 0.3;
+  }
+  .page-hero-left { padding: 80px 40px 80px 60px; position: relative; z-index: 1; display: flex; flex-direction: column; justify-content: center; }
+  .page-hero-left h1 { color: var(--white); font-size: 42px; font-weight: 700; line-height: 1.2; margin-bottom: 16px; }
+  .page-hero-left p { color: #aaa; font-size: 15px; margin-bottom: 32px; max-width: 400px; }
+  .page-hero-right { padding: 80px 60px 80px 40px; position: relative; z-index: 1; display: flex; flex-direction: column; justify-content: center; }
+  .page-hero-right p { color: #ccc; font-size: 14px; line-height: 1.8; margin-bottom: 14px; }
+
+  /* ── TEAM ── */
+  .team { padding: 80px 60px; background: var(--white); }
+  .team h2 { font-size: 36px; font-weight: 700; text-align: center; margin-bottom: 8px; }
+  .team .sub { text-align: center; color: #888; margin-bottom: 50px; font-size: 14px; }
+  .team-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 36px; }
+  .team-card { text-align: center; }
+  .team-img { width: 100%; height: 260px; object-fit: cover; background: #eee; display: block; margin-bottom: 16px; }
+  .team-card .role { font-size: 11px; color: var(--purple); font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 4px; }
+  .team-card h3 { font-size: 20px; font-weight: 700; margin-bottom: 4px; }
+  .team-card .company { font-size: 12px; color: #999; margin-bottom: 12px; }
+  .team-card p { font-size: 13px; color: #666; line-height: 1.6; }
+
+  /* ── CONTACT ── */
+  .contact { background: var(--dark); display: grid; grid-template-columns: 1fr 1fr; min-height: 500px; }
+  .contact-left { padding: 80px 40px 80px 60px; position: relative; z-index: 1; }
+  .contact-left h2 { color: var(--white); font-size: 32px; font-weight: 700; margin-bottom: 8px; }
+  .contact-left .sub-line { width: 40px; height: 3px; background: var(--purple); margin: 12px 0 16px; }
+  .contact-left .tagline { color: var(--purple); font-size: 14px; margin-bottom: 32px; }
+  .contact-left a.tagline { text-decoration: none; }
+  .form-group { margin-bottom: 14px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .form-group.full { grid-template-columns: 1fr; }
+  .form-group input, .form-group textarea { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); color: var(--white); padding: 10px 14px; font-size: 13px; outline: none; width: 100%; }
+  .form-group input::placeholder, .form-group textarea::placeholder { color: #666; }
+  .form-group textarea { height: 100px; resize: none; }
+  .chat-box { margin-top: 32px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 28px; }
+  .chat-box h3 { color: var(--white); font-size: 16px; margin-bottom: 8px; }
+  .chat-box p { color: #888; font-size: 13px; margin-bottom: 16px; }
+  .btn-outline-sm { display: inline-block; border: 1px solid var(--white); color: var(--white); padding: 8px 20px; font-size: 12px; text-decoration: none; transition: all 0.2s; }
+  .btn-outline-sm:hover { background: var(--white); color: var(--black); }
+  .contact-right { position: relative; overflow: hidden; }
+  .contact-right::before {
+    content: ''; position: absolute; inset: 0;
+    background: url('https://images.unsplash.com/photo-1497366216548-37526070297c?w=1000&q=80') center/cover no-repeat;
+    opacity: 0.7;
+  }
+
+  /* ── FAQ ── */
+  .faq { padding: 80px 60px; background: var(--white); max-width: 800px; margin: 0 auto; }
+  .faq h2 { font-size: 32px; font-weight: 700; margin-bottom: 36px; }
+  .faq-item { border-bottom: 1px solid #eee; padding: 20px 0; cursor: pointer; }
+  .faq-item h4 { font-size: 15px; font-weight: 600; margin-bottom: 8px; }
+  .faq-item p { font-size: 13px; color: #666; line-height: 1.7; }
+
+  /* ── TABS ── */
+  .page-tabs { display: flex; gap: 6px; padding: 80px 60px 0; background: var(--white); flex-wrap: wrap; }
+  .page-tab { padding: 9px 20px; border: 1.5px solid #ddd; background: var(--white); cursor: pointer; font-size: 12px; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; transition: all 0.2s; }
+  .page-tab:hover, .page-tab.active { background: var(--black); color: var(--white); border-color: var(--black); }
+
+  /* ── PAGE VISIBILITY ── */
+  .site-page { display: none; }
+  .site-page.active { display: block; }
+
+  /* ── PARTNER STRIP ── */
+  .partner-strip { background: var(--off-white); padding: 40px 60px; text-align: center; }
+  .partner-strip h2 { font-size: 20px; font-weight: 700; color: #333; margin-bottom: 30px; letter-spacing: 1px; }
+  .partner-logos { display: flex; justify-content: center; align-items: center; gap: 50px; flex-wrap: wrap; }
+  .partner-logo { font-size: 15px; font-weight: 700; color: #bbb; letter-spacing: 3px; text-transform: uppercase; }
+
+  /* ── RESOURCES PAGE ── */
+  .resources-page-hero { background: var(--dark); padding: 100px 60px 60px; text-align: center; }
+  .resources-page-hero h1 { color: var(--white); font-size: 38px; font-weight: 700; margin-bottom: 10px; }
+  .resources-page-hero p { color: var(--purple); font-size: 14px; }
+  .blog-filter { padding: 20px 60px; background: var(--white); border-bottom: 1px solid #eee; display: flex; gap: 20px; }
+  .blog-filter button { background: none; border: none; font-size: 13px; font-weight: 600; cursor: pointer; color: #999; padding-bottom: 4px; border-bottom: 2px solid transparent; }
+  .blog-filter button.active { color: var(--purple); border-color: var(--purple); }
+  .blog-full { padding: 60px; background: var(--white); }
+  .blog-full-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+
+  @media (max-width: 900px) {
+    nav { padding: 0 20px; }
+    .nav-links { display: none; }
+    .hero, .why, .about-dark, .stats-inner, .contact { grid-template-columns: 1fr; }
+    .hero-left, .hero-right, .about-left, .about-right, .stats-left, .stats-right, .contact-left { padding: 60px 24px; }
+    .values-grid { grid-template-columns: repeat(2, 1fr); }
+    .services-grid, .blog-grid, .blog-full-grid { grid-template-columns: 1fr; }
+    .team-grid { grid-template-columns: 1fr 1fr; }
+    .page-tabs { padding: 40px 24px 0; }
+    .resources, .academics, .values, .team, .faq, .blog-full, .resources-page-hero, .blog-filter, .partner-strip, .partners, footer { padding-left: 24px; padding-right: 24px; }
+    .footer-inner { grid-template-columns: 1fr; }
+    .footer-info { grid-template-columns: 1fr 1fr; }
+    .contact-right { display: none; }
+    .page-hero { grid-template-columns: 1fr; }
+    .page-hero-left, .page-hero-right { padding: 60px 24px; }
+  }
+</style>
 </head>
 <body>
-<script>window.location.replace('index_tr.html');</script>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">
+    <div class="name">Vildan<span>.</span></div>
+    <div class="sub">Bağımsız Danışman</div>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#" onclick="showPage('home')">Ana Sayfa</a></li>
+    <li><a href="#" onclick="showPage('about')">Hakkımda</a></li>
+    <li><a href="#" onclick="showPage('services')">Hizmetlerim</a></li>
+    <li><a href="#" onclick="showPage('resources')">Yazılarım</a></li>
+    <li><a href="#" onclick="showPage('contact')">İletişim</a></li>
+    <li><a href="index_en.html" style="color:#888;font-size:12px;letter-spacing:1px;">EN</a></li>
+    <li><a href="#" class="nav-cta" onclick="showPage('contact')">İletişime Geç</a></li>
+  </ul>
+</nav>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- SAYFA: ANA SAYFA -->
+<!-- ══════════════════════════════════════════ -->
+<div id="home" class="site-page active">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-left">
+      <h1>Dönüşüm Stratejisini Gerçek İş Değerine Dönüştürün</h1>
+      <p>20+ yıllık EMEA ve META deneyimiyle SAP dönüşümü, yönetilen hizmetler ve yapay zeka benimseme alanlarında bağımsız danışmanlık.</p>
+      <a href="#" class="btn-primary btn-purple" onclick="showPage('contact')">İletişime Geç</a>
+    </div>
+    <div class="hero-right">
+      <div class="subscribe-box">
+        <h3>Bültenime Abone Olun</h3>
+        <input type="email" placeholder="E-posta adresiniz">
+        <button>Abone Ol</button>
+        <label><input type="checkbox" style="width:auto;margin:0;"> Evet, bültene abone olmak istiyorum.</label>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY -->
+  <section class="why">
+    <div class="why-left">
+      <h2>Neden Bağımsız Danışmanlık?</h2>
+    </div>
+    <div class="why-right">
+      <div class="why-item">
+        <div class="why-icon"></div>
+        <h4>Kendi Hızınızda İlerleme</h4>
+        <p>Kurumunuzun ihtiyacına ve takvime göre şekillenen esnek danışmanlık modeli.</p>
+      </div>
+      <div class="why-item">
+        <div class="why-icon"></div>
+        <h4>Sektör Uzmanı Perspektifi</h4>
+        <p>20+ yıl NTT Data, SAP ve Metro Group deneyimiyle gerçek dünya bilgisi.</p>
+      </div>
+      <div class="why-item">
+        <div class="why-icon"></div>
+        <h4>Bağımsız ve Tarafsız</h4>
+        <p>Hiçbir ürün ya da satıcı gündeminden bağımsız, yalnızca sizin çıkarlarınız için.</p>
+      </div>
+      <div class="why-item">
+        <div class="why-icon"></div>
+        <h4>Kanıtlanmış Sonuçlar</h4>
+        <p>€1M+ programlar, %35 maliyet düşürümü, 100+ kişilik global ekip kurulumları.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT DARK -->
+  <section class="about-dark">
+    <div class="about-left">
+      <h2>Vildan Bağımsız Danışmanlık Okulu Hakkında</h2>
+      <p>Dönüşümü içeriden bilen bir danışman</p>
+      <a href="#" class="btn-outline-white" onclick="showPage('about')">Daha Fazla</a>
+    </div>
+    <div class="about-right">
+      <p>Uzun yıllar boyunca dünyanın en büyük kurumlarının en kritik dönüşüm programlarını içeriden yönettim. Daimler için Türkiye'nin ilk SAP global destek merkezini kurdum — 100'den fazla kişilik çok uluslu bir ekiple.</p>
+      <p>Bugün bağımsız bir danışman olarak çalışıyorum — çünkü en değerli rehberlik, herhangi bir ürünün, teknoloji firmasının ya da satış gündeminin dışında durabilmekten geçiyor.</p>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <section class="stats">
+    <div class="stats-inner">
+      <div class="stats-left">
+        <h2>Misyonum: Dönüşümü Gerçek Kılmak</h2>
+        <div class="stats-grid">
+          <div class="stat-item">
+            <div class="num">20+</div>
+            <div class="label">Yıl Uluslararası Deneyim</div>
+          </div>
+          <div class="stat-item">
+            <div class="num">3</div>
+            <div class="label">Global Kurum (NTT Data, SAP, Metro Group)</div>
+          </div>
+          <div class="stat-item">
+            <div class="num">35%</div>
+            <div class="label">Operasyonel Maliyet Düşürümü</div>
+          </div>
+          <div class="stat-item">
+            <div class="num">100+</div>
+            <div class="label">Kişilik Global Ekip Kurulumu</div>
+          </div>
+        </div>
+      </div>
+      <div class="stats-right">
+        <p>SAP dönüşümünden yapay zeka benimsemesine, tedarikçi seçiminden yönetilen hizmet modellerine kadar — stratejiyi uygulamaya bağlayan köprüyü kuruyoruz.</p>
+        <p>CIO'lara ve üst düzey IT liderlerine bağımsız, tarafsız ve sonuç odaklı bir perspektif sunuyorum.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CORE VALUES -->
+  <section class="values">
+    <h2>Temel İlkelerim</h2>
+    <p class="sub">Söylediğimi uygularım</p>
+    <div class="values-grid">
+      <div class="value-item">
+        <div class="value-icon"></div>
+        <h4>Dürüstlük</h4>
+        <p>Her tavsiye, bağımsız ve tarafsız bir perspektiften verilir.</p>
+      </div>
+      <div class="value-item">
+        <div class="value-icon"></div>
+        <h4>Sorumluluk</h4>
+        <p>Verilen taahhütler her koşulda yerine getirilir.</p>
+      </div>
+      <div class="value-item">
+        <div class="value-icon"></div>
+        <h4>Bilgi</h4>
+        <p>20+ yıllık sahada kazanılmış, gerçek dünya bilgisi.</p>
+      </div>
+      <div class="value-item">
+        <div class="value-icon"></div>
+        <h4>Kararlılık</h4>
+        <p>Sonuca ulaşana kadar sürecin her adımında yanınızda.</p>
+      </div>
+      <div class="value-item">
+        <div class="value-icon"></div>
+        <h4>Tutku</h4>
+        <p>Dönüşümün insan boyutuna duyulan derin ilgi ve inanç.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ACADEMICS / HIZMETLER -->
+  <section class="academics">
+    <div class="academics-inner">
+      <h2>Hizmetlerim</h2>
+      <p class="sub">Dönüşüm sürecinin her aşamasında bağımsız danışmanlık</p>
+      <div class="services-grid">
+        <div class="service-card">
+          <h3>SAP & S/4HANA Dönüşümü</h3>
+          <p>S/4HANA geçiş stratejisi, program yönetimi, hedef işletme modeli tasarımı ve go-live sonrası stabilizasyon.</p>
+          <a href="#" class="btn-purple-sm" onclick="showPage('services')">Detaylar</a>
+        </div>
+        <div class="service-card">
+          <h3>Yönetilen Hizmetler & İşletme Modeli</h3>
+          <p>ITIL tabanlı servis modeli tasarımı, SLA/KPI çerçeveleri, çok bölgeli teslimat organizasyonu.</p>
+          <a href="#" class="btn-purple-sm" onclick="showPage('services')">Detaylar</a>
+        </div>
+        <div class="service-card">
+          <h3>Tedarikçi Seçimi & RFP Yönetimi</h3>
+          <p>Bağımsız tedarikçi değerlendirmesi, RFP/RFI süreci tasarımı, teknik ve ticari değerlendirme.</p>
+          <a href="#" class="btn-purple-sm" onclick="showPage('services')">Detaylar</a>
+        </div>
+        <div class="service-card">
+          <h3>Program & Portföy Yönetimi</h3>
+          <p>PMO kurulumu, proje portföyü yönetimi, yönetişim çerçeveleri ve dönüşüm programı liderliği.</p>
+          <a href="#" class="btn-purple-sm" onclick="showPage('services')">Detaylar</a>
+        </div>
+        <div class="service-card">
+          <h3>Yapay Zeka Benimseme & Değişim Yönetimi</h3>
+          <p>Kurumsal AI stratejisi, organizasyonel değişim yönetimi, çalışan hazırlığı ve AI yönetişimi.</p>
+          <a href="#" class="btn-purple-sm" onclick="showPage('services')">Detaylar</a>
+        </div>
+        <div class="service-card">
+          <h3>Kurumsal Mimari & Yönetişim</h3>
+          <p>TOGAF tabanlı kurumsal mimari değerlendirmesi, yönetişim model tasarımı, risk ve kalite yönetimi.</p>
+          <a href="#" class="btn-purple-sm" onclick="showPage('services')">Detaylar</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESOURCES -->
+  <section class="resources">
+    <div class="resources-header">
+      <div>
+        <h2>Yazılarım</h2>
+        <p class="sub">Dönüşüm ve teknoloji dünyasından düşünceler</p>
+      </div>
+      <a href="#" class="btn-outline" onclick="showPage('resources')">Tümünü Gör</a>
+    </div>
+    <div class="blog-grid">
+      <div class="blog-card">
+        <div class="blog-img" style="background: url('https://images.unsplash.com/photo-1551434678-e076c223a692?w=600&q=80') center/cover;"></div>
+        <div class="blog-meta">Makale · 5 dk okuma</div>
+        <h3>SAP S/4HANA Geçişlerinde Neden Başarısız Olunur?</h3>
+        <p>Teknoloji değil, insan ve süreç boyutundaki eksiklikler. Başarısız projelerin ortak paydası...</p>
+      </div>
+      <div class="blog-card">
+        <div class="blog-img" style="background: url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&q=80') center/cover;"></div>
+        <div class="blog-meta">Makale · 4 dk okuma</div>
+        <h3>Yapay Zeka Kurumları Nasıl Dönüştürüyor?</h3>
+        <p>AI sadece teknoloji değil, organizasyonel bir dönüşüm meselesi. İşte bilmeniz gerekenler...</p>
+      </div>
+      <div class="blog-card">
+        <div class="blog-img" style="background: url('https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=600&q=80') center/cover;"></div>
+        <div class="blog-meta">Makale · 3 dk okuma</div>
+        <h3>Sektörün Önünde Kalmak</h3>
+        <p>Değişim hızlanıyor. CIO'ların bugün hazırlanması gereken üç kritik alan...</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUOTE -->
+  <section class="quote">
+    <blockquote>"Başarı kalıcı değildir, başarısızlık ölümcül değildir: önemli olan devam etme cesaredidir."</blockquote>
+    <cite>— Winston Churchill</cite>
+  </section>
+
+  <!-- PARTNER STRIP -->
+  <div class="partner-strip">
+    <h2>Deneyim Kazandığım Kurumlar</h2>
+    <div class="partner-logos">
+      <span class="partner-logo">NTT Data</span>
+      <span class="partner-logo">SAP</span>
+      <span class="partner-logo">Metro Group</span>
+      <span class="partner-logo">Daimler</span>
+      <span class="partner-logo">THY</span>
+      <span class="partner-logo">Arçelik</span>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="name">Vildan<span>.</span></div>
+        <div class="sub">Bağımsız Danışman</div>
+        <h3>Başarıya Katılın!</h3>
+        <input type="email" placeholder="E-posta adresiniz">
+        <button>Abone Ol</button>
+      </div>
+      <div class="footer-info">
+        <div class="footer-col">
+          <h4>İletişim</h4>
+          <p>+90 553 296 55 75</p>
+          <a href="mailto:vildan@vildankara.com">vildan@vildankara.com</a>
+        </div>
+        <div class="footer-col">
+          <h4>Konum</h4>
+          <p>İstanbul, Türkiye</p>
+        </div>
+        <div class="footer-col">
+          <h4>Sayfalar</h4>
+          <a href="#" onclick="showPage('about')">Hakkımda</a>
+          <a href="#" onclick="showPage('services')">Hizmetlerim</a>
+          <a href="#" onclick="showPage('team')">Deneyimim</a>
+          <a href="#" onclick="showPage('contact')">İletişim</a>
+        </div>
+        <div class="footer-col">
+          <h4>Takip Edin</h4>
+          <a href="#">LinkedIn</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">© 2026 Vildan Kara Kayacan. Tüm hakları saklıdır.</div>
+  </footer>
+
+</div><!-- /home -->
+
+<!-- ══════════════════════════════════════════ -->
+<!-- SAYFA: HAKKIMDA -->
+<!-- ══════════════════════════════════════════ -->
+<div id="about" class="site-page">
+
+  <style>
+    .cv-hero { background: var(--dark); padding: 100px 60px 60px; position: relative; overflow: hidden; }
+    .cv-hero::before { content:''; position:absolute; inset:0; background:url('https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=1400&q=80') center/cover no-repeat; opacity:0.15; }
+    .cv-hero-inner { position:relative; z-index:1; display:grid; grid-template-columns:auto 1fr; gap:48px; align-items:start; max-width:1000px; margin:0 auto; }
+    .cv-photo { width:160px; height:160px; border-radius:50%; object-fit:cover; border:3px solid var(--purple); flex-shrink:0; background:url('https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&q=80') center/cover; }
+    .cv-hero-text h1 { color:#fff; font-size:34px; font-weight:800; margin-bottom:4px; }
+    .cv-hero-text .cv-title { color:var(--purple); font-size:15px; font-weight:600; margin-bottom:6px; }
+    .cv-hero-text .cv-tags { color:#aaa; font-size:13px; margin-bottom:16px; }
+    .cv-hero-text .cv-contact { display:flex; gap:20px; flex-wrap:wrap; }
+    .cv-hero-text .cv-contact a { color:#ccc; font-size:13px; text-decoration:none; }
+    .cv-hero-text .cv-contact a:hover { color:#fff; }
+    .cv-summary { background:#fff; padding:48px 60px; max-width:1000px; margin:0 auto; }
+    .cv-summary p { font-size:15px; line-height:1.8; color:#333; }
+    .cv-section { padding:48px 60px; max-width:1000px; margin:0 auto; }
+    .cv-section-title { font-size:11px; font-weight:700; letter-spacing:3px; text-transform:uppercase; color:var(--purple); border-bottom:2px solid var(--purple); padding-bottom:8px; margin-bottom:28px; }
+    .cv-achievements { display:grid; grid-template-columns:1fr 1fr; gap:12px 40px; }
+    .cv-achievement { display:flex; gap:10px; align-items:flex-start; font-size:14px; line-height:1.6; color:#333; }
+    .cv-achievement::before { content:'▪'; color:var(--purple); font-size:16px; flex-shrink:0; margin-top:1px; }
+    .cv-competencies { display:flex; flex-wrap:wrap; gap:10px; }
+    .cv-competency { background:#f3eeff; color:var(--purple); font-size:12px; font-weight:600; padding:5px 14px; border-radius:2px; }
+    .cv-job { margin-bottom:36px; padding-bottom:36px; border-bottom:1px solid #eee; }
+    .cv-job:last-child { border-bottom:none; }
+    .cv-job-header { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:4px; flex-wrap:wrap; gap:8px; }
+    .cv-job-company { font-size:16px; font-weight:800; color:var(--black); }
+    .cv-job-dates { font-size:12px; color:#999; font-style:italic; }
+    .cv-job-role { font-size:14px; font-weight:700; color:var(--purple); margin:8px 0 4px; }
+    .cv-job-desc { font-size:13px; color:#555; line-height:1.7; }
+    .cv-job ul { margin:8px 0 0 16px; }
+    .cv-job ul li { font-size:13px; color:#555; line-height:1.7; margin-bottom:4px; }
+    .cv-project { margin:10px 0 0 16px; }
+    .cv-project-name { font-size:13px; font-weight:700; color:#333; }
+    .cv-project-desc { font-size:12px; color:#777; }
+    .cv-edu-item { display:flex; justify-content:space-between; margin-bottom:12px; }
+    .cv-edu-item .left h4 { font-size:14px; font-weight:700; }
+    .cv-edu-item .left p { font-size:13px; color:#777; }
+    .cv-edu-item .right { font-size:12px; color:#999; text-align:right; }
+    .cv-certs { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+    .cv-cert { font-size:13px; color:#444; display:flex; gap:8px; align-items:center; }
+    .cv-cert::before { content:'·'; color:var(--purple); font-size:20px; line-height:1; }
+    .cv-langs { display:flex; gap:32px; flex-wrap:wrap; }
+    .cv-lang { text-align:center; }
+    .cv-lang .lang-name { font-size:14px; font-weight:700; }
+    .cv-lang .lang-level { font-size:12px; color:#999; }
+    .cv-bg { background:#f9f9f7; }
+    @media(max-width:700px) {
+      .cv-hero { padding:80px 24px 40px; }
+      .cv-hero-inner { grid-template-columns:1fr; }
+      .cv-photo { width:100px; height:100px; }
+      .cv-summary, .cv-section { padding:32px 24px; }
+      .cv-achievements { grid-template-columns:1fr; }
+      .cv-certs { grid-template-columns:1fr; }
+    }
+  </style>
+
+  <!-- HERO -->
+  <div class="cv-hero">
+    <div class="cv-hero-inner">
+      <div class="cv-photo"></div>
+      <div class="cv-hero-text">
+        <h1>Vildan Kara Kayacan</h1>
+        <div class="cv-title">İş, Teknoloji & Yapay Zeka Dönüşüm Yöneticisi</div>
+        <div class="cv-tags">Dönüşüm Direktörü · Yönetilen Hizmetler · SAP & Kurumsal Mimari · AI Dönüşümü</div>
+        <div class="cv-contact">
+          <a href="mailto:vildan@vildankara.com">vildan@vildankara.com</a>
+          <a href="tel:+905532965575">+90 553 296 55 75</a>
+          <span style="color:#666;">İstanbul, Türkiye</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- EXECUTIVE PROFILE -->
+  <div class="cv-summary">
+    <p>EMEA ve META genelinde stratejik kurumlar için büyük ölçekli dönüşüm, yönetilen hizmetler ve global teslimat alanında 20+ yıllık deneyime sahip iş ve teknoloji dönüşüm yöneticisi. Servis portföyünü iki katına çıkarmış, faaliyet maliyetlerini üçte bir oranında düşürmüş ve sıfırdan çok ülkeli teslimat organizasyonları kurmuş somut bir sicile sahiptir. Kurumsal SAP dönüşümü ile yapay zeka benimsemenin nadir kesişim noktasında yer almakta; hem teknolojiyi hem de AI benimsemesinin arkasındaki organizasyonel dönüşümü yönetmektedir. CIO'lara ve yönetim ekiplerine dönüşüm stratejisini ölçülebilir iş değerine dönüştürmelerinde güvenilen danışmandır.</p>
+  </div>
+
+  <!-- BAŞARILLAR -->
+  <div class="cv-section">
+    <div class="cv-section-title">Öne Çıkan Başarılar</div>
+    <div class="cv-achievements">
+      <div class="cv-achievement">Global otomotiv devinin dünya geneli servis teslimatını merkezileştirmek için Türkiye'nin ilk SAP global destek merkezini kurdu (100+ FTE).</div>
+      <div class="cv-achievement">Global servis operasyonlarında servis kalitesini ve teslimat verimliliğini artırırken faaliyet maliyetlerini %35 düşürdü.</div>
+      <div class="cv-achievement">İlk günden itibaren zorlu SLA'ları karşılayarak üç ayda 75+ kişilik bölgesel IT servis organizasyonu kurdu.</div>
+      <div class="cv-achievement">Finansal hizmetler sektörünün ilk SAP HANA referans uygulamasını sektör referansı olarak yönetti.</div>
+      <div class="cv-achievement">Stratejik kurumsal hesaplarda önemli yinelenen gelir artışı sağlayarak yönetilen hizmetler portföyünü iki katına çıkardı.</div>
+      <div class="cv-achievement">€1M+ dönüşüm programlarını tutarlı biçimde zamanında ve bütçe dahilinde, stabil go-live'larla teslim etti.</div>
+      <div class="cv-achievement">Planlama, teslimat ve raporlamaya üretken AI ve otomasyon uygulayarak AI destekli proje yönetim sistemi geliştirdi.</div>
+    </div>
+  </div>
+
+  <!-- CORE COMPETENCIES -->
+  <div class="cv-section cv-bg">
+    <div class="cv-section-title">Temel Yetkinlikler</div>
+    <div class="cv-competencies">
+      <span class="cv-competency">Kurumsal & Org. Dönüşümü</span>
+      <span class="cv-competency">Yönetilen Hizmetler & P&L</span>
+      <span class="cv-competency">İşletme Modeli Tasarımı</span>
+      <span class="cv-competency">Global Çok Bölgeli Teslimat</span>
+      <span class="cv-competency">Yönetişim, Risk & Kalite</span>
+      <span class="cv-competency">Kurumsal Mimari (TOGAF)</span>
+      <span class="cv-competency">Teklif & Öneri Yönetimi</span>
+      <span class="cv-competency">SLA / KPI & Performans Yönetimi</span>
+      <span class="cv-competency">AI Benimseme & Değişim Yönetimi</span>
+      <span class="cv-competency">AI & Veri Odaklı Dönüşüm</span>
+      <span class="cv-competency">SAP / S/4HANA Dönüşümü</span>
+      <span class="cv-competency">Program & Portföy Liderliği</span>
+    </div>
+  </div>
+
+  <!-- PROFESSIONAL EXPERIENCE -->
+  <div class="cv-section">
+    <div class="cv-section-title">Profesyonel Deneyim</div>
+
+    <div class="cv-job">
+      <div class="cv-job-header">
+        <div class="cv-job-company">NTT DATA Business Solutions</div>
+        <div class="cv-job-dates">Kas 2014 – Günümüz</div>
+      </div>
+      <div style="font-size:13px;color:#888;margin-bottom:12px;font-style:italic;">EMEA & META'daki büyük kurumlar için servis stratejisi, global teslimat ve program yönetiminde aşamalı liderlik.</div>
+
+      <div class="cv-job-role">Direktör, Servis Satışı & Teslimat Stratejisi</div>
+      <ul>
+        <li>Stratejik IT ve yönetilen hizmet anlaşmaları için kazanma stratejisi, öneri geliştirme, çözüm tasarımı, teklif yönetimi, risk ve fiyatlandırma ile son aşama müzakerelere sahip olarak uçtan uca çok milyon euroluk RFP ve RFI süreçlerini yönetti.</li>
+        <li>Marj korumasını rekabetçi konumlandırmayla dengeleyen çok yıllı angajmanlar için ticari strateji şekillendirdi — fiyatlandırma çerçeveleri, finansal modelleme, maliyet yapıları ve sözleşme tasarımı.</li>
+        <li>Büyük hesaplarda istikrar, güvenilirlik ve sürekli iyileştirmeyi güvence altına alarak yönetilen hizmetler ve büyük ölçekli dönüşüm programları için servis stratejisi ve hedef işletme modelleri oluşturdu.</li>
+        <li>Çok bölgeli teslimat ekiplerinde performans yönetimi, SLA/KPI modelleri, finansal kontroller ve kalite güvencesini kapsayan yönetişim yapıları kurdu.</li>
+      </ul>
+
+      <div class="cv-job-role">Direktör, Global Servisler İş Entegrasyonu & Geliştirme</div>
+      <ul>
+        <li>EMEA ve META genelinde servis entegrasyonu ve genişlemesini yönetti; teslimat merkezlerini ölçeklendirerek yenilik, hesap verebilirlik ve yürütmeyi teşvik etmek için üst düzey liderlere mentörlük yaptı.</li>
+        <li>Pazar konumlandırmasını ve pazara hazırlığı güçlendiren yeni ticari mimariler tanıttı.</li>
+        <li>Operasyonel mükemmelliği ve uyumluluğu koruyarak global teslimatdan yerel teslimatava ve dış sağlayıcılardan iç Mükemmeliyet Merkezlerine stratejik geçişleri yönetti.</li>
+      </ul>
+
+      <div class="cv-job-role">PMO & Müşteri Katılım Ofisi Başkanı</div>
+      <ul>
+        <li>PMO'yu kurdu ve yönetti; proje yöneticileri ekibini yönlendirerek portföy genelinde teslimat metodolojisini standartlaştırdı.</li>
+        <li>Teslimat ekiplerinde yönetişim çerçevelerini ve performans yönetimini oluştururken öncelikli programlarda Program / Dönüşüm Lideri olarak görev yaptı.</li>
+      </ul>
+
+      <div class="cv-job-role">Bölgesel IT Servis Teslimat Lideri — B/S/H (Bosch-Siemens Ev Aletleri)</div>
+      <ul>
+        <li>Üç ayda 75+ kişilik IT servis organizasyonu kurdu; ilk günden itibaren yüksek müşteri memnuniyetiyle zorlu SLA'ları karşıladı.</li>
+        <li>Uçtan uca servis geçişini yönetti: işe alım, kapasite geliştirme ve insan yönetimi.</li>
+        <li>Finansal ve operasyonel hedefleri tutarlı biçimde karşılayarak karmaşık sözleşme çerçevesinde bütçe ve P&L'ye sahip oldu.</li>
+        <li>Operasyonları düzenlemek ve servis verimliliğini artırmak için kurumsal RPA otomasyon programını yönetti.</li>
+      </ul>
+
+      <div class="cv-job-role">Kıdemli Servis Yöneticisi — Daimler Bölgesel CoE Teslimat Merkezi</div>
+      <ul>
+        <li>Daimler iştirakleri için operasyonları merkezileştirerek birden fazla ülkede 100+ FTE'lik SAP global destek merkezi kurdu.</li>
+      </ul>
+    </div>
+
+    <div class="cv-job">
+      <div class="cv-job-header">
+        <div class="cv-job-company">SAP Türkiye</div>
+        <div class="cv-job-dates">May 2011 – Eki 2014</div>
+      </div>
+      <div class="cv-job-role">Kıdemli İş Dönüşümü Proje Yöneticisi</div>
+      <ul>
+        <li>İmalat, otomotiv, finansal hizmetler ve havacılık sektörlerindeki sektör liderlerine yönelik SAP S/4HANA dönüşüm programlarını yönetti.</li>
+        <li>CIO'lar ve kıdemli IT liderleriyle ortaklık içinde hedef işletme modelleri, yönetişim çerçeveleri ve dönüşüm yol haritaları tasarladı.</li>
+      </ul>
+      <div style="margin-top:12px;font-size:13px;font-weight:700;color:#333;">Seçili Programlar:</div>
+      <div class="cv-project" style="margin-top:8px;">
+        <div class="cv-project-name">Türk Hava Yolları (THY)</div>
+        <div class="cv-project-desc">~150 global ekip üyesiyle ülkenin en büyük ERP dönüşümünde Organizasyonel Değişim Yönetimi Lideri.</div>
+      </div>
+      <div class="cv-project">
+        <div class="cv-project-name">Eureko Sigorta</div>
+        <div class="cv-project-desc">22 kişilik ekiple finansal hizmetler sektörünün ilk SAP HANA referans uygulamasında Program Yöneticisi.</div>
+      </div>
+      <div class="cv-project">
+        <div class="cv-project-name">Arçelik</div>
+        <div class="cv-project-desc">12 kişilik ekiple ana veri mimarisini ve yönetişimini güçlendiren kapsamlı MDM uygulamalarından birinde Program Yöneticisi.</div>
+      </div>
+      <div class="cv-project">
+        <div class="cv-project-name">Yapı Kredi Bankası</div>
+        <div class="cv-project-desc">İlk bankacılık sektörü ERP referans uygulamasında güvenilen danışman rolüyle SAP uygulaması.</div>
+      </div>
+    </div>
+
+    <div class="cv-job">
+      <div class="cv-job-header">
+        <div class="cv-job-company">Metro Group Information AG — Düsseldorf, Almanya</div>
+        <div class="cv-job-dates">Eki 2005 – Nis 2011</div>
+      </div>
+      <div class="cv-job-role">Kıdemli Finansal Danışman & Geliştirici</div>
+      <ul>
+        <li>ABAP geliştirme ve SAP Basis'ten finans danışmanlığına ilerledi; Mısır, Kazakistan, Slovakya, Türkiye, Belçika, İspanya, Bulgaristan ve Pakistan'da uluslararası SAP roll-out'ları gerçekleştirdi.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- EĞİTİM -->
+  <div class="cv-section cv-bg">
+    <div class="cv-section-title">Eğitim</div>
+    <div class="cv-edu-item">
+      <div class="left">
+        <h4>İşletme Bilgi Sistemleri Lisans (Wirtschaftsinformatik)</h4>
+        <p>Marmara Üniversitesi — Almanca program</p>
+      </div>
+      <div class="right">2000 – 2005</div>
+    </div>
+  </div>
+
+  <!-- SERTİFİKALAR -->
+  <div class="cv-section">
+    <div class="cv-section-title">Sertifikalar</div>
+    <div class="cv-certs">
+      <div class="cv-cert">SAP İş Dönüşümü — SAP Akademisi</div>
+      <div class="cv-cert">Proje & İş Dönüşümü Yönetimi — SAP</div>
+      <div class="cv-cert">TOGAF® Kurumsal Mimari</div>
+      <div class="cv-cert">SAP Kurumsal Mimari</div>
+      <div class="cv-cert">Çevik Proje Yönetimi (SAP Activate) — Sertifikalı</div>
+      <div class="cv-cert">Risk Yönetimi Uzmanı (PMI-RMP)® — PMI</div>
+      <div class="cv-cert">ITIL® Foundation</div>
+      <div class="cv-cert">Finansal Raporlama & Analiz — Deloitte</div>
+    </div>
+  </div>
+
+  <!-- DİLLER -->
+  <div class="cv-section cv-bg">
+    <div class="cv-section-title">Diller</div>
+    <div class="cv-langs">
+      <div class="cv-lang"><div class="lang-name">Türkçe</div><div class="lang-level">Anadil</div></div>
+      <div class="cv-lang"><div class="lang-name">İngilizce</div><div class="lang-level">İleri (yazılı & sözlü)</div></div>
+      <div class="cv-lang"><div class="lang-name">Almanca</div><div class="lang-level">İleri (yazılı & okuma; konuşma pratik gerektirir)</div></div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="name">Vildan<span>.</span></div>
+        <div class="sub">Bağımsız Danışman</div>
+        <h3>Başarıya Katılın!</h3>
+        <input type="email" placeholder="E-posta adresiniz">
+        <button>Abone Ol</button>
+      </div>
+      <div class="footer-info">
+        <div class="footer-col"><h4>İletişim</h4><p>+90 553 296 55 75</p><a href="mailto:vildan@vildankara.com">vildan@vildankara.com</a></div>
+        <div class="footer-col"><h4>Konum</h4><p>İstanbul, Türkiye</p></div>
+        <div class="footer-col"><h4>Sayfalar</h4><a href="#" onclick="showPage('home')">Ana Sayfa</a><a href="#" onclick="showPage('services')">Hizmetlerim</a><a href="#" onclick="showPage('contact')">İletişim</a></div>
+        <div class="footer-col"><h4>Takip Edin</h4><a href="#">LinkedIn</a></div>
+      </div>
+    </div>
+    <div class="footer-bottom">© 2026 Vildan Kara Kayacan. Tüm hakları saklıdır.</div>
+  </footer>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- SAYFA: HİZMETLERİM -->
+<!-- ══════════════════════════════════════════ -->
+<div id="services" class="site-page">
+
+  <style>
+    .svc-hero { background:var(--dark); padding:100px 60px 60px; text-align:center; position:relative; overflow:hidden; }
+    .svc-hero::before { content:''; position:absolute; inset:0; background:url('https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1400&q=80') center/cover no-repeat; opacity:.15; }
+    .svc-hero h1 { position:relative; z-index:1; color:#fff; font-size:38px; font-weight:700; margin-bottom:10px; }
+    .svc-hero p { position:relative; z-index:1; color:var(--purple); font-size:14px; }
+    .svc-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:0; background:var(--white); }
+    .svc-item { border:1px solid #eee; overflow:hidden; cursor:pointer; transition:box-shadow 0.2s; }
+    .svc-item:hover { box-shadow:0 4px 24px rgba(107,70,193,0.12); z-index:1; }
+    .svc-img { width:100%; height:200px; object-fit:cover; display:block; }
+    .svc-body { padding:24px 24px 28px; }
+    .svc-body h3 { font-size:17px; font-weight:700; color:var(--black); margin-bottom:10px; line-height:1.3; }
+    .svc-body p { font-size:13px; color:#555; line-height:1.7; margin-bottom:12px; }
+    .svc-scope { font-size:12px; color:#888; border-top:1px solid #f0eeea; padding-top:12px; margin-top:4px; }
+    .svc-scope strong { color:var(--purple); }
+    @media(max-width:900px){ .svc-grid { grid-template-columns:1fr; } .svc-hero { padding:80px 24px 40px; } }
+  </style>
+
+  <div class="svc-hero">
+    <h1>Hizmetlerim</h1>
+    <p>Dönüşüm sürecinin her aşamasında bağımsız danışmanlık</p>
+  </div>
+
+  <div class="svc-grid">
+
+    <div class="svc-item">
+      <div class="svc-img" style="background:url('https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=600&q=80') center/cover;"></div>
+      <div class="svc-body">
+        <h3>SAP & S/4HANA Dönüşümü</h3>
+        <p>SAP S/4HANA geçişleri; strateji, mimari, veri, organizasyon ve yönetişim boyutlarının eş zamanlı yönetilmesini gerektiren karmaşık dönüşüm programlarıdır. THY, Eureko Sigorta, Arçelik ve Yapı Kredi gibi kurumların bu yolculuklarına eşlik ettim. Teknoloji entegratörünüzün bağımsız karşı ağırlığı olarak — sizin tarafınızda, sizin çıkarlarınız için çalışırım.</p>
+        <div class="svc-scope"><strong>Kapsam:</strong> Geçiş stratejisi, RFP/tedarikçi seçimi, program yönetimi, hedef işletme modeli, go-live ve stabilizasyon.</div>
+      </div>
+    </div>
+
+    <div class="svc-item">
+      <div class="svc-img" style="background:url('https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=600&q=80') center/cover;"></div>
+      <div class="svc-body">
+        <h3>Yönetilen Hizmetler & İşletme Modeli Tasarımı</h3>
+        <p>NTT Data'da 10+ yıl boyunca EMEA ve META genelinde büyük kurumlar için ITIL tabanlı servis modelleri tasarladım, kurdum ve yönettim. B/S/H için 3 ayda 75+ kişilik servis organizasyonu kurarak SLA taahhütlerini ilk günden karşıladım.</p>
+        <div class="svc-scope"><strong>Kapsam:</strong> Servis model tasarımı, SLA/KPI çerçevesi, organizasyon yapısı, yönetişim, geçiş planlaması, sürekli iyileştirme.</div>
+      </div>
+    </div>
+
+    <div class="svc-item">
+      <div class="svc-img" style="background:url('https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=600&q=80') center/cover;"></div>
+      <div class="svc-body">
+        <h3>Tedarikçi Seçimi & RFP Yönetimi</h3>
+        <p>Teknoloji tedarikçileri güçlü satış ekipleriyle gelir. Bağımsız bir değerlendirici olarak teknik, ticari ve organizasyonel boyutları bir arada ele alarak en iyi kararı vermenize destek olurum. NTT Data'daki RFP deneyimimi artık müşteri tarafında kullanıyorum.</p>
+        <div class="svc-scope"><strong>Kapsam:</strong> RFP/RFI tasarımı, değerlendirme kriterleri ve ağırlıklandırma, bağımsız analiz raporu, müzakere desteği.</div>
+      </div>
+    </div>
+
+    <div class="svc-item">
+      <div class="svc-img" style="background:url('https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?w=600&q=80') center/cover;"></div>
+      <div class="svc-body">
+        <h3>Program & Portföy Yönetimi</h3>
+        <p>NTT Data'da PMO'yu kurdum ve yönettim. SAP Türkiye'de THY, Arçelik ve Eureko Sigorta gibi ülkenin en büyük ve en karmaşık dönüşüm programlarını yönettim. €1M+ programları tutarlı biçimde zamanında ve bütçe dahilinde teslim ettim.</p>
+        <div class="svc-scope"><strong>Kapsam:</strong> PMO kurulumu, portföy yönetimi ve önceliklendirme, yönetişim çerçeveleri, program/dönüşüm liderliği, sağlık izleme ve raporlama.</div>
+      </div>
+    </div>
+
+    <div class="svc-item">
+      <div class="svc-img" style="background:url('https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=600&q=80') center/cover;"></div>
+      <div class="svc-body">
+        <h3>Yapay Zeka Benimseme & Değişim Yönetimi</h3>
+        <p>Hem kurumsal dönüşüm deneyimime hem de AI destekli araçları aktif olarak geliştirip kullanan bir pratisyen perspektifine sahibim. Kendi süreçlerimde yapay zeka destekli proje yönetim sistemleri kurdum. Teknolojiyi satın almak değil, kurumu hazırlamak belirleyici faktördür.</p>
+        <div class="svc-scope"><strong>Kapsam:</strong> AI hazırlık değerlendirmesi, strateji ve yol haritası, değişim yönetimi, çalışan hazırlığı, AI yönetişim çerçevesi, pilot uygulama yönetimi.</div>
+      </div>
+    </div>
+
+    <div class="svc-item">
+      <div class="svc-img" style="background:url('https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&q=80') center/cover;"></div>
+      <div class="svc-body">
+        <h3>Kurumsal Mimari & Yönetişim</h3>
+        <p>TOGAF sertifikalı kurumsal mimar olarak teknoloji mimarisi ile iş stratejisini hizalamak için bütünsel bir yaklaşım getiriyorum. NTT Data'da ve SAP Türkiye'de kurumsal çaplı benimsenen yönetişim ve teslimat çerçeveleri tasarladım.</p>
+        <div class="svc-scope"><strong>Kapsam:</strong> Mevcut mimari değerlendirmesi, hedef mimari tasarımı, yönetişim model tasarımı, risk ve kalite yönetimi çerçeveleri, mimari ilkeler.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="name">Vildan<span>.</span></div>
+        <div class="sub">Bağımsız Danışman</div>
+        <h3>Başarıya Katılın!</h3>
+        <input type="email" placeholder="E-posta adresiniz">
+        <button>Abone Ol</button>
+      </div>
+      <div class="footer-info">
+        <div class="footer-col"><h4>İletişim</h4><p>+90 553 296 55 75</p><a href="mailto:vildan@vildankara.com">vildan@vildankara.com</a></div>
+        <div class="footer-col"><h4>Konum</h4><p>İstanbul, Türkiye</p></div>
+        <div class="footer-col"><h4>Sayfalar</h4><a href="#" onclick="showPage('home')">Ana Sayfa</a><a href="#" onclick="showPage('about')">Hakkımda</a><a href="#" onclick="showPage('contact')">İletişim</a></div>
+        <div class="footer-col"><h4>Takip Edin</h4><a href="#">LinkedIn</a></div>
+      </div>
+    </div>
+    <div class="footer-bottom">© 2026 Vildan Kara Kayacan. Tüm hakları saklıdır.</div>
+  </footer>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- SAYFA: YAZILARIM (RESOURCES) -->
+<!-- ══════════════════════════════════════════ -->
+<div id="resources" class="site-page">
+
+  <style>
+    .blog-detail-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.85); z-index:500; overflow-y:auto; padding:40px 20px; }
+    .blog-detail-overlay.open { display:flex; align-items:flex-start; justify-content:center; }
+    .blog-detail-box { background:#fff; max-width:780px; width:100%; padding:48px; position:relative; margin:auto; }
+    .blog-detail-close { position:absolute; top:16px; right:20px; background:none; border:none; font-size:28px; cursor:pointer; color:#999; line-height:1; }
+    .blog-detail-close:hover { color:#000; }
+    .blog-detail-img { width:100%; height:280px; object-fit:cover; background:#eee; margin-bottom:28px; }
+    .blog-detail-meta { font-size:12px; color:#999; margin-bottom:10px; }
+    .blog-detail-title { font-size:26px; font-weight:800; line-height:1.3; margin-bottom:20px; color:#111; }
+    .blog-detail-body { font-size:15px; line-height:1.9; color:#333; }
+    .blog-detail-body p { margin-bottom:16px; }
+    .blog-detail-body h4 { font-size:16px; font-weight:700; margin:24px 0 8px; color:#111; }
+    .blog-card { cursor:pointer; transition:transform 0.2s; }
+    .blog-card:hover { transform:translateY(-4px); }
+    .blog-card:hover h3 { color:#805ad5; }
+  </style>
+
+  <!-- Detay overlay -->
+  <div id="blog-detail-overlay" class="blog-detail-overlay" onclick="closeBlogDetail(event)">
+    <div class="blog-detail-box">
+      <button class="blog-detail-close" onclick="closeBlogDetail(null, true)">×</button>
+      <div id="blog-detail-img" class="blog-detail-img"></div>
+      <div id="blog-detail-meta" class="blog-detail-meta"></div>
+      <div id="blog-detail-title" class="blog-detail-title"></div>
+      <div id="blog-detail-body" class="blog-detail-body"></div>
+    </div>
+  </div>
+
+  <section class="resources-page-hero">
+    <h1>Yazılarım</h1>
+    <p>Dönüşüm ve teknoloji dünyasından perspektifler</p>
+  </section>
+  <div class="blog-filter">
+    <button class="active">Tüm Yazılar</button>
+    <button>Öne Çıkanlar</button>
+  </div>
+  <section class="blog-full">
+    <div class="blog-full-grid">
+
+      <div class="blog-card" onclick="openBlog(0)">
+        <div class="blog-img" style="background:url('https://images.unsplash.com/photo-1551434678-e076c223a692?w=600&q=80') center/cover;height:220px;"></div>
+        <div class="blog-meta">Makale · 5 dk okuma</div>
+        <h3>SAP S/4HANA Geçişlerinde Neden Başarısız Olunur?</h3>
+        <p>Teknoloji değil, insan ve süreç boyutundaki eksiklikler başarısızlığın temel nedeni...</p>
+      </div>
+
+      <div class="blog-card" onclick="openBlog(1)">
+        <div class="blog-img" style="background:url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&q=80') center/cover;height:220px;"></div>
+        <div class="blog-meta">Makale · 4 dk okuma</div>
+        <h3>Yapay Zeka Kurumları Nasıl Dönüştürüyor?</h3>
+        <p>AI sadece teknoloji değil, organizasyonel bir dönüşüm meselesi...</p>
+      </div>
+
+      <div class="blog-card" onclick="openBlog(2)">
+        <div class="blog-img" style="background:url('https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=600&q=80') center/cover;height:220px;"></div>
+        <div class="blog-meta">Makale · 3 dk okuma</div>
+        <h3>Sektörün Önünde Kalmak</h3>
+        <p>Değişim hızlanıyor. CIO'ların bugün hazırlanması gereken üç kritik alan...</p>
+      </div>
+
+      <div class="blog-card" onclick="openBlog(3)">
+        <div class="blog-img" style="background:url('https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&q=80') center/cover;height:220px;"></div>
+        <div class="blog-meta">Makale · 6 dk okuma</div>
+        <h3>Tedarikçi Seçiminde 10 Kritik Hata</h3>
+        <p>Yanlış tedarikçi seçimi bir dönüşüm programının en büyük riski olabilir...</p>
+      </div>
+
+      <div class="blog-card" onclick="openBlog(4)">
+        <div class="blog-img" style="background:url('https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=600&q=80') center/cover;height:220px;"></div>
+        <div class="blog-meta">Makale · 4 dk okuma</div>
+        <h3>Yönetilen Hizmetlerde Değer Yaratma</h3>
+        <p>ITIL sadece bir çerçeve değil, operasyonel mükemmelliğin temelidir...</p>
+      </div>
+
+      <div class="blog-card" onclick="openBlog(5)">
+        <div class="blog-img" style="background:url('https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=600&q=80') center/cover;height:220px;"></div>
+        <div class="blog-meta">Makale · 5 dk okuma</div>
+        <h3>İş Trendleri mi, Kalıcı Değişim mi?</h3>
+        <p>Her yeni teknolojiyi trend olarak mı görmeli? İşte ayırt etmenin yolu...</p>
+      </div>
+
+    </div>
+  </section>
+
+  <script>
+  const BLOG_POSTS_TR = [
+    {
+      img: 'https://images.unsplash.com/photo-1551434678-e076c223a692?w=900&q=80',
+      meta: 'Makale · 5 dk okuma',
+      title: 'SAP S/4HANA Geçişlerinde Neden Başarısız Olunur?',
+      body: `<p>SAP S/4HANA geçişleri, kurumların karşılaştığı en karmaşık ve riskli dönüşüm programlarından birini oluşturmaktadır. Ancak çoğu başarısızlık hikayesinde ortak bir paydaş vardır: sorun teknoloji değil, insandır.</p>
+<h4>1. Hazırlık Eksikliği</h4>
+<p>Pek çok kurum, teknik gereksinimleri karşılamadan geçişe başlar. Veri kalitesi sorunları, mimari boşluklar ve yetersiz test süreçleri, go-live aşamasında kritik aksamalara yol açar. Hazırlık değerlendirmesi olmadan başlanan her proje, ilerleyen aşamalarda katlanarak büyüyen riskler taşır.</p>
+<h4>2. Yönetişim Çerçevesinin Yokluğu</h4>
+<p>Büyük dönüşüm programları, güçlü bir yönetişim yapısı olmadan raydan çıkar. Kim karar alır? Hangi süreçte? Kimin onayı gerekir? Bu soruların yanıtları baştan netleştirilmediğinde, program yönetimden çıkar.</p>
+<h4>3. Organizasyonel Değişim Yönetiminin Hafife Alınması</h4>
+<p>Teknoloji kurulabilir, ancak insanlar benimsemezse yatırım değer üretemez. Çalışanların yeni sisteme hazırlanması, süreç değişikliklerinin anlatılması ve direncin yönetilmesi, teknik kurulum kadar kritiktir.</p>
+<h4>4. Tedarikçi ile Müşteri Arasındaki Denge</h4>
+<p>Teknoloji entegratörleri kendi metodolojilerini ve ürünlerini ön plana çıkarır. Müşteri tarafında bağımsız bir perspektif olmadığında, kararlar müşterinin değil tedarikçinin çıkarlarına hizmet edebilir. Bağımsız danışmanlık tam da bu noktada kritik bir denge unsuru sağlar.</p>
+<p>Başarılı bir S/4HANA geçişi; doğru hazırlık, güçlü yönetişim, etkin değişim yönetimi ve tarafsız bir dış perspektifin birleşimiyle mümkündür.</p>`
+    },
+    {
+      img: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=900&q=80',
+      meta: 'Makale · 4 dk okuma',
+      title: 'Yapay Zeka Kurumları Nasıl Dönüştürüyor?',
+      body: `<p>Yapay zeka, son birkaç yılda iş dünyasının gündeminde üst sıralara tırmanmıştır. Ancak gerçek şu ki: AI sadece bir teknoloji meselesi değil, köklü bir organizasyonel dönüşüm meselesidir.</p>
+<h4>Teknoloji Satın Almak Yeterli Değil</h4>
+<p>Pek çok kurum, AI araçlarına yatırım yapmakta ancak bu araçların benimsenmesi için gereken organizasyonel altyapıyı kurmakta başarısız olmaktadır. Süreç yeniden tasarımı, çalışan yetkinlik geliştirme, veri yönetişimi ve liderlik uyumu olmadan, AI projeleri değer üretemez.</p>
+<h4>Üç Kritik Boyut</h4>
+<p><strong>İnsan:</strong> Çalışanlar yeni araçları nasıl kullanacak? Hangi rollerin dönüşmesi gerekiyor? Yetkinlik açıkları nasıl kapatılacak?</p>
+<p><strong>Süreç:</strong> Hangi süreçler AI ile yeniden tasarlanmalı? Hangileri otomasyona hazır, hangilerinde insan yargısı vazgeçilmez?</p>
+<p><strong>Yönetişim:</strong> AI kararları nasıl denetlenecek? Veri gizliliği ve etik çerçevesi nasıl kurulacak?</p>
+<h4>Pratisyen Perspektifi</h4>
+<p>Kendi danışmanlık süreçlerimde AI destekli proje yönetim sistemleri kurdum. Bu deneyim bana şunu öğretti: AI'ı en iyi kullananlar, onu bir araç olarak gören değil, iş modelinin bir parçası olarak tasarlayanlardır.</p>
+<p>Kurumunuzun AI yolculuğunda nerede olduğunu anlamak için hazırlık değerlendirmesiyle başlamak en sağlıklı adımdır.</p>`
+    },
+    {
+      img: 'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=900&q=80',
+      meta: 'Makale · 3 dk okuma',
+      title: 'Sektörün Önünde Kalmak',
+      body: `<p>Teknoloji dönüşümünün hızı, kurumların adaptasyon kapasitesini zorlamaya devam ediyor. CIO'lar ve IT liderleri için "güncel kalmak" artık yeterli değil — ileriye bakmak zorunlu.</p>
+<h4>1. SAP'ın Yol Haritasını Takip Edin</h4>
+<p>SAP 2027 sonrasında ECC desteğini kaldırıyor. Bu geçiş için hazırlık yapmamış kurumlar ciddi risklerle karşı karşıya. Strateji geliştirmek için zaman daralıyor.</p>
+<h4>2. AI Hazırlığını Gerçekçi Değerlendirin</h4>
+<p>Her kurumun "AI stratejisi" olduğu iddia ediliyor, ancak gerçek hazırlık düzeyi çok daha düşük. Veri kalitesi, altyapı ve insan yetkinliği olmadan AI yatırımları boşa gider.</p>
+<h4>3. Tedarikçi Bağımlılığını Yönetin</h4>
+<p>Tek bir tedarikçiye aşırı bağımlılık, uzun vadede kurumun pazarlık gücünü ve esnekliğini zayıflatır. Bağımsız bir değerlendirme ile mevcut tedarikçi portföyünüzü düzenli olarak gözden geçirmek kritik bir rekabet avantajı sağlar.</p>`
+    },
+    {
+      img: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=900&q=80',
+      meta: 'Makale · 6 dk okuma',
+      title: 'Tedarikçi Seçiminde 10 Kritik Hata',
+      body: `<p>Yanlış tedarikçi seçimi, bir dönüşüm programının en büyük ve en pahalı riski olabilir. Bu hatalar yalnızca para kaybettirmez — yıllarca süren bağımlılıklar yaratır.</p>
+<h4>1. Sadece Fiyata Odaklanmak</h4>
+<p>En düşük teklif, en düşük toplam maliyeti her zaman anlamaz. Uygulama sonrası destek, lisans yapıları ve gizli maliyetler tabloyu tamamen değiştirebilir.</p>
+<h4>2. Referans Kontrolü Yapmamak</h4>
+<p>Tedarikçinin verdiği referanslar onun seçtikleri. Bağımsız olarak ulaşabileceğiniz müşterilerle konuşun.</p>
+<h4>3. Teknik Yetkinliği Satış Yetkinliğiyle Karıştırmak</h4>
+<p>Güçlü bir satış ekibi, güçlü bir uygulama ekibi anlamına gelmez. Teklif sunumundaki ekibin projeyi yürütecek ekiple aynı olduğundan emin olun.</p>
+<h4>4. Değerlendirme Kriterlerini Önceden Netleştirmemek</h4>
+<p>Sunum sonrası kriterler koymak, değerlendirmeyi sübjektif hale getirir. Ağırlıklı değerlendirme matrisi, teklifler gelmeden hazır olmalıdır.</p>
+<h4>5. Müzakereyi Erken Sonlandırmak</h4>
+<p>İlk teklife razı olmak, masa üzerinde bırakılan değeri kaçırmaktır. Profesyonel müzakere desteği, sözleşme değerinin önemli bir bölümünü kurtarabilir.</p>
+<p>Tedarikçi seçiminde bağımsız bir danışman, tarafsız bir değerlendirme ve güçlü bir müzakere ortağı sağlar.</p>`
+    },
+    {
+      img: 'https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=900&q=80',
+      meta: 'Makale · 4 dk okuma',
+      title: 'Yönetilen Hizmetlerde Değer Yaratma',
+      body: `<p>Yönetilen hizmet modelleri, kurumların IT operasyonlarını daha verimli yönetmelerini sağlamanın en güçlü araçlarından biridir. Ancak bu modeller doğru kurulmadığında, beklenen değeri üretemez.</p>
+<h4>Servis Modeli Tasarımı Her Şeyden Önce Gelir</h4>
+<p>ITIL çerçevesi iyi bir başlangıç noktasıdır, ancak tek başına yeterli değildir. Kurumun özel ihtiyaçlarına, olgunluk düzeyine ve hedeflerine göre uyarlanmış bir servis modeli tasarlamak, başarının temel koşuludur.</p>
+<h4>SLA'lar Gerçekçi Olmalıdır</h4>
+<p>Ulaşılamayacak SLA hedefleri, sürekli ihlal kültürü yaratır. Doğru hedefler, hem tedarikçiyi hem de müşteriyi motive eden, ölçülebilir ve gerçekçi değerler içermelidir.</p>
+<h4>Sürekli İyileştirme Bir Proje Değil, Bir Kültürdür</h4>
+<p>B/S/H için kurduğum servis organizasyonunda en önemli başarı faktörlerinden biri, sürekli iyileştirme mekanizmalarını organizasyonun DNA'sına işlemekti. Aylık servis değerlendirmeleri, trend analizleri ve proaktif problem yönetimi bu kültürün temel taşlarıdır.</p>
+<p>Yönetilen hizmet modelinizi gözden geçirmek veya sıfırdan kurmak için bağımsız bir perspektif değer katabilir.</p>`
+    },
+    {
+      img: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=900&q=80',
+      meta: 'Makale · 5 dk okuma',
+      title: 'İş Trendleri mi, Kalıcı Değişim mi?',
+      body: `<p>Her yıl yeni bir teknoloji "oyun değiştirici" olarak ilan edilir. Blockchain, metaverse, Web3... ve şimdi yapay zeka. Bu dalgaları nasıl okumalı?</p>
+<h4>Trend ile Dönüşüm Arasındaki Fark</h4>
+<p>Bir trend, mevcut iş modellerini kolaylaştırır veya hızlandırır. Gerçek bir dönüşüm ise iş modellerini kökten değiştirir. AI ikinci kategoriye girer — ancak her AI uygulaması dönüştürücü değildir.</p>
+<h4>Doğru Soruları Sormak</h4>
+<p>Yeni bir teknolojiyi değerlendirirken sorulması gereken sorular: Bu teknoloji müşterime nasıl değer katıyor? Organizasyonum bunu benimsemeye hazır mı? Uzun vadeli maliyet yapısı nasıl şekilleniyor? Rakiplerim bu teknolojiyle ne yapıyor?</p>
+<h4>Erken Benimseyici mi, Takipçi mi?</h4>
+<p>Her kurumun erken benimseyici olması gerekmiyor. Ancak rakiplerinizin 2-3 yıl önünde olmasına izin vermeyin. İzleme, değerlendirme ve zamanında harekete geçme döngüsü, sektörün önünde kalmak için yeterlidir.</p>
+<p>Teknoloji yatırım kararlarınızda bağımsız bir değerlendirme, pahalı hatalardan kaçınmanızı sağlayabilir.</p>`
+    }
+  ];
+
+  function openBlog(idx) {
+    const stored = (() => { try { const d = JSON.parse(localStorage.getItem('vildan_content')); return d?.blog?.items; } catch { return null; } })();
+    const post = BLOG_POSTS_TR[idx];
+    if (!post) return;
+    const title = stored?.[idx]?.title || post.title;
+    const meta  = stored?.[idx]?.meta  || post.meta;
+    const body  = stored?.[idx]?.body  || post.body;
+    document.getElementById('blog-detail-img').style.background = `url('${post.img}') center/cover`;
+    document.getElementById('blog-detail-meta').textContent = meta;
+    document.getElementById('blog-detail-title').textContent = title;
+    document.getElementById('blog-detail-body').innerHTML = body;
+    const overlay = document.getElementById('blog-detail-overlay');
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeBlogDetail(e, force) {
+    if (!force && e && e.target !== document.getElementById('blog-detail-overlay')) return;
+    document.getElementById('blog-detail-overlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeBlogDetail(null, true); });
+  </script>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="name">Vildan<span>.</span></div>
+        <div class="sub">Bağımsız Danışman</div>
+        <h3>Başarıya Katılın!</h3>
+        <input type="email" placeholder="E-posta adresiniz">
+        <button>Abone Ol</button>
+      </div>
+      <div class="footer-info">
+        <div class="footer-col"><h4>İletişim</h4><p>+90 553 296 55 75</p><a href="mailto:vildan@vildankara.com">vildan@vildankara.com</a></div>
+        <div class="footer-col"><h4>Konum</h4><p>İstanbul, Türkiye</p></div>
+        <div class="footer-col"><h4>Sayfalar</h4><a href="#" onclick="showPage('home')">Ana Sayfa</a><a href="#" onclick="showPage('about')">Hakkımda</a><a href="#" onclick="showPage('contact')">İletişim</a></div>
+        <div class="footer-col"><h4>Takip Edin</h4><a href="#">LinkedIn</a></div>
+      </div>
+    </div>
+    <div class="footer-bottom">© 2026 Vildan Kara Kayacan. Tüm hakları saklıdır.</div>
+  </footer>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- SAYFA: DENEYİMİM (TEAM) -->
+<!-- ══════════════════════════════════════════ -->
+<div id="team" class="site-page">
+  <section class="page-hero" style="grid-template-columns:1fr;">
+    <div class="page-hero-left" style="padding:120px 60px 80px;">
+      <h1>Deneyimim</h1>
+      <p>20+ yıllık uluslararası liderlik</p>
+    </div>
+  </section>
+
+  <section class="team">
+    <h2>Kariyer Yolculuğum</h2>
+    <p class="sub">NTT Data · SAP Türkiye · Metro Group · EMEA & META</p>
+    <div class="team-grid">
+      <div class="team-card">
+        <div class="team-img" style="background:url('https://images.unsplash.com/photo-1486325212027-8081e485255e?w=600&q=80') center/cover;"></div>
+        <div class="role">Kas 2014 – Günümüz</div>
+        <h3>NTT Data Business Solutions</h3>
+        <div class="company">Director — Service Sales, Global Services, PMO</div>
+        <p>Çok milyon euro RFP/RFI süreçleri, EMEA-META servis entegrasyonu, B/S/H ve Daimler için servis organizasyonları, PMO liderliği.</p>
+      </div>
+      <div class="team-card">
+        <div class="team-img" style="background:url('https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=600&q=80') center/cover;"></div>
+        <div class="role">May 2011 – Eki 2014</div>
+        <h3>SAP Türkiye</h3>
+        <div class="company">Senior Business Transformation Project Manager</div>
+        <p>THY, Eureko Sigorta, Arçelik, Yapı Kredi dahil ülkenin en büyük SAP dönüşüm programlarında liderlik.</p>
+      </div>
+      <div class="team-card">
+        <div class="team-img" style="background:url('https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=600&q=80') center/cover;"></div>
+        <div class="role">Eki 2005 – Nis 2011</div>
+        <h3>Metro Group Information AG</h3>
+        <div class="company">Senior Financials Consultant — Düsseldorf, Almanya</div>
+        <p>Mısır, Kazakistan, Slovakya, Belçika, İspanya, Pakistan dahil 8 ülkede uluslararası SAP roll-out projeleri.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="values" style="background:#f9f9f7;">
+    <h2>Sertifikalar</h2>
+    <p class="sub">Mesleki yetkinlik belgeleri</p>
+    <div class="values-grid">
+      <div class="value-item"><div class="value-icon"></div><h4>TOGAF®</h4><p>Enterprise Architecture</p></div>
+      <div class="value-item"><div class="value-icon"></div><h4>PMI-RMP®</h4><p>Risk Management Professional</p></div>
+      <div class="value-item"><div class="value-icon"></div><h4>ITIL®</h4><p>Foundation Certification</p></div>
+      <div class="value-item"><div class="value-icon"></div><h4>SAP BTA</h4><p>Business Transformation Academy</p></div>
+      <div class="value-item"><div class="value-icon"></div><h4>SAP Activate</h4><p>Agile Project Management</p></div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="name">Vildan<span>.</span></div>
+        <div class="sub">Bağımsız Danışman</div>
+        <h3>Başarıya Katılın!</h3>
+        <input type="email" placeholder="E-posta adresiniz">
+        <button>Abone Ol</button>
+      </div>
+      <div class="footer-info">
+        <div class="footer-col"><h4>İletişim</h4><p>+90 553 296 55 75</p><a href="mailto:vildan@vildankara.com">vildan@vildankara.com</a></div>
+        <div class="footer-col"><h4>Konum</h4><p>İstanbul, Türkiye</p></div>
+        <div class="footer-col"><h4>Sayfalar</h4><a href="#" onclick="showPage('home')">Ana Sayfa</a><a href="#" onclick="showPage('services')">Hizmetlerim</a><a href="#" onclick="showPage('contact')">İletişim</a></div>
+        <div class="footer-col"><h4>Takip Edin</h4><a href="#">LinkedIn</a></div>
+      </div>
+    </div>
+    <div class="footer-bottom">© 2026 Vildan Kara Kayacan. Tüm hakları saklıdır.</div>
+  </footer>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- SAYFA: İLETİŞİM -->
+<!-- ══════════════════════════════════════════ -->
+<div id="contact" class="site-page">
+  <section class="contact">
+    <div class="contact-left">
+      <h2>Bize Ulaşın</h2>
+      <div class="sub-line"></div>
+      <p class="tagline">Sorularınız veya danışmanlık için buradayız</p>
+      <div class="form-group">
+        <input type="text" placeholder="Ad *">
+        <input type="text" placeholder="Soyad *">
+      </div>
+      <div class="form-group">
+        <input type="email" placeholder="E-posta *">
+        <input type="tel" placeholder="Telefon">
+      </div>
+      <div class="form-group full">
+        <textarea placeholder="Mesajınızı bırakın..."></textarea>
+      </div>
+      <button class="btn-purple-sm" style="padding:11px 32px;font-size:13px;">Gönder</button>
+
+      <div class="chat-box">
+        <h3>Doğrudan İletişim</h3>
+        <p>Dönüşüm sürecinizin herhangi bir aşamasında — nereden başlayacağınızdan emin olmadığınızda da dahil — bağlanmaktan memnuniyet duyarım.</p>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:16px;">
+          <a href="mailto:vildan@vildankara.com" class="btn-outline-sm" style="display:flex;align-items:center;gap:6px;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2,4 12,13 22,4"/></svg>
+            vildan@vildankara.com
+          </a>
+          <a href="https://wa.me/905532965575?text=Merhaba%20Vildan%20Han%C4%B1m%2C%20dan%C4%B1%C5%9Fanl%C4%B1k%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum." target="_blank" class="btn-outline-sm" style="display:flex;align-items:center;gap:6px;border-color:#25D366;color:#25D366;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            WhatsApp ile Yaz
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="contact-right"></div>
+  </section>
+
+  <section class="faq">
+    <h2>Sık Sorulan Sorular</h2>
+    <div class="faq-item">
+      <h4>Bağımsız danışmanlık ne anlama gelir?</h4>
+      <p>Herhangi bir teknoloji firması, ürün ya da satıcı ile bağı olmaksızın, yalnızca müşterinin çıkarları doğrultusunda verilen tarafsız danışmanlık hizmetidir.</p>
+    </div>
+    <div class="faq-item">
+      <h4>Hangi sektörlerde deneyiminiz var?</h4>
+      <p>Üretim, otomotiv, finans, havacılık, perakende, lojistik ve enerji sektörlerinde EMEA ve META genelinde 20+ yıllık deneyim.</p>
+    </div>
+    <div class="faq-item">
+      <h4>Uzaktan danışmanlık sunuyor musunuz?</h4>
+      <p>Evet. Hem uzaktan hem de yüz yüze çalışma modellerine uyum sağlanabilir. Konum: İstanbul, Türkiye.</p>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="name">Vildan<span>.</span></div>
+        <div class="sub">Bağımsız Danışman</div>
+        <h3>Başarıya Katılın!</h3>
+        <input type="email" placeholder="E-posta adresiniz">
+        <button>Abone Ol</button>
+      </div>
+      <div class="footer-info">
+        <div class="footer-col"><h4>İletişim</h4><p>+90 553 296 55 75</p><a href="mailto:vildan@vildankara.com">vildan@vildankara.com</a></div>
+        <div class="footer-col"><h4>Konum</h4><p>İstanbul, Türkiye</p></div>
+        <div class="footer-col"><h4>Sayfalar</h4><a href="#" onclick="showPage('home')">Ana Sayfa</a><a href="#" onclick="showPage('about')">Hakkımda</a><a href="#" onclick="showPage('services')">Hizmetlerim</a></div>
+        <div class="footer-col"><h4>Takip Edin</h4><a href="#">LinkedIn</a></div>
+      </div>
+    </div>
+    <div class="footer-bottom">© 2026 Vildan Kara Kayacan. Tüm hakları saklıdır.</div>
+  </footer>
+</div>
+
+<script>
+  function showPage(id) {
+    document.querySelectorAll('.site-page').forEach(p => p.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // ── ADMIN CONTENT LOADER ──────────────────────
+  function applyContent() {
+    try {
+      const d = JSON.parse(localStorage.getItem('vildan_content'));
+      if (!d) return;
+      function set(sel, val, attr) {
+        document.querySelectorAll(sel).forEach(el => {
+          if (!val && val !== 0) return;
+          if (attr) el[attr] = val;
+          else el.textContent = val;
+        });
+      }
+      // Brand
+      set('.nav-brand .name', d.brand?.name ? d.brand.name + '.' : null);
+      set('.nav-brand .sub', d.brand?.sub);
+      // Nav links
+      if (d.menu) {
+        const links = document.querySelectorAll('.nav-links a');
+        const keys = ['about','services','resources','team','contact'];
+        links.forEach((a, i) => { if (keys[i] && d.menu[keys[i]]) a.textContent = d.menu[keys[i]]; });
+        const cta = document.querySelector('.nav-cta');
+        if (cta && d.menu.cta) cta.textContent = d.menu.cta;
+      }
+      // Hero
+      if (d.hero) {
+        set('.hero-left h1', d.hero.title);
+        set('.hero-left p', d.hero.sub);
+        const heroBtns = document.querySelectorAll('.hero-left .btn-primary');
+        if (heroBtns[0] && d.hero.btn) heroBtns[0].textContent = d.hero.btn;
+        set('.subscribe-box h3', d.hero.nl_title);
+        const subBtn = document.querySelector('.subscribe-box button');
+        if (subBtn && d.hero.nl_btn) subBtn.textContent = d.hero.nl_btn;
+        const subLabel = document.querySelector('.subscribe-box label');
+        if (subLabel && d.hero.nl_check) subLabel.childNodes[subLabel.childNodes.length - 1].textContent = ' ' + d.hero.nl_check;
+      }
+      // Why
+      if (d.why) {
+        set('.why-left h2', d.why.title);
+        const wi = document.querySelectorAll('.why-item');
+        const ws = [d.why.w1, d.why.w2, d.why.w3, d.why.w4];
+        wi.forEach((el, i) => {
+          if (ws[i]) {
+            const h4 = el.querySelector('h4'); if (h4) h4.textContent = ws[i].title;
+            const p = el.querySelector('p'); if (p) p.textContent = ws[i].text;
+          }
+        });
+      }
+      // Stats
+      if (d.stats) {
+        document.querySelectorAll('.stats-left h2').forEach(el => el.textContent = d.stats.title);
+        const nums = document.querySelectorAll('.stat-item .num');
+        const lbls = document.querySelectorAll('.stat-item .label');
+        const ss = [d.stats.s1, d.stats.s2, d.stats.s3, d.stats.s4];
+        ss.forEach((s, i) => {
+          if (nums[i] && s) nums[i].textContent = s.num;
+          if (lbls[i] && s) lbls[i].textContent = s.lbl;
+        });
+        const srps = document.querySelectorAll('.stats-right p');
+        if (srps[0] && d.stats.p1) srps[0].textContent = d.stats.p1;
+        if (srps[1] && d.stats.p2) srps[1].textContent = d.stats.p2;
+      }
+      // Values
+      if (d.values) {
+        document.querySelectorAll('.values h2').forEach(el => el.textContent = d.values.title);
+        document.querySelectorAll('.values .sub').forEach(el => el.textContent = d.values.sub);
+        const vi = document.querySelectorAll('.value-item');
+        vi.forEach((el, i) => {
+          if (d.values.items && d.values.items[i]) {
+            const h4 = el.querySelector('h4'); if (h4) h4.textContent = d.values.items[i].title;
+            const p = el.querySelector('p'); if (p) p.textContent = d.values.items[i].text;
+          }
+        });
+      }
+      // About
+      if (d.about) {
+        const adl = document.querySelector('.about-left h2'); if (adl) adl.textContent = d.about.title;
+        const adp = document.querySelector('.about-left p'); if (adp) adp.textContent = d.about.sub;
+        const adr = document.querySelectorAll('.about-right p');
+        if (adr[0] && d.about.p1) adr[0].textContent = d.about.p1;
+        if (adr[1] && d.about.p2) adr[1].textContent = d.about.p2;
+        const abtn = document.querySelector('.about-left .btn-outline-white'); if (abtn && d.about.btn) abtn.textContent = d.about.btn;
+      }
+      // Services
+      if (d.services) {
+        document.querySelectorAll('.academics h2').forEach(el => el.textContent = d.services.title);
+        document.querySelectorAll('.academics .sub').forEach(el => el.textContent = d.services.sub);
+        const sc = document.querySelectorAll('.service-card');
+        sc.forEach((el, i) => {
+          if (d.services.items && d.services.items[i]) {
+            const h3 = el.querySelector('h3'); if (h3) h3.textContent = d.services.items[i].title;
+            const p = el.querySelector('p'); if (p) p.textContent = d.services.items[i].text;
+          }
+        });
+      }
+      // Blog
+      if (d.blog) {
+        document.querySelectorAll('.resources h2').forEach(el => el.textContent = d.blog.title);
+        document.querySelectorAll('.resources .sub').forEach(el => el.textContent = d.blog.sub);
+        document.querySelectorAll('.resources-page-hero h1').forEach(el => el.textContent = d.blog.title);
+        const bc = document.querySelectorAll('.blog-card');
+        bc.forEach((el, i) => {
+          if (d.blog.items && d.blog.items[i]) {
+            const h3 = el.querySelector('h3'); if (h3) h3.textContent = d.blog.items[i].title;
+            const meta = el.querySelector('.blog-meta'); if (meta) meta.textContent = d.blog.items[i].meta;
+            const p = el.querySelector('p'); if (p) p.textContent = d.blog.items[i].text;
+          }
+        });
+      }
+      // Quote
+      if (d.quote) {
+        set('blockquote', d.quote.text);
+        set('cite', d.quote.source);
+      }
+      // Contact
+      if (d.contact) {
+        set('.contact-left h2', d.contact.title);
+        set('.contact-left .tagline', d.contact.tag);
+        const cbtn = document.querySelector('.contact-left .btn-purple-sm'); if (cbtn) cbtn.textContent = d.contact.btn;
+        set('.chat-box h3', d.contact.chat_title);
+        set('.chat-box p', d.contact.chat_text);
+        const chatbtn = document.querySelector('.chat-box .btn-outline-sm'); if (chatbtn) chatbtn.textContent = d.contact.chat_btn;
+        const faqs = document.querySelectorAll('.faq-item');
+        const fdata = [[d.contact.faq1_q, d.contact.faq1_a],[d.contact.faq2_q, d.contact.faq2_a],[d.contact.faq3_q, d.contact.faq3_a]];
+        faqs.forEach((el, i) => {
+          if (fdata[i]) {
+            const h4 = el.querySelector('h4'); if (h4) h4.textContent = fdata[i][0];
+            const p = el.querySelector('p'); if (p) p.textContent = fdata[i][1];
+          }
+        });
+      }
+      // Footer
+      if (d.footer) {
+        document.querySelectorAll('.footer-brand h3').forEach(el => el.textContent = d.footer.title);
+        document.querySelectorAll('.footer-brand button').forEach(el => el.textContent = d.footer.btn);
+        document.querySelectorAll('.footer-col p').forEach((el, i) => {
+          if (i === 0) el.textContent = d.footer.phone;
+          if (i === 1) el.textContent = d.footer.location;
+        });
+        document.querySelectorAll('.footer-col a').forEach(el => {
+          if (el.textContent.includes('@') || el.href.includes('mailto')) { el.textContent = d.footer.email; el.href = 'mailto:' + d.footer.email; }
+          if (el.textContent === 'LinkedIn') el.href = d.footer.linkedin;
+        });
+        document.querySelectorAll('.footer-bottom').forEach(el => el.textContent = d.footer.copy);
+      }
+    } catch(e) { console.warn('Content load error:', e); }
+  }
+  applyContent();
+</script>
 </body>
 </html>
