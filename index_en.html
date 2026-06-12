@@ -1235,6 +1235,54 @@
     try {
       const d = JSON.parse(localStorage.getItem('vildan_content_en'));
       if (!d) return;
+      function set(sel, val) { document.querySelectorAll(sel).forEach(el => { if (!val && val !== 0) return; el.textContent = val; }); }
+      // Brand
+      set('.nav-brand .sub', d.brand?.sub);
+      // Nav links
+      if (d.menu) {
+        const links = document.querySelectorAll('.nav-links a');
+        const keys = ['about','services','resources','team','contact'];
+        links.forEach((a, i) => { if (keys[i] && d.menu[keys[i]]) a.textContent = d.menu[keys[i]]; });
+        const cta = document.querySelector('.nav-cta');
+        if (cta && d.menu.cta) cta.textContent = d.menu.cta;
+      }
+      // Hero
+      if (d.hero) {
+        set('.hero-left h1', d.hero.title);
+        set('.hero-left p', d.hero.sub);
+        const heroBtns = document.querySelectorAll('.hero-left .btn-primary');
+        if (heroBtns[0] && d.hero.btn) heroBtns[0].textContent = d.hero.btn;
+        set('.subscribe-box h3', d.hero.nl_title);
+        const subBtn = document.querySelector('.subscribe-box button');
+        if (subBtn && d.hero.nl_btn) subBtn.textContent = d.hero.nl_btn;
+        const subLabel = document.querySelector('.subscribe-box label');
+        if (subLabel && d.hero.nl_check) {
+          const lastNode = subLabel.childNodes[subLabel.childNodes.length - 1];
+          if (lastNode) lastNode.textContent = ' ' + d.hero.nl_check;
+        }
+      }
+      // Why
+      if (d.why) {
+        set('.why-left h2', d.why.title);
+        const wi = document.querySelectorAll('.why-item');
+        const ws = d.why.items || [d.why.w1, d.why.w2, d.why.w3, d.why.w4];
+        wi.forEach((el, i) => {
+          if (ws[i]) {
+            const h4 = el.querySelector('h4'); if (h4) h4.textContent = ws[i].title;
+            const p = el.querySelector('p'); if (p) p.textContent = ws[i].text;
+          }
+        });
+      }
+      // About dark
+      const ab = d.aboutDark || d.about;
+      if (ab) {
+        const adl = document.querySelector('.about-left h2'); if (adl) adl.textContent = ab.title;
+        const adp = document.querySelector('.about-left p'); if (adp) adp.textContent = ab.sub;
+        const adr = document.querySelectorAll('.about-right p');
+        if (adr[0] && ab.p1) adr[0].textContent = ab.p1;
+        if (adr[1] && ab.p2) adr[1].textContent = ab.p2;
+        const abtn = document.querySelector('.about-left .btn-outline-white'); if (abtn && ab.btn) abtn.textContent = ab.btn;
+      }
       // Stats
       if (d.stats) {
         document.querySelectorAll('.stats-left h2').forEach(el => el.textContent = d.stats.title);
@@ -1248,6 +1296,8 @@
       }
       // Values
       if (d.values) {
+        document.querySelectorAll('.values h2').forEach(el => el.textContent = d.values.title);
+        document.querySelectorAll('.values .sub').forEach(el => el.textContent = d.values.sub);
         const vi = document.querySelectorAll('.value-item');
         vi.forEach((el, i) => {
           if (d.values.items && d.values.items[i]) {
@@ -1256,8 +1306,10 @@
           }
         });
       }
-      // Services
+      // Services (ana sayfa kartları)
       if (d.services) {
+        document.querySelectorAll('.academics h2').forEach(el => el.textContent = d.services.title);
+        document.querySelectorAll('.academics .sub').forEach(el => el.textContent = d.services.sub);
         const sc = document.querySelectorAll('.service-card');
         sc.forEach((el, i) => {
           if (d.services.items && d.services.items[i]) {
@@ -1266,16 +1318,49 @@
           }
         });
       }
+      // Blog
+      if (d.blog) {
+        document.querySelectorAll('.resources h2').forEach(el => el.textContent = d.blog.title);
+        document.querySelectorAll('.resources .sub').forEach(el => el.textContent = d.blog.sub);
+        document.querySelectorAll('.resources-page-hero h1').forEach(el => el.textContent = d.blog.title);
+        const bc = document.querySelectorAll('.blog-card');
+        bc.forEach((el, i) => {
+          if (d.blog.items && d.blog.items[i]) {
+            const h3 = el.querySelector('h3'); if (h3) h3.textContent = d.blog.items[i].title;
+            const meta = el.querySelector('.blog-meta'); if (meta) meta.textContent = d.blog.items[i].meta;
+            const p = el.querySelector('p'); if (p) p.textContent = d.blog.items[i].text;
+          }
+        });
+      }
       // Quote
       if (d.quote) {
-        document.querySelectorAll('blockquote').forEach(el => el.textContent = d.quote.text);
-        document.querySelectorAll('cite').forEach(el => el.textContent = d.quote.source);
+        set('blockquote', d.quote.text);
+        set('cite', d.quote.source);
+      }
+      // Contact
+      if (d.contact) {
+        set('.contact-left h2', d.contact.title);
+        set('.contact-left .tagline', d.contact.tag);
+        const cbtn = document.querySelector('.contact-left .btn-purple-sm'); if (cbtn) cbtn.textContent = d.contact.btn;
+        set('.chat-box p', d.contact.chat_text);
+        const faqs = document.querySelectorAll('.faq-item');
+        const fdata = [[d.contact.faq1_q, d.contact.faq1_a],[d.contact.faq2_q, d.contact.faq2_a],[d.contact.faq3_q, d.contact.faq3_a]];
+        faqs.forEach((el, i) => {
+          if (fdata[i]) {
+            const h4 = el.querySelector('h4'); if (h4) h4.textContent = fdata[i][0];
+            const p = el.querySelector('p'); if (p) p.textContent = fdata[i][1];
+          }
+        });
       }
       // Footer
       if (d.footer) {
         document.querySelectorAll('.footer-brand h3').forEach(el => el.textContent = d.footer.title);
         document.querySelectorAll('.footer-brand button').forEach(el => el.textContent = d.footer.btn);
         document.querySelectorAll('.footer-bottom').forEach(el => el.textContent = d.footer.copy);
+        document.querySelectorAll('.footer-col p').forEach((el, i) => {
+          if (i === 0 && d.footer.phone) el.textContent = d.footer.phone;
+          if (i === 1 && d.footer.location) el.textContent = d.footer.location;
+        });
         document.querySelectorAll('.footer-col a').forEach(el => {
           if (el.href && el.href.includes('mailto')) { el.textContent = d.footer.email; el.href = 'mailto:' + d.footer.email; }
           if (el.textContent === 'LinkedIn') el.href = d.footer.linkedin;
