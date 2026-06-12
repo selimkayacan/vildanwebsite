@@ -1283,7 +1283,89 @@
       }
     } catch(e) { console.warn('Content load error:', e); }
   }
+
+  function applyAboutContent(d) {
+    try {
+      const ab = d.about; if (!ab) return;
+      if (ab.photo) document.querySelectorAll('.ab-photo').forEach(el => el.style.background = `url('${ab.photo}') center/cover`);
+      const storyPs = document.querySelectorAll('#about .ab-story p');
+      if (ab.story) ab.story.forEach((s, i) => { if (storyPs[i] && s) storyPs[i].textContent = s; });
+      const numItems = document.querySelectorAll('#about .ab-num-item');
+      if (ab.numbers) ab.numbers.forEach((item, i) => {
+        if (!numItems[i] || !item) return;
+        const n = numItems[i].querySelector('.n'); if (n && item.n) n.textContent = item.n;
+        const l = numItems[i].querySelector('.l'); if (l && item.l) l.textContent = item.l;
+      });
+      const achieveItems = document.querySelectorAll('#about .ab-achieve-item');
+      if (ab.achievements) ab.achievements.forEach((a, i) => { if (achieveItems[i] && a) achieveItems[i].textContent = a; });
+      const skillGroups = document.querySelectorAll('#about .ab-skill-group');
+      if (ab.skills) ab.skills.forEach((grp, g) => {
+        if (!skillGroups[g] || !grp) return;
+        const h4 = skillGroups[g].querySelector('h4'); if (h4 && grp.title) h4.textContent = grp.title;
+        const lis = skillGroups[g].querySelectorAll('li');
+        if (grp.items) grp.items.forEach((item, i) => { if (lis[i] && item) lis[i].textContent = item; });
+      });
+      const companies = document.querySelectorAll('#about .ab-company-tag');
+      if (ab.companies) ab.companies.forEach((c, i) => { if (companies[i] && c) companies[i].textContent = c; });
+    } catch(e) { console.warn('About content error:', e); }
+  }
+
+  function applySvcPageContent(d) {
+    try {
+      if (!d.svcpage) return;
+      const items = document.querySelectorAll('#services .svc-item');
+      if (d.svcpage.items) d.svcpage.items.forEach((item, i) => {
+        if (!items[i] || !item) return;
+        const h3 = items[i].querySelector('h3'); if (h3 && item.title) h3.textContent = item.title;
+        const p = items[i].querySelector('p'); if (p && item.text) p.textContent = item.text;
+        if (item.img) { const img = items[i].querySelector('.svc-img'); if (img) img.style.background = `url('${item.img}') center/cover`; }
+      });
+    } catch(e) {}
+  }
+
+  function applyTeamContent(d) {
+    try {
+      if (!d.team) return;
+      const cards = document.querySelectorAll('#team .team-card');
+      if (d.team.careers) d.team.careers.forEach((career, i) => {
+        if (!cards[i] || !career) return;
+        const role = cards[i].querySelector('.role'); if (role && career.period) role.textContent = career.period;
+        const h3 = cards[i].querySelector('h3'); if (h3 && career.company) h3.textContent = career.company;
+        const company = cards[i].querySelector('.company'); if (company && career.role) company.textContent = career.role;
+        const p = cards[i].querySelector('p'); if (p && career.desc) p.textContent = career.desc;
+      });
+      const certItems = document.querySelectorAll('#team .value-item');
+      if (d.team.certs) d.team.certs.forEach((cert, i) => {
+        if (!certItems[i] || !cert) return;
+        const h4 = certItems[i].querySelector('h4'); if (h4 && cert.title) h4.textContent = cert.title;
+        const p = certItems[i].querySelector('p'); if (p && cert.desc) p.textContent = cert.desc;
+      });
+    } catch(e) {}
+  }
+
+  function applyProjectsContent(d) {
+    try {
+      if (!d.projects || !d.projects.items) return;
+      const cards = document.querySelectorAll('#projects .prj-card');
+      const statusMap = { active:'🟢 Active', dev:'🟡 In Development', soon:'🔵 Coming Soon' };
+      d.projects.items.forEach((item, i) => {
+        if (!cards[i] || !item) return;
+        const h3 = cards[i].querySelector('h3'); if (h3 && item.name) h3.textContent = item.name;
+        const p = cards[i].querySelector('p'); if (p && item.desc) p.textContent = item.desc;
+        const link = cards[i].querySelector('.prj-link'); if (link && item.url) link.href = item.url;
+        const status = cards[i].querySelector('.prj-status'); if (status && item.status) status.textContent = statusMap[item.status] || item.status;
+      });
+    } catch(e) {}
+  }
+
   applyContent();
+  const _siteData = (() => { try { return JSON.parse(localStorage.getItem('vildan_content_en')); } catch{ return null; } })();
+  if (_siteData) {
+    applyAboutContent(_siteData);
+    applySvcPageContent(_siteData);
+    applyTeamContent(_siteData);
+    applyProjectsContent(_siteData);
+  }
 </script>
 </body>
 </html>
