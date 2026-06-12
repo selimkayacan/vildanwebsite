@@ -173,7 +173,7 @@
     position: relative; cursor: pointer;
   }
   .photo-editable::after {
-    content: '📷 Fotoğrafı Değiştir';
+    content: '📷 Fotoğrafı Değiştir / Change Photo';
     position: absolute; inset: 0;
     background: rgba(124,58,237,0.0);
     display: flex; align-items: center; justify-content: center;
@@ -224,12 +224,12 @@
       <button class="lang-btn active" id="btn-tr" onclick="setLang('tr')">🇹🇷 TR</button>
       <button class="lang-btn" id="btn-en" onclick="setLang('en')">🇬🇧 EN</button>
     </div>
-    <span class="ab-hint">Metne tıkla ve yaz · Fotoğrafa tıkla · Kaydet</span>
+    <span class="ab-hint" id="ab-hint">Metne tıkla ve yaz · Fotoğrafa tıkla · Kaydet</span>
   </div>
   <div class="ab-right">
-    <a class="ab-btn ab-preview" id="preview-link" href="index.html" target="_blank">👁 Siteyi Aç</a>
-    <button class="ab-btn ab-reset" onclick="resetAll()">Sıfırla</button>
-    <button class="ab-btn ab-save" onclick="saveAll()">💾 Kaydet &amp; Uygula</button>
+    <a class="ab-btn ab-preview" id="preview-link" href="index.html" target="_blank" id="ab-preview-btn">👁 Siteyi Aç</a>
+    <button class="ab-btn ab-reset" id="ab-reset-btn" onclick="resetAll()">Sıfırla</button>
+    <button class="ab-btn ab-save" id="ab-save-btn" onclick="saveAll()">💾 Kaydet &amp; Uygula</button>
   </div>
 </div>
 
@@ -487,15 +487,64 @@ let lang = 'tr';
 
 const PREVIEW_LINKS = { tr: 'index.html', en: 'index_en.html' };
 
+const UI = {
+  tr: {
+    hint: 'Metne tıkla ve yaz · Fotoğrafa tıkla · Kaydet',
+    preview: '👁 Siteyi Aç',
+    reset: 'Sıfırla',
+    save: '💾 Kaydet & Uygula',
+    badge: '🇹🇷 TR düzenliyorsunuz',
+    toastSaved: '✓ Kaydedildi — TR ve EN site güncellendi!',
+    toastPhoto: 'Fotoğraf güncellendi — Kaydet butonuna basmayı unutma!',
+    resetConfirm: 'Tüm değişiklikleri sıfırlamak istiyor musunuz?',
+    photoModalTitle: 'Fotoğrafı Değiştir',
+    photoModalFor: ' için URL girin',
+    photoModalPlaceholder: 'https://',
+    photoModalHint: 'GitHub\'a yüklemek için: github.com/selimkayacan/vildanwebsite → Add file → Upload files\nURL: https://selimkayacan.github.io/vildanwebsite/DOSYAADI.jpg',
+    photoModalCancel: 'İptal',
+    photoModalApply: 'Uygula',
+  },
+  en: {
+    hint: 'Click text to edit · Click photo to change · Save',
+    preview: '👁 Open Site',
+    reset: 'Reset',
+    save: '💾 Save & Apply',
+    badge: '🇬🇧 Editing EN version',
+    toastSaved: '✓ Saved — TR and EN sites updated!',
+    toastPhoto: 'Photo updated — don\'t forget to Save!',
+    resetConfirm: 'Reset all changes to default?',
+    photoModalTitle: 'Change Photo',
+    photoModalFor: ' — enter URL',
+    photoModalPlaceholder: 'https://',
+    photoModalHint: 'To upload: github.com/selimkayacan/vildanwebsite → Add file → Upload files\nURL: https://selimkayacan.github.io/vildanwebsite/FILENAME.jpg',
+    photoModalCancel: 'Cancel',
+    photoModalApply: 'Apply',
+  }
+};
+
+function updateAdminUI(l) {
+  const u = UI[l];
+  document.getElementById('ab-hint').textContent = u.hint;
+  document.getElementById('preview-link').textContent = u.preview;
+  document.getElementById('ab-reset-btn').textContent = u.reset;
+  document.getElementById('ab-save-btn').innerHTML = u.save;
+  const badge = document.getElementById('lang-badge');
+  badge.className = l === 'tr' ? 'lang-badge-tr' : 'lang-badge-en';
+  badge.textContent = u.badge;
+  document.querySelector('#photo-modal h3').textContent = u.photoModalTitle;
+  document.querySelector('.modal-cancel').textContent = u.photoModalCancel;
+  document.querySelector('.modal-save').textContent = u.photoModalApply;
+  document.getElementById('photo-modal-input').placeholder = u.photoModalPlaceholder;
+  document.querySelector('.modal-hint').textContent = u.photoModalHint;
+}
+
 function setLang(l) {
   saveCurrentLang();
   lang = l;
   document.getElementById('btn-tr').classList.toggle('active', l === 'tr');
   document.getElementById('btn-en').classList.toggle('active', l === 'en');
-  const badge = document.getElementById('lang-badge');
-  badge.className = l === 'tr' ? 'lang-badge-tr' : 'lang-badge-en';
-  badge.textContent = l === 'tr' ? '🇹🇷 TR düzenliyorsunuz' : '🇬🇧 EN düzenliyorsunuz';
   document.getElementById('preview-link').href = PREVIEW_LINKS[l];
+  updateAdminUI(l);
   loadLang(l);
 }
 
@@ -604,7 +653,7 @@ function saveAll() {
   writeSite(d, 'tr');
   writeSite(d, 'en');
 
-  showToast('✓ Kaydedildi — TR ve EN site güncellendi!');
+  showToast(UI[lang].toastSaved);
 }
 
 function writeSite(d, l) {
@@ -673,7 +722,7 @@ function writeSite(d, l) {
 }
 
 function resetAll() {
-  if (!confirm('Tüm değişiklikleri sıfırlamak istiyor musunuz?')) return;
+  if (!confirm(UI[lang].resetConfirm)) return;
   localStorage.removeItem('vildan_admin_v2');
   localStorage.removeItem('vildan_content');
   localStorage.removeItem('vildan_content_en');
@@ -685,7 +734,7 @@ let currentPhotoTarget = null;
 
 function openPhotoModal(targetId, label) {
   currentPhotoTarget = targetId;
-  document.getElementById('photo-modal-desc').textContent = label + ' için URL girin';
+  document.getElementById('photo-modal-desc').textContent = label + UI[lang].photoModalFor;
   const el = document.getElementById(targetId);
   let currentUrl = '';
   if (el) {
@@ -725,7 +774,7 @@ function applyPhoto() {
     }
   }
   closePhotoModal();
-  showToast('Fotoğraf güncellendi — Kaydet butonuna basmayı unutma!');
+  showToast(UI[lang].toastPhoto);
 }
 
 // Hero ve about-dark için tıklama
@@ -749,6 +798,7 @@ function showToast(msg) {
 }
 
 // ─── INIT ────────────────────────────────────────
+updateAdminUI('tr');
 loadLang('tr');
 </script>
 </body>
