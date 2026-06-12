@@ -1899,7 +1899,8 @@
       if (d.why) {
         set('.why-left h2', d.why.title);
         const wi = document.querySelectorAll('.why-item');
-        const ws = [d.why.w1, d.why.w2, d.why.w3, d.why.w4];
+        // Yeni format: items[], eski format: w1/w2/w3/w4
+        const ws = d.why.items || [d.why.w1, d.why.w2, d.why.w3, d.why.w4];
         wi.forEach((el, i) => {
           if (ws[i]) {
             const h4 = el.querySelector('h4'); if (h4) h4.textContent = ws[i].title;
@@ -1912,7 +1913,8 @@
         document.querySelectorAll('.stats-left h2').forEach(el => el.textContent = d.stats.title);
         const nums = document.querySelectorAll('.stat-item .num');
         const lbls = document.querySelectorAll('.stat-item .label');
-        const ss = [d.stats.s1, d.stats.s2, d.stats.s3, d.stats.s4];
+        // Yeni format: items[], eski format: s1/s2/s3/s4
+        const ss = d.stats.items || [d.stats.s1, d.stats.s2, d.stats.s3, d.stats.s4];
         ss.forEach((s, i) => {
           if (nums[i] && s) nums[i].textContent = s.num;
           if (lbls[i] && s) lbls[i].textContent = s.lbl;
@@ -1933,14 +1935,15 @@
           }
         });
       }
-      // About
-      if (d.about) {
-        const adl = document.querySelector('.about-left h2'); if (adl) adl.textContent = d.about.title;
-        const adp = document.querySelector('.about-left p'); if (adp) adp.textContent = d.about.sub;
+      // About (hem eski 'about' hem yeni 'aboutDark' key'ini destekle)
+      const ab = d.aboutDark || d.about;
+      if (ab) {
+        const adl = document.querySelector('.about-left h2'); if (adl) adl.textContent = ab.title;
+        const adp = document.querySelector('.about-left p'); if (adp) adp.textContent = ab.sub;
         const adr = document.querySelectorAll('.about-right p');
-        if (adr[0] && d.about.p1) adr[0].textContent = d.about.p1;
-        if (adr[1] && d.about.p2) adr[1].textContent = d.about.p2;
-        const abtn = document.querySelector('.about-left .btn-outline-white'); if (abtn && d.about.btn) abtn.textContent = d.about.btn;
+        if (adr[0] && ab.p1) adr[0].textContent = ab.p1;
+        if (adr[1] && ab.p2) adr[1].textContent = ab.p2;
+        const abtn = document.querySelector('.about-left .btn-outline-white'); if (abtn && ab.btn) abtn.textContent = ab.btn;
       }
       // Services
       if (d.services) {

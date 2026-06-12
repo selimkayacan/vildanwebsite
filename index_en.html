@@ -1240,7 +1240,7 @@
         document.querySelectorAll('.stats-left h2').forEach(el => el.textContent = d.stats.title);
         const nums = document.querySelectorAll('.stat-item .num');
         const lbls = document.querySelectorAll('.stat-item .label');
-        const ss = [d.stats.s1, d.stats.s2, d.stats.s3, d.stats.s4];
+        const ss = d.stats.items || [d.stats.s1, d.stats.s2, d.stats.s3, d.stats.s4];
         ss.forEach((s, i) => { if (nums[i] && s) nums[i].textContent = s.num; if (lbls[i] && s) lbls[i].textContent = s.lbl; });
         const srps = document.querySelectorAll('.stats-right p');
         if (srps[0] && d.stats.p1) srps[0].textContent = d.stats.p1;
