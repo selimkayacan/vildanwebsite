@@ -494,7 +494,7 @@ const UI = {
     reset: 'Sıfırla',
     save: '💾 Kaydet & Uygula',
     badge: '🇹🇷 TR düzenliyorsunuz',
-    toastSaved: '✓ Kaydedildi — TR ve EN site güncellendi!',
+    toastSaved: '✓ TR site güncellendi! EN için EN\'e geç ve tekrar kaydet.',
     toastPhoto: 'Fotoğraf güncellendi — Kaydet butonuna basmayı unutma!',
     resetConfirm: 'Tüm değişiklikleri sıfırlamak istiyor musunuz?',
     photoModalTitle: 'Fotoğrafı Değiştir',
@@ -510,7 +510,7 @@ const UI = {
     reset: 'Reset',
     save: '💾 Save & Apply',
     badge: '🇬🇧 Editing EN version',
-    toastSaved: '✓ Saved — TR and EN sites updated!',
+    toastSaved: '✓ EN site updated! Switch to TR to update Turkish version.',
     toastPhoto: 'Photo updated — don\'t forget to Save!',
     resetConfirm: 'Reset all changes to default?',
     photoModalTitle: 'Change Photo',
@@ -649,10 +649,7 @@ function applyBgPhotos(photos) {
 function saveAll() {
   saveCurrentLang();
   const d = getAdminState();
-
-  writeSite(d, 'tr');
-  writeSite(d, 'en');
-
+  writeSite(d, lang);  // Sadece aktif dili güncelle
   showToast(UI[lang].toastSaved);
 }
 
