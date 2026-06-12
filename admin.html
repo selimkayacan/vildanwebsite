@@ -3,430 +3,903 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin Paneli — Vildan Kara Kayacan</title>
+<title>Admin — Vildan Kara Kayacan</title>
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  :root { --purple: #6b46c1; --purple-light: #805ad5; --dark: #1a1a1a; --white: #fff; --gray: #f4f4f4; --border: #e0e0e0; --text: #222; --success: #38a169; --danger: #e53e3e; }
-  body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; background: var(--gray); color: var(--text); font-size: 14px; }
-  header { background: var(--dark); padding: 0 32px; height: 56px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
-  header .brand { color: #fff; font-size: 15px; font-weight: 700; }
-  header .brand span { color: var(--purple); }
-  header .actions { display: flex; gap: 10px; align-items: center; }
-  .btn { padding: 8px 18px; font-size: 13px; font-weight: 600; border: none; cursor: pointer; border-radius: 3px; transition: all 0.2s; }
-  .btn-purple { background: var(--purple); color: #fff; }
-  .btn-purple:hover { background: var(--purple-light); }
-  .btn-outline { background: transparent; border: 1.5px solid #555; color: #ccc; }
-  .btn-outline:hover { border-color: #fff; color: #fff; }
-  .btn-sm { padding: 5px 12px; font-size: 12px; }
-  .layout { display: grid; grid-template-columns: 220px 1fr; min-height: calc(100vh - 56px); }
-  aside { background: #fff; border-right: 1px solid var(--border); padding: 20px 0; }
-  .nav-group { margin-bottom: 8px; }
-  .nav-group-title { font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: #999; padding: 8px 20px 4px; }
-  .nav-item { display: block; padding: 9px 20px; font-size: 13px; color: #444; cursor: pointer; border-left: 3px solid transparent; transition: all 0.15s; }
-  .nav-item:hover { background: #f8f6ff; color: var(--purple); }
-  .nav-item.active { background: #f3eeff; color: var(--purple); border-left-color: var(--purple); font-weight: 600; }
-  main { padding: 32px; overflow-y: auto; }
-  .page-section { display: none; }
-  .page-section.active { display: block; }
-  .section-title { font-size: 20px; font-weight: 700; margin-bottom: 6px; }
-  .section-desc { color: #777; font-size: 13px; margin-bottom: 24px; }
-  .card { background: #fff; border: 1px solid var(--border); border-radius: 6px; padding: 24px; margin-bottom: 20px; }
-  .card-title { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #888; margin-bottom: 16px; padding-bottom: 10px; border-bottom: 1px solid var(--border); }
-  .field { margin-bottom: 16px; }
-  .field label { display: block; font-size: 12px; font-weight: 600; color: #555; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.5px; }
-  .field input, .field textarea { width: 100%; border: 1px solid var(--border); border-radius: 3px; padding: 9px 12px; font-size: 13px; color: var(--text); outline: none; transition: border 0.2s; font-family: inherit; background: #fff; }
-  .field input:focus, .field textarea:focus { border-color: var(--purple); box-shadow: 0 0 0 2px rgba(107,70,193,0.1); }
-  .field textarea { min-height: 90px; resize: vertical; }
-  .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-  .field-hint { font-size: 11px; color: #aaa; margin-top: 4px; }
-  .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 24px; }
-  .stat-box { background: #fff; border: 1px solid var(--border); border-radius: 6px; padding: 16px; text-align: center; }
-  .stat-box .num { font-size: 28px; font-weight: 800; color: var(--purple); }
-  .stat-box .lbl { font-size: 11px; color: #999; margin-top: 4px; }
-  #toast { position: fixed; bottom: 24px; right: 24px; background: var(--success); color: #fff; padding: 12px 24px; border-radius: 4px; font-size: 13px; font-weight: 600; opacity: 0; transition: opacity 0.3s; z-index: 999; pointer-events: none; }
-  #toast.show { opacity: 1; }
-  .service-item, .blog-item { border: 1px solid var(--border); border-radius: 4px; padding: 16px; margin-bottom: 12px; background: #fafafa; }
-  .service-item-header, .blog-item-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
-  .service-item-header span, .blog-item-header span { font-weight: 700; font-size: 13px; }
-  .preview-bar { background: #f3eeff; border: 1px solid #d6c8f7; border-radius: 4px; padding: 10px 16px; margin-bottom: 24px; display: flex; align-items: center; justify-content: space-between; }
-  .preview-bar span { font-size: 13px; color: var(--purple); }
-  .preview-bar a { font-size: 12px; font-weight: 600; color: var(--purple); text-decoration: none; border: 1px solid var(--purple); padding: 4px 12px; border-radius: 2px; }
-  .lang-badge { font-size: 11px; background: #444; padding: 2px 8px; border-radius: 2px; color: #ccc; letter-spacing: 1px; }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --purple: #6b46c1; --purple-light: #805ad5;
+  --dark: #1a1a1a; --border: #e0e0e0;
+  --text: #222; --success: #38a169; --bg: #f5f5f5;
+}
+body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; background: var(--bg); color: var(--text); font-size: 14px; }
+
+/* HEADER */
+header { background: var(--dark); padding: 0 28px; height: 54px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
+.brand { color: #fff; font-size: 15px; font-weight: 700; }
+.brand span { color: var(--purple); }
+.header-right { display: flex; gap: 10px; align-items: center; }
+.btn { padding: 7px 16px; font-size: 13px; font-weight: 600; border: none; cursor: pointer; border-radius: 3px; transition: all 0.2s; }
+.btn-purple { background: var(--purple); color: #fff; }
+.btn-purple:hover { background: var(--purple-light); }
+.btn-outline { background: transparent; border: 1.5px solid #555; color: #ccc; }
+.btn-outline:hover { border-color: #fff; color: #fff; }
+.btn-sm { padding: 5px 12px; font-size: 12px; }
+
+/* LAYOUT */
+.layout { display: grid; grid-template-columns: 200px 1fr; min-height: calc(100vh - 54px); }
+
+/* SIDEBAR */
+aside { background: #fff; border-right: 1px solid var(--border); padding: 16px 0; position: sticky; top: 54px; height: calc(100vh - 54px); overflow-y: auto; }
+.nav-group-title { font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: #aaa; padding: 10px 18px 4px; }
+.nav-item { display: block; padding: 8px 18px; font-size: 13px; color: #555; cursor: pointer; border-left: 3px solid transparent; }
+.nav-item:hover { background: #f8f6ff; color: var(--purple); }
+.nav-item.active { background: #f3eeff; color: var(--purple); border-left-color: var(--purple); font-weight: 600; }
+
+/* MAIN */
+main { padding: 28px 32px; }
+.page-section { display: none; }
+.page-section.active { display: block; }
+.section-title { font-size: 19px; font-weight: 700; margin-bottom: 4px; }
+.section-desc { color: #888; font-size: 13px; margin-bottom: 22px; }
+
+/* CARD */
+.card { background: #fff; border: 1px solid var(--border); border-radius: 6px; padding: 22px; margin-bottom: 18px; }
+.card-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #999; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
+
+/* BILINGUAL FIELD */
+.field { margin-bottom: 14px; }
+.field > label { display: block; font-size: 11px; font-weight: 700; color: #777; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
+.bilingual { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.lang-input { display: flex; flex-direction: column; gap: 4px; }
+.lang-label { font-size: 10px; font-weight: 700; letter-spacing: 1px; padding: 2px 6px; border-radius: 2px; width: fit-content; }
+.lang-tr { background: #e8f4fd; color: #1a6fa0; }
+.lang-en { background: #fde8e8; color: #a01a1a; }
+input[type=text], input[type=password], input[type=url], textarea, select {
+  width: 100%; border: 1px solid var(--border); border-radius: 3px;
+  padding: 8px 10px; font-size: 13px; color: var(--text);
+  outline: none; transition: border 0.2s; font-family: inherit; background: #fff;
+}
+input:focus, textarea:focus { border-color: var(--purple); box-shadow: 0 0 0 2px rgba(107,70,193,0.08); }
+textarea { resize: vertical; min-height: 72px; }
+.field-hint { font-size: 11px; color: #aaa; margin-top: 3px; }
+
+/* SINGLE FIELD (not bilingual) */
+.field-single input, .field-single textarea { max-width: 100%; }
+
+/* REPEATER */
+.rep-item { border: 1px solid var(--border); border-radius: 4px; padding: 14px; margin-bottom: 10px; background: #fafafa; }
+.rep-header { font-size: 12px; font-weight: 700; color: #888; margin-bottom: 12px; }
+
+/* PREVIEW BAR */
+.preview-bar { background: #f3eeff; border: 1px solid #d6c8f7; border-radius: 4px; padding: 10px 16px; margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between; }
+.preview-bar span { font-size: 13px; color: var(--purple); font-weight: 600; }
+.preview-bar a { font-size: 12px; font-weight: 600; color: var(--purple); text-decoration: none; border: 1px solid var(--purple); padding: 4px 12px; border-radius: 2px; margin-left: 8px; }
+.preview-bar a:hover { background: var(--purple); color: #fff; }
+
+/* STATS ROW */
+.stats-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; margin-bottom: 20px; }
+.stat-box { background: #fff; border: 1px solid var(--border); border-radius: 6px; padding: 14px; text-align: center; }
+.stat-box .n { font-size: 26px; font-weight: 800; color: var(--purple); }
+.stat-box .l { font-size: 11px; color: #aaa; margin-top: 3px; }
+
+/* TOAST */
+#toast { position: fixed; bottom: 22px; right: 22px; background: var(--success); color: #fff; padding: 11px 22px; border-radius: 4px; font-size: 13px; font-weight: 600; opacity: 0; transition: opacity 0.3s; z-index: 9999; pointer-events: none; }
+#toast.show { opacity: 1; }
 </style>
 </head>
 <body>
 
 <header>
-  <div class="brand">Vildan<span>.</span> &nbsp;Admin &nbsp;<span id="lang-indicator" class="lang-badge">TR</span></div>
-  <div class="actions">
-    <button id="lang-btn" class="btn btn-outline btn-sm" onclick="toggleLang()">🇬🇧 EN'e Geç</button>
+  <div class="brand">Vildan<span>.</span> &nbsp; Admin</div>
+  <div class="header-right">
     <button class="btn btn-outline btn-sm" onclick="resetAll()">Sıfırla</button>
-    <button class="btn btn-purple btn-sm" onclick="saveAll()">Kaydet &amp; Uygula</button>
+    <button class="btn btn-purple btn-sm" onclick="saveAll()">💾 Kaydet &amp; Uygula</button>
   </div>
 </header>
 
 <div class="layout">
-  <aside>
-    <div class="nav-group">
-      <div class="nav-group-title">Genel</div>
-      <div class="nav-item active" onclick="showSection('dashboard',this)">Özet</div>
-      <div class="nav-item" onclick="showSection('brand',this)">Marka & Menü</div>
-    </div>
-    <div class="nav-group">
-      <div class="nav-group-title">Sayfalar</div>
-      <div class="nav-item" onclick="showSection('hero',this)">Hero</div>
-      <div class="nav-item" onclick="showSection('why',this)">Neden Bağımsız</div>
-      <div class="nav-item" onclick="showSection('stats',this)">İstatistikler</div>
-      <div class="nav-item" onclick="showSection('values',this)">Temel İlkeler</div>
-      <div class="nav-item" onclick="showSection('about',this)">Hakkımda</div>
-      <div class="nav-item" onclick="showSection('services',this)">Hizmetlerim</div>
-      <div class="nav-item" onclick="showSection('blog',this)">Yazılarım</div>
-      <div class="nav-item" onclick="showSection('quote',this)">Alıntı</div>
-      <div class="nav-item" onclick="showSection('contact',this)">İletişim</div>
-      <div class="nav-item" onclick="showSection('footer',this)">Footer</div>
-    </div>
-  </aside>
+<aside>
+  <div class="nav-group-title">Genel</div>
+  <div class="nav-item active" onclick="nav('dashboard',this)">📊 Özet</div>
+  <div class="nav-item" onclick="nav('brand',this)">🎨 Marka & Menü</div>
+  <div class="nav-item" onclick="nav('photos',this)">🖼 Fotoğraflar</div>
 
-  <main>
+  <div class="nav-group-title">Ana Sayfa</div>
+  <div class="nav-item" onclick="nav('hero',this)">Hero</div>
+  <div class="nav-item" onclick="nav('why',this)">Neden Bağımsız</div>
+  <div class="nav-item" onclick="nav('about-dark',this)">Hakkımda Koyu</div>
+  <div class="nav-item" onclick="nav('stats',this)">İstatistikler</div>
+  <div class="nav-item" onclick="nav('values',this)">Temel İlkeler</div>
+  <div class="nav-item" onclick="nav('quote',this)">Alıntı</div>
 
-    <div id="s-dashboard" class="page-section active">
-      <div class="section-title">Hoş Geldiniz</div>
-      <div class="section-desc">Düzenlemek istediğin bölümü sol menüden seç, değişiklikleri yap, <strong>Kaydet & Uygula</strong>'ya bas. Siteyi aç, F5'e bas.</div>
-      <div class="preview-bar">
-        <span>Site önizlemesi</span>
-        <div>
-          <a href="index.html" target="_blank">TR Siteyi Aç</a>
-          &nbsp;
-          <a href="index_en.html" target="_blank">EN Siteyi Aç</a>
-        </div>
-      </div>
-      <div class="stats-grid">
-        <div class="stat-box"><div class="num">6</div><div class="lbl">Hizmet</div></div>
-        <div class="stat-box"><div class="num">6</div><div class="lbl">Blog Yazısı</div></div>
-        <div class="stat-box"><div class="num">5</div><div class="lbl">Temel İlke</div></div>
-        <div class="stat-box"><div class="num">4</div><div class="lbl">İstatistik</div></div>
-      </div>
+  <div class="nav-group-title">Diğer Sayfalar</div>
+  <div class="nav-item" onclick="nav('services',this)">Hizmetlerim</div>
+  <div class="nav-item" onclick="nav('blog',this)">Yazılarım</div>
+  <div class="nav-item" onclick="nav('contact',this)">İletişim</div>
+  <div class="nav-item" onclick="nav('footer',this)">Footer</div>
+</aside>
+
+<main>
+
+<!-- DASHBOARD -->
+<div id="s-dashboard" class="page-section active">
+  <div class="section-title">Hoş Geldiniz</div>
+  <div class="section-desc">Her alanda TR ve EN metnini girin. <strong>Kaydet & Uygula</strong>'ya basın — her iki site anında güncellenir.</div>
+  <div class="preview-bar">
+    <span>Siteyi önizle</span>
+    <div>
+      <a href="index.html" target="_blank">🇹🇷 TR Site</a>
+      <a href="index_en.html" target="_blank">🇬🇧 EN Site</a>
     </div>
+  </div>
+  <div class="stats-row">
+    <div class="stat-box"><div class="n">6</div><div class="l">Hizmet</div></div>
+    <div class="stat-box"><div class="n">6</div><div class="l">Blog Yazısı</div></div>
+    <div class="stat-box"><div class="n">5</div><div class="l">Temel İlke</div></div>
+    <div class="stat-box"><div class="n">4</div><div class="l">İstatistik</div></div>
+  </div>
+  <div class="card">
+    <div class="card-title">Nasıl Kullanılır</div>
+    <ul style="padding-left:18px;line-height:2.4;font-size:13px;color:#555;">
+      <li>Sol menüden bölüm seç</li>
+      <li>Her alan için <span style="background:#e8f4fd;color:#1a6fa0;padding:1px 6px;border-radius:2px;font-size:11px;font-weight:700;">TR</span> ve <span style="background:#fde8e8;color:#a01a1a;padding:1px 6px;border-radius:2px;font-size:11px;font-weight:700;">EN</span> metinlerini gir</li>
+      <li>Sağ üstte <strong>Kaydet & Uygula</strong>'ya bas</li>
+      <li>TR ve EN siteler otomatik güncellenir — F5 yeterli</li>
+    </ul>
+  </div>
+</div>
 
-    <div id="s-brand" class="page-section">
-      <div class="section-title">Marka & Menü</div>
-      <div class="card">
-        <div class="card-title">Logo</div>
-        <div class="field-row">
-          <div class="field"><label>İsim</label><input id="b-name" type="text"></div>
-          <div class="field"><label>Alt başlık</label><input id="b-sub" type="text"></div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-title">Menü Linkleri</div>
-        <div class="field-row">
-          <div class="field"><label>Hakkımda</label><input id="m-about" type="text"></div>
-          <div class="field"><label>Hizmetlerim</label><input id="m-services" type="text"></div>
-        </div>
-        <div class="field-row">
-          <div class="field"><label>Yazılarım</label><input id="m-resources" type="text"></div>
-          <div class="field"><label>Deneyimim</label><input id="m-team" type="text"></div>
-        </div>
-        <div class="field-row">
-          <div class="field"><label>İletişim</label><input id="m-contact" type="text"></div>
-          <div class="field"><label>CTA Butonu</label><input id="m-cta" type="text"></div>
-        </div>
+<!-- MARKA & MENÜ -->
+<div id="s-brand" class="page-section">
+  <div class="section-title">Marka & Menü</div>
+  <div class="card">
+    <div class="card-title">Logo</div>
+    <div class="field">
+      <label>Logo Adı (değiştirme)</label>
+      <div class="bilingual">
+        <div class="lang-input"><span class="lang-label lang-tr">TR</span><input type="text" id="b-name-tr" placeholder="Vildan"></div>
+        <div class="lang-input"><span class="lang-label lang-en">EN</span><input type="text" id="b-name-en" placeholder="Vildan"></div>
       </div>
     </div>
-
-    <div id="s-hero" class="page-section">
-      <div class="section-title">Hero Bölümü</div>
-      <div class="card">
-        <div class="field"><label>Büyük Başlık</label><textarea id="h-title"></textarea></div>
-        <div class="field"><label>Alt Metin</label><textarea id="h-sub"></textarea></div>
-        <div class="field"><label>Buton</label><input id="h-btn" type="text"></div>
-      </div>
-      <div class="card">
-        <div class="card-title">Bülten Kutusu</div>
-        <div class="field"><label>Başlık</label><input id="h-nl-title" type="text"></div>
-        <div class="field"><label>Buton</label><input id="h-nl-btn" type="text"></div>
-        <div class="field"><label>Checkbox Metni</label><input id="h-nl-check" type="text"></div>
+    <div class="field">
+      <label>Logo Alt Başlık</label>
+      <div class="bilingual">
+        <div class="lang-input"><span class="lang-label lang-tr">TR</span><input type="text" id="b-sub-tr" placeholder="Bağımsız Danışman"></div>
+        <div class="lang-input"><span class="lang-label lang-en">EN</span><input type="text" id="b-sub-en" placeholder="Independent Advisor"></div>
       </div>
     </div>
-
-    <div id="s-why" class="page-section">
-      <div class="section-title">Neden Bağımsız</div>
-      <div class="card"><div class="field"><label>Başlık</label><input id="w-title" type="text"></div></div>
-      <div class="card"><div class="card-title">Kutu 1</div><div class="field-row"><div class="field"><label>Başlık</label><input id="w1-title" type="text"></div><div class="field"><label>Metin</label><input id="w1-text" type="text"></div></div></div>
-      <div class="card"><div class="card-title">Kutu 2</div><div class="field-row"><div class="field"><label>Başlık</label><input id="w2-title" type="text"></div><div class="field"><label>Metin</label><input id="w2-text" type="text"></div></div></div>
-      <div class="card"><div class="card-title">Kutu 3</div><div class="field-row"><div class="field"><label>Başlık</label><input id="w3-title" type="text"></div><div class="field"><label>Metin</label><input id="w3-text" type="text"></div></div></div>
-      <div class="card"><div class="card-title">Kutu 4</div><div class="field-row"><div class="field"><label>Başlık</label><input id="w4-title" type="text"></div><div class="field"><label>Metin</label><input id="w4-text" type="text"></div></div></div>
-    </div>
-
-    <div id="s-stats" class="page-section">
-      <div class="section-title">İstatistikler</div>
-      <div class="card"><div class="field"><label>Başlık</label><input id="st-title" type="text"></div><div class="field"><label>Paragraf 1</label><textarea id="st-p1"></textarea></div><div class="field"><label>Paragraf 2</label><textarea id="st-p2"></textarea></div></div>
-      <div class="card"><div class="card-title">İstatistik 1</div><div class="field-row"><div class="field"><label>Sayı</label><input id="s1-num" type="text"></div><div class="field"><label>Etiket</label><input id="s1-lbl" type="text"></div></div></div>
-      <div class="card"><div class="card-title">İstatistik 2</div><div class="field-row"><div class="field"><label>Sayı</label><input id="s2-num" type="text"></div><div class="field"><label>Etiket</label><input id="s2-lbl" type="text"></div></div></div>
-      <div class="card"><div class="card-title">İstatistik 3</div><div class="field-row"><div class="field"><label>Sayı</label><input id="s3-num" type="text"></div><div class="field"><label>Etiket</label><input id="s3-lbl" type="text"></div></div></div>
-      <div class="card"><div class="card-title">İstatistik 4</div><div class="field-row"><div class="field"><label>Sayı</label><input id="s4-num" type="text"></div><div class="field"><label>Etiket</label><input id="s4-lbl" type="text"></div></div></div>
-    </div>
-
-    <div id="s-values" class="page-section">
-      <div class="section-title">Temel İlkeler</div>
-      <div class="card"><div class="field-row"><div class="field"><label>Başlık</label><input id="v-title" type="text"></div><div class="field"><label>Alt Başlık</label><input id="v-sub" type="text"></div></div></div>
-      <div id="values-list"></div>
-    </div>
-
-    <div id="s-about" class="page-section">
-      <div class="section-title">Hakkımda</div>
-      <div class="card">
-        <div class="card-title">Ana Sayfa Koyu Bölüm</div>
-        <div class="field"><label>Başlık</label><input id="a-title" type="text"></div>
-        <div class="field"><label>Alt Başlık</label><input id="a-sub" type="text"></div>
-        <div class="field"><label>Paragraf 1</label><textarea id="a-p1"></textarea></div>
-        <div class="field"><label>Paragraf 2</label><textarea id="a-p2"></textarea></div>
-        <div class="field"><label>Buton</label><input id="a-btn" type="text"></div>
+  </div>
+  <div class="card">
+    <div class="card-title">Menü Linkleri</div>
+    <div class="field">
+      <label>Hakkımda / About</label>
+      <div class="bilingual">
+        <div class="lang-input"><span class="lang-label lang-tr">TR</span><input type="text" id="m-about-tr"></div>
+        <div class="lang-input"><span class="lang-label lang-en">EN</span><input type="text" id="m-about-en"></div>
       </div>
     </div>
-
-    <div id="s-services" class="page-section">
-      <div class="section-title">Hizmetlerim</div>
-      <div class="card"><div class="field-row"><div class="field"><label>Başlık</label><input id="sv-title" type="text"></div><div class="field"><label>Alt Başlık</label><input id="sv-sub" type="text"></div></div></div>
-      <div id="services-list"></div>
-    </div>
-
-    <div id="s-blog" class="page-section">
-      <div class="section-title">Yazılarım</div>
-      <div class="card"><div class="field-row"><div class="field"><label>Başlık</label><input id="bl-title" type="text"></div><div class="field"><label>Alt Başlık</label><input id="bl-sub" type="text"></div></div></div>
-      <div id="blog-list"></div>
-    </div>
-
-    <div id="s-quote" class="page-section">
-      <div class="section-title">Alıntı</div>
-      <div class="card">
-        <div class="field"><label>Alıntı Metni</label><textarea id="q-text" style="min-height:120px;"></textarea></div>
-        <div class="field"><label>Kaynak</label><input id="q-source" type="text"></div>
+    <div class="field">
+      <label>Hizmetlerim / Services</label>
+      <div class="bilingual">
+        <div class="lang-input"><span class="lang-label lang-tr">TR</span><input type="text" id="m-services-tr"></div>
+        <div class="lang-input"><span class="lang-label lang-en">EN</span><input type="text" id="m-services-en"></div>
       </div>
     </div>
-
-    <div id="s-contact" class="page-section">
-      <div class="section-title">İletişim</div>
-      <div class="card">
-        <div class="field"><label>Başlık</label><input id="c-title" type="text"></div>
-        <div class="field"><label>Tagline</label><input id="c-tag" type="text"></div>
-        <div class="field"><label>Gönder Butonu</label><input id="c-btn" type="text"></div>
-        <div class="field"><label>Chat Başlık</label><input id="c-chat-title" type="text"></div>
-        <div class="field"><label>Chat Metin</label><textarea id="c-chat-text"></textarea></div>
-      </div>
-      <div class="card">
-        <div class="card-title">SSS</div>
-        <div class="field"><label>Soru 1</label><input id="faq1-q" type="text"></div>
-        <div class="field"><label>Cevap 1</label><textarea id="faq1-a"></textarea></div>
-        <div class="field"><label>Soru 2</label><input id="faq2-q" type="text"></div>
-        <div class="field"><label>Cevap 2</label><textarea id="faq2-a"></textarea></div>
-        <div class="field"><label>Soru 3</label><input id="faq3-q" type="text"></div>
-        <div class="field"><label>Cevap 3</label><textarea id="faq3-a"></textarea></div>
+    <div class="field">
+      <label>Yazılarım / Resources</label>
+      <div class="bilingual">
+        <div class="lang-input"><span class="lang-label lang-tr">TR</span><input type="text" id="m-resources-tr"></div>
+        <div class="lang-input"><span class="lang-label lang-en">EN</span><input type="text" id="m-resources-en"></div>
       </div>
     </div>
-
-    <div id="s-footer" class="page-section">
-      <div class="section-title">Footer</div>
-      <div class="card">
-        <div class="field"><label>Büyük Başlık</label><input id="f-title" type="text"></div>
-        <div class="field"><label>Buton</label><input id="f-btn" type="text"></div>
-        <div class="field-row">
-          <div class="field"><label>Telefon</label><input id="f-phone" type="text"></div>
-          <div class="field"><label>E-posta</label><input id="f-email" type="text"></div>
-        </div>
-        <div class="field-row">
-          <div class="field"><label>Konum</label><input id="f-location" type="text"></div>
-          <div class="field"><label>LinkedIn URL</label><input id="f-linkedin" type="text"></div>
-        </div>
-        <div class="field"><label>Copyright</label><input id="f-copy" type="text"></div>
+    <div class="field">
+      <label>Deneyimim / Experience</label>
+      <div class="bilingual">
+        <div class="lang-input"><span class="lang-label lang-tr">TR</span><input type="text" id="m-team-tr"></div>
+        <div class="lang-input"><span class="lang-label lang-en">EN</span><input type="text" id="m-team-en"></div>
       </div>
     </div>
+    <div class="field">
+      <label>İletişim / Contact</label>
+      <div class="bilingual">
+        <div class="lang-input"><span class="lang-label lang-tr">TR</span><input type="text" id="m-contact-tr"></div>
+        <div class="lang-input"><span class="lang-label lang-en">EN</span><input type="text" id="m-contact-en"></div>
+      </div>
+    </div>
+    <div class="field">
+      <label>CTA Butonu</label>
+      <div class="bilingual">
+        <div class="lang-input"><span class="lang-label lang-tr">TR</span><input type="text" id="m-cta-tr"></div>
+        <div class="lang-input"><span class="lang-label lang-en">EN</span><input type="text" id="m-cta-en"></div>
+      </div>
+    </div>
+  </div>
+</div>
 
-  </main>
+<!-- FOTOĞRAFLAR -->
+<div id="s-photos" class="page-section">
+  <div class="section-title">Fotoğraflar</div>
+  <div class="section-desc">Fotoğraf URL'si girin. GitHub'a yüklediğiniz fotoğraf için URL: <code>https://selimkayacan.github.io/vildanwebsite/DOSYAADI.jpg</code></div>
+  <div class="card">
+    <div class="card-title">Profil Fotoğrafı</div>
+    <div class="field field-single">
+      <label>Profil Fotoğrafı URL (About sayfası yuvarlak fotoğraf)</label>
+      <input type="url" id="photo-profile" placeholder="https://selimkayacan.github.io/vildanwebsite/vildan.jpg">
+      <div class="field-hint">GitHub'a fotoğrafı yükleyin, URL'yi buraya yapıştırın. Her iki dilde de aynı fotoğraf kullanılır.</div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">Arka Plan Görselleri</div>
+    <div class="field field-single">
+      <label>Hero Arka Plan</label>
+      <input type="url" id="photo-hero-bg" placeholder="https://images.unsplash.com/...">
+    </div>
+    <div class="field field-single">
+      <label>About Koyu Bölüm Arka Plan</label>
+      <input type="url" id="photo-about-bg" placeholder="https://images.unsplash.com/...">
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">GitHub'a Fotoğraf Yükleme</div>
+    <ol style="padding-left:18px;line-height:2.4;font-size:13px;color:#555;">
+      <li><a href="https://github.com/selimkayacan/vildanwebsite" target="_blank" style="color:var(--purple);">github.com/selimkayacan/vildanwebsite</a> adresine git</li>
+      <li><strong>Add file → Upload files</strong> butonuna tıkla</li>
+      <li>Fotoğrafı sürükle bırak (örn. <code>vildan.jpg</code>)</li>
+      <li><strong>Commit changes</strong> de</li>
+      <li>URL: <code>https://selimkayacan.github.io/vildanwebsite/vildan.jpg</code></li>
+    </ol>
+  </div>
+</div>
+
+<!-- HERO -->
+<div id="s-hero" class="page-section">
+  <div class="section-title">Hero Bölümü</div>
+  <div class="card">
+    <div class="field">
+      <label>Büyük Başlık</label>
+      <div class="bilingual">
+        <div class="lang-input"><span class="lang-label lang-tr">TR</span><textarea id="h-title-tr" rows="3"></textarea></div>
+        <div class="lang-input"><span class="lang-label lang-en">EN</span><textarea id="h-title-en" rows="3"></textarea></div>
+      </div>
+    </div>
+    <div class="field">
+      <label>Alt Metin</label>
+      <div class="bilingual">
+        <div class="lang-input"><span class="lang-label lang-tr">TR</span><textarea id="h-sub-tr"></textarea></div>
+        <div class="lang-input"><span class="lang-label lang-en">EN</span><textarea id="h-sub-en"></textarea></div>
+      </div>
+    </div>
+    <div class="field">
+      <label>Buton</label>
+      <div class="bilingual">
+        <div class="lang-input"><span class="lang-label lang-tr">TR</span><input type="text" id="h-btn-tr"></div>
+        <div class="lang-input"><span class="lang-label lang-en">EN</span><input type="text" id="h-btn-en"></div>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">Bülten Kutusu</div>
+    <div class="field">
+      <label>Başlık</label>
+      <div class="bilingual">
+        <div class="lang-input"><span class="lang-label lang-tr">TR</span><input type="text" id="h-nl-title-tr"></div>
+        <div class="lang-input"><span class="lang-label lang-en">EN</span><input type="text" id="h-nl-title-en"></div>
+      </div>
+    </div>
+    <div class="field">
+      <label>Buton</label>
+      <div class="bilingual">
+        <div class="lang-input"><span class="lang-label lang-tr">TR</span><input type="text" id="h-nl-btn-tr"></div>
+        <div class="lang-input"><span class="lang-label lang-en">EN</span><input type="text" id="h-nl-btn-en"></div>
+      </div>
+    </div>
+    <div class="field">
+      <label>Checkbox Metni</label>
+      <div class="bilingual">
+        <div class="lang-input"><span class="lang-label lang-tr">TR</span><input type="text" id="h-nl-check-tr"></div>
+        <div class="lang-input"><span class="lang-label lang-en">EN</span><input type="text" id="h-nl-check-en"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- NEDEN BAĞIMSIZ -->
+<div id="s-why" class="page-section">
+  <div class="section-title">Neden Bağımsız</div>
+  <div class="card">
+    <div class="field">
+      <label>Bölüm Başlığı</label>
+      <div class="bilingual">
+        <div class="lang-input"><span class="lang-label lang-tr">TR</span><input type="text" id="w-title-tr"></div>
+        <div class="lang-input"><span class="lang-label lang-en">EN</span><input type="text" id="w-title-en"></div>
+      </div>
+    </div>
+  </div>
+  <div id="why-cards"></div>
+</div>
+
+<!-- HAKKIMDA KOYU -->
+<div id="s-about-dark" class="page-section">
+  <div class="section-title">Hakkımda — Ana Sayfa Koyu Bölüm</div>
+  <div class="card">
+    <div class="field">
+      <label>Başlık</label>
+      <div class="bilingual">
+        <div class="lang-input"><span class="lang-label lang-tr">TR</span><input type="text" id="ad-title-tr"></div>
+        <div class="lang-input"><span class="lang-label lang-en">EN</span><input type="text" id="ad-title-en"></div>
+      </div>
+    </div>
+    <div class="field">
+      <label>Alt Başlık</label>
+      <div class="bilingual">
+        <div class="lang-input"><span class="lang-label lang-tr">TR</span><input type="text" id="ad-sub-tr"></div>
+        <div class="lang-input"><span class="lang-label lang-en">EN</span><input type="text" id="ad-sub-en"></div>
+      </div>
+    </div>
+    <div class="field">
+      <label>Paragraf 1</label>
+      <div class="bilingual">
+        <div class="lang-input"><span class="lang-label lang-tr">TR</span><textarea id="ad-p1-tr"></textarea></div>
+        <div class="lang-input"><span class="lang-label lang-en">EN</span><textarea id="ad-p1-en"></textarea></div>
+      </div>
+    </div>
+    <div class="field">
+      <label>Paragraf 2</label>
+      <div class="bilingual">
+        <div class="lang-input"><span class="lang-label lang-tr">TR</span><textarea id="ad-p2-tr"></textarea></div>
+        <div class="lang-input"><span class="lang-label lang-en">EN</span><textarea id="ad-p2-en"></textarea></div>
+      </div>
+    </div>
+    <div class="field">
+      <label>Buton</label>
+      <div class="bilingual">
+        <div class="lang-input"><span class="lang-label lang-tr">TR</span><input type="text" id="ad-btn-tr"></div>
+        <div class="lang-input"><span class="lang-label lang-en">EN</span><input type="text" id="ad-btn-en"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- İSTATİSTİKLER -->
+<div id="s-stats" class="page-section">
+  <div class="section-title">İstatistikler</div>
+  <div class="card">
+    <div class="field">
+      <label>Başlık</label>
+      <div class="bilingual">
+        <div class="lang-input"><span class="lang-label lang-tr">TR</span><input type="text" id="st-title-tr"></div>
+        <div class="lang-input"><span class="lang-label lang-en">EN</span><input type="text" id="st-title-en"></div>
+      </div>
+    </div>
+    <div class="field">
+      <label>Sağ Paragraf 1</label>
+      <div class="bilingual">
+        <div class="lang-input"><span class="lang-label lang-tr">TR</span><textarea id="st-p1-tr"></textarea></div>
+        <div class="lang-input"><span class="lang-label lang-en">EN</span><textarea id="st-p1-en"></textarea></div>
+      </div>
+    </div>
+    <div class="field">
+      <label>Sağ Paragraf 2</label>
+      <div class="bilingual">
+        <div class="lang-input"><span class="lang-label lang-tr">TR</span><textarea id="st-p2-tr"></textarea></div>
+        <div class="lang-input"><span class="lang-label lang-en">EN</span><textarea id="st-p2-en"></textarea></div>
+      </div>
+    </div>
+  </div>
+  <div id="stats-cards"></div>
+</div>
+
+<!-- TEMEL İLKELER -->
+<div id="s-values" class="page-section">
+  <div class="section-title">Temel İlkeler</div>
+  <div class="card">
+    <div class="field">
+      <label>Başlık</label>
+      <div class="bilingual">
+        <div class="lang-input"><span class="lang-label lang-tr">TR</span><input type="text" id="v-title-tr"></div>
+        <div class="lang-input"><span class="lang-label lang-en">EN</span><input type="text" id="v-title-en"></div>
+      </div>
+    </div>
+    <div class="field">
+      <label>Alt Başlık</label>
+      <div class="bilingual">
+        <div class="lang-input"><span class="lang-label lang-tr">TR</span><input type="text" id="v-sub-tr"></div>
+        <div class="lang-input"><span class="lang-label lang-en">EN</span><input type="text" id="v-sub-en"></div>
+      </div>
+    </div>
+  </div>
+  <div id="values-cards"></div>
+</div>
+
+<!-- ALINTI -->
+<div id="s-quote" class="page-section">
+  <div class="section-title">Alıntı</div>
+  <div class="card">
+    <div class="field">
+      <label>Alıntı Metni</label>
+      <div class="bilingual">
+        <div class="lang-input"><span class="lang-label lang-tr">TR</span><textarea id="q-text-tr" style="min-height:100px;"></textarea></div>
+        <div class="lang-input"><span class="lang-label lang-en">EN</span><textarea id="q-text-en" style="min-height:100px;"></textarea></div>
+      </div>
+    </div>
+    <div class="field">
+      <label>Kaynak (aynı her iki dilde)</label>
+      <div class="field field-single"><input type="text" id="q-source"></div>
+    </div>
+  </div>
+</div>
+
+<!-- HİZMETLERİM -->
+<div id="s-services" class="page-section">
+  <div class="section-title">Hizmetlerim</div>
+  <div class="card">
+    <div class="field">
+      <label>Bölüm Başlığı</label>
+      <div class="bilingual">
+        <div class="lang-input"><span class="lang-label lang-tr">TR</span><input type="text" id="sv-title-tr"></div>
+        <div class="lang-input"><span class="lang-label lang-en">EN</span><input type="text" id="sv-title-en"></div>
+      </div>
+    </div>
+    <div class="field">
+      <label>Alt Başlık</label>
+      <div class="bilingual">
+        <div class="lang-input"><span class="lang-label lang-tr">TR</span><input type="text" id="sv-sub-tr"></div>
+        <div class="lang-input"><span class="lang-label lang-en">EN</span><input type="text" id="sv-sub-en"></div>
+      </div>
+    </div>
+  </div>
+  <div id="services-cards"></div>
+</div>
+
+<!-- YAZILARIM -->
+<div id="s-blog" class="page-section">
+  <div class="section-title">Yazılarım</div>
+  <div class="card">
+    <div class="field">
+      <label>Bölüm Başlığı</label>
+      <div class="bilingual">
+        <div class="lang-input"><span class="lang-label lang-tr">TR</span><input type="text" id="bl-title-tr"></div>
+        <div class="lang-input"><span class="lang-label lang-en">EN</span><input type="text" id="bl-title-en"></div>
+      </div>
+    </div>
+    <div class="field">
+      <label>Alt Başlık</label>
+      <div class="bilingual">
+        <div class="lang-input"><span class="lang-label lang-tr">TR</span><input type="text" id="bl-sub-tr"></div>
+        <div class="lang-input"><span class="lang-label lang-en">EN</span><input type="text" id="bl-sub-en"></div>
+      </div>
+    </div>
+  </div>
+  <div id="blog-cards"></div>
+</div>
+
+<!-- İLETİŞİM -->
+<div id="s-contact" class="page-section">
+  <div class="section-title">İletişim</div>
+  <div class="card">
+    <div class="field">
+      <label>Başlık</label>
+      <div class="bilingual">
+        <div class="lang-input"><span class="lang-label lang-tr">TR</span><input type="text" id="c-title-tr"></div>
+        <div class="lang-input"><span class="lang-label lang-en">EN</span><input type="text" id="c-title-en"></div>
+      </div>
+    </div>
+    <div class="field">
+      <label>Tagline</label>
+      <div class="bilingual">
+        <div class="lang-input"><span class="lang-label lang-tr">TR</span><input type="text" id="c-tag-tr"></div>
+        <div class="lang-input"><span class="lang-label lang-en">EN</span><input type="text" id="c-tag-en"></div>
+      </div>
+    </div>
+    <div class="field">
+      <label>Gönder Butonu</label>
+      <div class="bilingual">
+        <div class="lang-input"><span class="lang-label lang-tr">TR</span><input type="text" id="c-btn-tr"></div>
+        <div class="lang-input"><span class="lang-label lang-en">EN</span><input type="text" id="c-btn-en"></div>
+      </div>
+    </div>
+    <div class="field">
+      <label>Doğrudan İletişim Metni</label>
+      <div class="bilingual">
+        <div class="lang-input"><span class="lang-label lang-tr">TR</span><textarea id="c-chat-tr"></textarea></div>
+        <div class="lang-input"><span class="lang-label lang-en">EN</span><textarea id="c-chat-en"></textarea></div>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">SSS</div>
+    <div class="field"><label>Soru 1</label><div class="bilingual"><div class="lang-input"><span class="lang-label lang-tr">TR</span><input type="text" id="faq1-q-tr"></div><div class="lang-input"><span class="lang-label lang-en">EN</span><input type="text" id="faq1-q-en"></div></div></div>
+    <div class="field"><label>Cevap 1</label><div class="bilingual"><div class="lang-input"><span class="lang-label lang-tr">TR</span><textarea id="faq1-a-tr"></textarea></div><div class="lang-input"><span class="lang-label lang-en">EN</span><textarea id="faq1-a-en"></textarea></div></div></div>
+    <div class="field"><label>Soru 2</label><div class="bilingual"><div class="lang-input"><span class="lang-label lang-tr">TR</span><input type="text" id="faq2-q-tr"></div><div class="lang-input"><span class="lang-label lang-en">EN</span><input type="text" id="faq2-q-en"></div></div></div>
+    <div class="field"><label>Cevap 2</label><div class="bilingual"><div class="lang-input"><span class="lang-label lang-tr">TR</span><textarea id="faq2-a-tr"></textarea></div><div class="lang-input"><span class="lang-label lang-en">EN</span><textarea id="faq2-a-en"></textarea></div></div></div>
+    <div class="field"><label>Soru 3</label><div class="bilingual"><div class="lang-input"><span class="lang-label lang-tr">TR</span><input type="text" id="faq3-q-tr"></div><div class="lang-input"><span class="lang-label lang-en">EN</span><input type="text" id="faq3-q-en"></div></div></div>
+    <div class="field"><label>Cevap 3</label><div class="bilingual"><div class="lang-input"><span class="lang-label lang-tr">TR</span><textarea id="faq3-a-tr"></textarea></div><div class="lang-input"><span class="lang-label lang-en">EN</span><textarea id="faq3-a-en"></textarea></div></div></div>
+  </div>
+  <div class="card">
+    <div class="card-title">İletişim Bilgileri (her iki dilde aynı)</div>
+    <div class="field field-single"><label>Telefon</label><input type="text" id="f-phone"></div>
+    <div class="field field-single"><label>E-posta</label><input type="text" id="f-email"></div>
+    <div class="field field-single"><label>LinkedIn URL</label><input type="url" id="f-linkedin"></div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div id="s-footer" class="page-section">
+  <div class="section-title">Footer</div>
+  <div class="card">
+    <div class="field">
+      <label>Büyük Başlık</label>
+      <div class="bilingual">
+        <div class="lang-input"><span class="lang-label lang-tr">TR</span><input type="text" id="ft-title-tr"></div>
+        <div class="lang-input"><span class="lang-label lang-en">EN</span><input type="text" id="ft-title-en"></div>
+      </div>
+    </div>
+    <div class="field">
+      <label>Abone Ol Butonu</label>
+      <div class="bilingual">
+        <div class="lang-input"><span class="lang-label lang-tr">TR</span><input type="text" id="ft-btn-tr"></div>
+        <div class="lang-input"><span class="lang-label lang-en">EN</span><input type="text" id="ft-btn-en"></div>
+      </div>
+    </div>
+    <div class="field">
+      <label>Konum</label>
+      <div class="bilingual">
+        <div class="lang-input"><span class="lang-label lang-tr">TR</span><input type="text" id="ft-location-tr"></div>
+        <div class="lang-input"><span class="lang-label lang-en">EN</span><input type="text" id="ft-location-en"></div>
+      </div>
+    </div>
+    <div class="field">
+      <label>Copyright</label>
+      <div class="bilingual">
+        <div class="lang-input"><span class="lang-label lang-tr">TR</span><input type="text" id="ft-copy-tr"></div>
+        <div class="lang-input"><span class="lang-label lang-en">EN</span><input type="text" id="ft-copy-en"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</main>
 </div>
 
 <div id="toast">Kaydedildi!</div>
 
 <script>
-const DEFAULTS = {
-  brand: { name: 'Vildan', sub: 'Bağımsız Danışman' },
-  menu: { about: 'Hakkımda', services: 'Hizmetlerim', resources: 'Yazılarım', team: 'Deneyimim', contact: 'İletişim', cta: 'İletişime Geç' },
-  hero: { title: 'Dönüşüm Stratejisini Gerçek İş Değerine Dönüştürün', sub: '20+ yıllık EMEA ve META deneyimiyle SAP dönüşümü, yönetilen hizmetler ve yapay zeka benimseme alanlarında bağımsız danışmanlık.', btn: 'İletişime Geç', nl_title: 'Bültenime Abone Olun', nl_btn: 'Abone Ol', nl_check: 'Evet, bültene abone olmak istiyorum.' },
-  why: { title: 'Neden Bağımsız Danışmanlık?', w1: { title: 'Kendi Hızınızda İlerleme', text: 'Kurumunuzun ihtiyacına ve takvime göre şekillenen esnek danışmanlık modeli.' }, w2: { title: 'Sektör Uzmanı Perspektifi', text: '20+ yıl NTT Data, SAP ve Metro Group deneyimiyle gerçek dünya bilgisi.' }, w3: { title: 'Bağımsız ve Tarafsız', text: 'Hiçbir ürün ya da satıcı gündeminden bağımsız, yalnızca sizin çıkarlarınız için.' }, w4: { title: 'Kanıtlanmış Sonuçlar', text: '€1M+ programlar, %35 maliyet düşürümü, 100+ kişilik global ekip kurulumları.' } },
-  stats: { title: 'Misyonum: Dönüşümü Gerçek Kılmak', p1: 'SAP dönüşümünden yapay zeka benimsemesine, tedarikçi seçiminden yönetilen hizmet modellerine kadar — stratejiyi uygulamaya bağlayan köprüyü kuruyoruz.', p2: "CIO'lara ve üst düzey IT liderlerine bağımsız, tarafsız ve sonuç odaklı bir perspektif sunuyorum.", s1: { num: '20+', lbl: 'Yıl Uluslararası Deneyim' }, s2: { num: '3', lbl: 'Global Kurum' }, s3: { num: '%35', lbl: 'Operasyonel Maliyet Düşürümü' }, s4: { num: '100+', lbl: 'Kişilik Global Ekip Kurulumu' } },
-  values: { title: 'Temel İlkelerim', sub: 'Söylediğimi uygularım', items: [ { title: 'Dürüstlük', text: 'Her tavsiye, bağımsız ve tarafsız bir perspektiften verilir.' }, { title: 'Sorumluluk', text: 'Verilen taahhütler her koşulda yerine getirilir.' }, { title: 'Bilgi', text: '20+ yıllık sahada kazanılmış, gerçek dünya bilgisi.' }, { title: 'Kararlılık', text: 'Sonuca ulaşana kadar sürecin her adımında yanınızda.' }, { title: 'Tutku', text: 'Dönüşümün insan boyutuna duyulan derin ilgi ve inanç.' } ] },
-  about: { title: 'Vildan Kara Kayacan Hakkında', sub: 'Dönüşümü içeriden bilen bir danışman', p1: "Uzun yıllar boyunca dünyanın en büyük kurumlarının en kritik dönüşüm programlarını içeriden yönettim. Daimler için Türkiye'nin ilk SAP global destek merkezini kurdum.", p2: 'Bugün bağımsız bir danışman olarak çalışıyorum — çünkü en değerli rehberlik, herhangi bir ürünün, teknoloji firmasının ya da satış gündeminin dışında durabilmekten geçiyor.', btn: 'Daha Fazla' },
-  services: { title: 'Hizmetlerim', sub: 'Dönüşüm sürecinin her aşamasında bağımsız danışmanlık', items: [ { title: 'SAP & S/4HANA Dönüşümü', text: 'S/4HANA geçiş stratejisi, program yönetimi, hedef işletme modeli tasarımı ve go-live sonrası stabilizasyon.' }, { title: 'Yönetilen Hizmetler & İşletme Modeli', text: 'ITIL tabanlı servis modeli tasarımı, SLA/KPI çerçeveleri, çok bölgeli teslimat organizasyonu.' }, { title: 'Tedarikçi Seçimi & RFP Yönetimi', text: 'Bağımsız tedarikçi değerlendirmesi, RFP/RFI süreci tasarımı, teknik ve ticari değerlendirme.' }, { title: 'Program & Portföy Yönetimi', text: 'PMO kurulumu, proje portföyü yönetimi, yönetişim çerçeveleri ve dönüşüm programı liderliği.' }, { title: 'Yapay Zeka Benimseme & Değişim Yönetimi', text: 'Kurumsal AI stratejisi, organizasyonel değişim yönetimi, çalışan hazırlığı ve AI yönetişimi.' }, { title: 'Kurumsal Mimari & Yönetişim', text: 'TOGAF tabanlı kurumsal mimari değerlendirmesi, yönetişim model tasarımı, risk ve kalite yönetimi.' } ] },
-  blog: { title: 'Yazılarım', sub: 'Dönüşüm ve teknoloji dünyasından düşünceler', items: [ { title: 'SAP S/4HANA Geçişlerinde Neden Başarısız Olunur?', meta: 'Makale · 5 dk okuma', text: 'Teknoloji değil, insan ve süreç boyutundaki eksiklikler...', body: '' }, { title: 'Yapay Zeka Kurumları Nasıl Dönüştürüyor?', meta: 'Makale · 4 dk okuma', text: 'AI sadece teknoloji değil, organizasyonel bir dönüşüm meselesi...', body: '' }, { title: 'Sektörün Önünde Kalmak', meta: 'Makale · 3 dk okuma', text: "Değişim hızlanıyor. CIO'ların bugün hazırlanması gereken üç kritik alan...", body: '' }, { title: 'Tedarikçi Seçiminde 10 Kritik Hata', meta: 'Makale · 6 dk okuma', text: 'Yanlış tedarikçi seçimi bir dönüşüm programının en büyük riski olabilir...', body: '' }, { title: 'Yönetilen Hizmetlerde Değer Yaratma', meta: 'Makale · 4 dk okuma', text: 'ITIL sadece bir çerçeve değil, operasyonel mükemmelliğin temelidir...', body: '' }, { title: 'İş Trendleri mi, Kalıcı Değişim mi?', meta: 'Makale · 5 dk okuma', text: 'Her yeni teknolojiyi trend olarak mı görmeli?', body: '' } ] },
-  quote: { text: '"Başarı kalıcı değildir, başarısızlık ölümcül değildir: önemli olan devam etme cesaredidir."', source: '— Winston Churchill' },
-  contact: { title: 'Bize Ulaşın', tag: 'Sorularınız veya danışmanlık için buradayız', btn: 'Gönder', chat_title: 'Doğrudan İletişim', chat_text: 'Dönüşüm sürecinizin herhangi bir aşamasında bağlanmaktan memnuniyet duyarım.', faq1_q: 'Bağımsız danışmanlık ne anlama gelir?', faq1_a: 'Herhangi bir teknoloji firması, ürün ya da satıcı ile bağı olmaksızın, yalnızca müşterinin çıkarları doğrultusunda verilen tarafsız danışmanlık hizmetidir.', faq2_q: 'Hangi sektörlerde deneyiminiz var?', faq2_a: 'Üretim, otomotiv, finans, havacılık, perakende, lojistik ve enerji sektörlerinde EMEA ve META genelinde 20+ yıllık deneyim.', faq3_q: 'Uzaktan danışmanlık sunuyor musunuz?', faq3_a: 'Evet. Hem uzaktan hem de yüz yüze çalışma modellerine uyum sağlanabilir. Konum: İstanbul, Türkiye.' },
-  footer: { title: 'Başarıya Katılın!', btn: 'Abone Ol', phone: '+90 553 296 55 75', email: 'vildan@vildankara.com', location: 'İstanbul, Türkiye', linkedin: '#', copy: '© 2026 Vildan Kara Kayacan. Tüm hakları saklıdır.' }
+// ─────────────────────────────────────────────────
+// DEFAULTS
+// ─────────────────────────────────────────────────
+const D = {
+  brand:   { name: {tr:'Vildan', en:'Vildan'}, sub: {tr:'Bağımsız Danışman', en:'Independent Advisor'} },
+  menu:    { about:{tr:'Hakkımda',en:'About'}, services:{tr:'Hizmetlerim',en:'Services'}, resources:{tr:'Yazılarım',en:'Insights'}, team:{tr:'Deneyimim',en:'Experience'}, contact:{tr:'İletişim',en:'Contact'}, cta:{tr:'İletişime Geç',en:'Get in Touch'} },
+  photos:  { profile:'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&q=80', heroBg:'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1600&q=80', aboutBg:'https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=1400&q=80' },
+  hero:    { title:{tr:'Dönüşüm Stratejisini Gerçek İş Değerine Dönüştürün',en:'Turning Transformation Strategy into Measurable Business Value'}, sub:{tr:'20+ yıllık EMEA ve META deneyimiyle SAP dönüşümü, yönetilen hizmetler ve yapay zeka benimseme alanlarında bağımsız danışmanlık.',en:'Independent advisory with 20+ years of EMEA and META experience in SAP transformation, managed services, and AI adoption.'}, btn:{tr:'İletişime Geç',en:'Get in Touch'}, nlTitle:{tr:'Bültenime Abone Olun',en:'Subscribe to My Mailing List'}, nlBtn:{tr:'Abone Ol',en:'Subscribe'}, nlCheck:{tr:'Evet, bültene abone olmak istiyorum.',en:'Yes, subscribe me to your newsletter.'} },
+  why:     { title:{tr:'Neden Bağımsız Danışmanlık?',en:'Why Independent Advisory?'}, items:[ {title:{tr:'Kendi Hızınızda İlerleme',en:'At Your Own Pace'},text:{tr:'Kurumunuzun ihtiyacına ve takvime göre şekillenen esnek danışmanlık modeli.',en:"A flexible advisory model shaped around your organization's needs and timeline."}}, {title:{tr:'Sektör Uzmanı Perspektifi',en:'Industry Expert Perspective'},text:{tr:'20+ yıl NTT Data, SAP ve Metro Group deneyimiyle gerçek dünya bilgisi.',en:'Real-world knowledge from 20+ years at NTT Data, SAP, and Metro Group.'}}, {title:{tr:'Bağımsız ve Tarafsız',en:'Independent & Unbiased'},text:{tr:'Hiçbir ürün ya da satıcı gündeminden bağımsız, yalnızca sizin çıkarlarınız için.',en:'Free from any product, vendor, or sales agenda — working solely for your interests.'}}, {title:{tr:'Kanıtlanmış Sonuçlar',en:'Proven Results'},text:{tr:'€1M+ programlar, %35 maliyet düşürümü, 100+ kişilik global ekip kurulumları.',en:'€1M+ programs, 35% cost reduction, 100+ person global team setups delivered.'}} ] },
+  aboutDark:{ title:{tr:'Vildan Kara Kayacan Hakkında',en:'About Vildan Kara Kayacan'}, sub:{tr:'Dönüşümü içeriden bilen bir danışman',en:'An advisor who knows transformation from the inside'}, p1:{tr:"Uzun yıllar boyunca dünyanın en büyük kurumlarının en kritik dönüşüm programlarını içeriden yönettim. Daimler için Türkiye'nin ilk SAP global destek merkezini kurdum.",en:"For over two decades, I led the most critical transformation programs at some of the world's largest enterprises. I built Turkey's first SAP global support hub for Daimler."}, p2:{tr:'Bugün bağımsız bir danışman olarak çalışıyorum — çünkü en değerli rehberlik, herhangi bir ürünün, teknoloji firmasının ya da satış gündeminin dışında durabilmekten geçiyor.',en:'Today I work as an independent advisor — because the most valuable guidance comes from standing outside any product, technology firm, or sales agenda.'}, btn:{tr:'Daha Fazla',en:'Read More'} },
+  stats:   { title:{tr:'Misyonum: Dönüşümü Gerçek Kılmak',en:'Our Mission Is to Empower'}, p1:{tr:'SAP dönüşümünden yapay zeka benimsemesine, tedarikçi seçiminden yönetilen hizmet modellerine kadar — stratejiyi uygulamaya bağlayan köprüyü kuruyoruz.',en:'From SAP transformation to AI adoption, from vendor selection to managed service models — I build the bridge between strategy and execution.'}, p2:{tr:"CIO'lara ve üst düzey IT liderlerine bağımsız, tarafsız ve sonuç odaklı bir perspektif sunuyorum.",en:'I offer CIOs and senior IT leaders an independent, unbiased, outcome-focused perspective.'}, items:[ {num:'20+',lbl:{tr:'Yıl Uluslararası Deneyim',en:'Years of International Experience'}}, {num:'3',lbl:{tr:'Global Kurum',en:'Global Institutions'}}, {num:'35%',lbl:{tr:'Operasyonel Maliyet Düşürümü',en:'Operational Cost Reduction'}}, {num:'100+',lbl:{tr:'Kişilik Global Ekip Kurulumu',en:'Person Global Team Established'}} ] },
+  values:  { title:{tr:'Temel İlkelerim',en:'Our Core Values'}, sub:{tr:'Söylediğimi uygularım',en:'We practice what we preach'}, items:[ {title:{tr:'Dürüstlük',en:'Integrity'},text:{tr:'Her tavsiye, bağımsız ve tarafsız bir perspektiften verilir.',en:'Every recommendation is delivered from an independent, unbiased perspective.'}}, {title:{tr:'Sorumluluk',en:'Accountability'},text:{tr:'Verilen taahhütler her koşulda yerine getirilir.',en:'Commitments are honored under all circumstances.'}}, {title:{tr:'Bilgi',en:'Knowledge'},text:{tr:'20+ yıllık sahada kazanılmış, gerçek dünya bilgisi.',en:'Real-world expertise earned over 20+ years in the field.'}}, {title:{tr:'Kararlılık',en:'Commitment'},text:{tr:'Sonuca ulaşana kadar sürecin her adımında yanınızda.',en:'By your side at every step of the journey until the outcome is achieved.'}}, {title:{tr:'Tutku',en:'Passion'},text:{tr:'Dönüşümün insan boyutuna duyulan derin ilgi ve inanç.',en:'A deep belief in and fascination with the human dimension of transformation.'}} ] },
+  quote:   { text:{tr:'"Başarı kalıcı değildir, başarısızlık ölümcül değildir: önemli olan devam etme cesaredidir."',en:'"Success is not final, failure is not fatal: it is the courage to continue that counts."'}, source:'— Winston Churchill' },
+  services:{ title:{tr:'Hizmetlerim',en:'My Services'}, sub:{tr:'Dönüşüm sürecinin her aşamasında bağımsız danışmanlık',en:'Independent advisory across every phase of transformation'}, items:[ {title:{tr:'SAP & S/4HANA Dönüşümü',en:'SAP & S/4HANA Transformation'},text:{tr:'S/4HANA geçiş stratejisi, program yönetimi, hedef işletme modeli tasarımı ve go-live sonrası stabilizasyon.',en:'S/4HANA migration strategy, program management, target operating model design, and post-go-live stabilization.'}}, {title:{tr:'Yönetilen Hizmetler & İşletme Modeli',en:'Managed Services & Operating Model'},text:{tr:'ITIL tabanlı servis modeli tasarımı, SLA/KPI çerçeveleri, çok bölgeli teslimat organizasyonu.',en:'ITIL-based service model design, SLA/KPI frameworks, multi-region delivery organization.'}}, {title:{tr:'Tedarikçi Seçimi & RFP Yönetimi',en:'Vendor Selection & RFP Management'},text:{tr:'Bağımsız tedarikçi değerlendirmesi, RFP/RFI süreci tasarımı, teknik ve ticari değerlendirme.',en:'Independent vendor evaluation, RFP/RFI process design, technical and commercial assessment.'}}, {title:{tr:'Program & Portföy Yönetimi',en:'Program & Portfolio Management'},text:{tr:'PMO kurulumu, proje portföyü yönetimi, yönetişim çerçeveleri ve dönüşüm programı liderliği.',en:'PMO setup, portfolio management, governance frameworks, and transformation program leadership.'}}, {title:{tr:'Yapay Zeka Benimseme & Değişim Yönetimi',en:'AI Adoption & Change Management'},text:{tr:'Kurumsal AI stratejisi, organizasyonel değişim yönetimi, çalışan hazırlığı ve AI yönetişimi.',en:'Enterprise AI strategy, organizational change management, workforce readiness, and AI governance.'}}, {title:{tr:'Kurumsal Mimari & Yönetişim',en:'Enterprise Architecture & Governance'},text:{tr:'TOGAF tabanlı kurumsal mimari değerlendirmesi, yönetişim model tasarımı, risk ve kalite yönetimi.',en:'TOGAF-based architecture assessment, governance model design, risk and quality management frameworks.'}} ] },
+  blog:    { title:{tr:'Yazılarım',en:'Resources'}, sub:{tr:'Dönüşüm ve teknoloji dünyasından düşünceler',en:'Perspectives from the world of transformation and technology'}, items:[ {title:{tr:'SAP S/4HANA Geçişlerinde Neden Başarısız Olunur?',en:'Why SAP S/4HANA Migrations Fail'},meta:{tr:'Makale · 5 dk okuma',en:'Article · 5 min read'},text:{tr:'Teknoloji değil, insan ve süreç boyutundaki eksiklikler başarısızlığın temel nedeni...',en:'The root cause is rarely technology — it lies in gaps around people, process, and governance...'},body:''}, {title:{tr:'Yapay Zeka Kurumları Nasıl Dönüştürüyor?',en:'How AI Is Transforming the Enterprise'},meta:{tr:'Makale · 4 dk okuma',en:'Article · 4 min read'},text:{tr:'AI sadece teknoloji değil, organizasyonel bir dönüşüm meselesi...',en:'AI is not just a technology challenge — it is an organizational transformation challenge...'},body:''}, {title:{tr:'Sektörün Önünde Kalmak',en:'Staying Ahead of the Industry'},meta:{tr:'Makale · 3 dk okuma',en:'Article · 3 min read'},text:{tr:"Değişim hızlanıyor. CIO'ların bugün hazırlanması gereken üç kritik alan...",en:'Change is accelerating. Three critical areas every CIO needs to prepare for today...'},body:''}, {title:{tr:'Tedarikçi Seçiminde 10 Kritik Hata',en:'10 Critical Vendor Selection Mistakes'},meta:{tr:'Makale · 6 dk okuma',en:'Article · 6 min read'},text:{tr:'Yanlış tedarikçi seçimi bir dönüşüm programının en büyük riski olabilir...',en:"Choosing the wrong vendor can be a transformation program's biggest risk..."},body:''}, {title:{tr:'Yönetilen Hizmetlerde Değer Yaratma',en:'Creating Value in Managed Services'},meta:{tr:'Makale · 4 dk okuma',en:'Article · 4 min read'},text:{tr:'ITIL sadece bir çerçeve değil, operasyonel mükemmelliğin temelidir...',en:'ITIL is not just a framework — it is the foundation of operational excellence...'},body:''}, {title:{tr:'İş Trendleri mi, Kalıcı Değişim mi?',en:'A Business Trend or a Fad?'},meta:{tr:'Makale · 5 dk okuma',en:'Article · 5 min read'},text:{tr:'Her yeni teknolojiyi trend olarak mı görmeli? İşte ayırt etmenin yolu...',en:'Should every new technology be treated as a trend? Here is how to tell the difference...'},body:''} ] },
+  contact: { title:{tr:'Bize Ulaşın',en:'Contact Us'}, tag:{tr:'Sorularınız veya danışmanlık için buradayız',en:'We are here for questions or consulting'}, btn:{tr:'Gönder',en:'Submit'}, chat:{tr:'Dönüşüm sürecinizin herhangi bir aşamasında bağlanmaktan memnuniyet duyarım.',en:'I would be glad to connect at any stage of your transformation journey.'}, faq1q:{tr:'Bağımsız danışmanlık ne anlama gelir?',en:'What does independent advisory mean?'}, faq1a:{tr:'Herhangi bir teknoloji firması, ürün ya da satıcı ile bağı olmaksızın, yalnızca müşterinin çıkarları doğrultusunda verilen tarafsız danışmanlık hizmetidir.',en:"Unbiased advisory delivered without any affiliation to a technology firm, product, or vendor — working solely in the client's interest."}, faq2q:{tr:'Hangi sektörlerde deneyiminiz var?',en:'Which sectors do you have experience in?'}, faq2a:{tr:'Üretim, otomotiv, finans, havacılık, perakende, lojistik ve enerji sektörlerinde EMEA ve META genelinde 20+ yıllık deneyim.',en:'Manufacturing, automotive, financial services, aviation, retail, logistics, and energy across EMEA and META — 20+ years.'}, faq3q:{tr:'Uzaktan danışmanlık sunuyor musunuz?',en:'Do you offer remote advisory?'}, faq3a:{tr:'Evet. Hem uzaktan hem de yüz yüze çalışma modellerine uyum sağlanabilir. Konum: İstanbul, Türkiye.',en:'Yes. Both remote and in-person working models are accommodated. Location: Istanbul, Türkiye.'}, phone:'+90 553 296 55 75', email:'vildan@vildankara.com', linkedin:'#' },
+  footer:  { title:{tr:'Başarıya Katılın!',en:'Join The Success!'}, btn:{tr:'Abone Ol',en:'Subscribe'}, location:{tr:'İstanbul, Türkiye',en:'Istanbul, Türkiye'}, copy:{tr:'© 2026 Vildan Kara Kayacan. Tüm hakları saklıdır.',en:'© 2026 Vildan Kara Kayacan. All rights reserved.'} }
 };
 
-const DEFAULTS_EN = {
-  brand: { name: 'Vildan', sub: 'Independent Advisor' },
-  menu: { about: 'About', services: 'Services', resources: 'Insights', team: 'Experience', contact: 'Contact', cta: 'Get in Touch' },
-  hero: { title: 'Turning Transformation Strategy into Measurable Business Value', sub: 'Independent advisory with 20+ years of EMEA and META experience in SAP transformation, managed services, and AI adoption.', btn: 'Get in Touch', nl_title: 'Subscribe to My Mailing List', nl_btn: 'Subscribe', nl_check: 'Yes, subscribe me to your newsletter.' },
-  why: { title: 'Why Independent Advisory?', w1: { title: 'At Your Own Pace', text: "A flexible advisory model shaped around your organization's needs and timeline." }, w2: { title: 'Industry Expert Perspective', text: 'Real-world knowledge from 20+ years at NTT Data, SAP, and Metro Group.' }, w3: { title: 'Independent & Unbiased', text: 'Free from any product, vendor, or sales agenda — working solely for your interests.' }, w4: { title: 'Proven Results', text: '€1M+ programs, 35% cost reduction, 100+ person global team setups delivered.' } },
-  stats: { title: 'Our Mission Is to Empower', p1: 'From SAP transformation to AI adoption, from vendor selection to managed service models — I build the bridge between strategy and execution.', p2: 'I offer CIOs and senior IT leaders an independent, unbiased, outcome-focused perspective.', s1: { num: '20+', lbl: 'Years of International Experience' }, s2: { num: '3', lbl: 'Global Institutions' }, s3: { num: '35%', lbl: 'Operational Cost Reduction' }, s4: { num: '100+', lbl: 'Person Global Team Established' } },
-  values: { title: 'Our Core Values', sub: 'We practice what we preach', items: [ { title: 'Integrity', text: 'Every recommendation is delivered from an independent, unbiased perspective.' }, { title: 'Accountability', text: 'Commitments are honored under all circumstances.' }, { title: 'Knowledge', text: 'Real-world expertise earned over 20+ years in the field.' }, { title: 'Commitment', text: 'By your side at every step of the journey until the outcome is achieved.' }, { title: 'Passion', text: 'A deep belief in and fascination with the human dimension of transformation.' } ] },
-  about: { title: 'About Vildan Kara Kayacan', sub: 'An advisor who knows transformation from the inside', p1: "For over two decades, I led the most critical transformation programs at some of the world's largest enterprises. I built Turkey's first SAP global support hub for Daimler, with a multinational team of 100+.", p2: 'Today I work as an independent advisor — because the most valuable guidance comes from standing outside any product, technology firm, or sales agenda.', btn: 'Read More' },
-  services: { title: 'My Services', sub: 'Independent advisory across every phase of transformation', items: [ { title: 'SAP & S/4HANA Transformation', text: 'S/4HANA migration strategy, program management, target operating model design, and post-go-live stabilization.' }, { title: 'Managed Services & Operating Model', text: 'ITIL-based service model design, SLA/KPI frameworks, multi-region delivery organization.' }, { title: 'Vendor Selection & RFP Management', text: 'Independent vendor evaluation, RFP/RFI process design, technical and commercial assessment.' }, { title: 'Program & Portfolio Management', text: 'PMO setup, portfolio management, governance frameworks, and transformation program leadership.' }, { title: 'AI Adoption & Change Management', text: 'Enterprise AI strategy, organizational change management, workforce readiness, and AI governance.' }, { title: 'Enterprise Architecture & Governance', text: 'TOGAF-based architecture assessment, governance model design, risk and quality management frameworks.' } ] },
-  blog: { title: 'Resources', sub: 'Perspectives from the world of transformation and technology', items: [ { title: 'Why SAP S/4HANA Migrations Fail', meta: 'Article · 5 min read', text: 'The root cause is rarely technology — it lies in gaps around people, process, and governance...', body: '' }, { title: 'How AI Is Transforming the Enterprise', meta: 'Article · 4 min read', text: 'AI is not just a technology challenge — it is an organizational transformation challenge...', body: '' }, { title: 'Staying Ahead of the Industry', meta: 'Article · 3 min read', text: 'Change is accelerating. Three critical areas every CIO needs to prepare for today...', body: '' }, { title: '10 Critical Vendor Selection Mistakes', meta: 'Article · 6 min read', text: "Choosing the wrong vendor can be a transformation program's biggest risk...", body: '' }, { title: 'Creating Value in Managed Services', meta: 'Article · 4 min read', text: 'ITIL is not just a framework — it is the foundation of operational excellence...', body: '' }, { title: 'A Business Trend or a Fad?', meta: 'Article · 5 min read', text: 'Should every new technology be treated as a trend? Here is how to tell the difference...', body: '' } ] },
-  quote: { text: '"Success is not final, failure is not fatal: it is the courage to continue that counts."', source: '— Winston Churchill' },
-  contact: { title: 'Contact Us', tag: 'We are here for questions or consulting', btn: 'Submit', chat_title: 'Direct Contact', chat_text: 'I would be glad to connect at any stage of your transformation journey.', faq1_q: 'What does independent advisory mean?', faq1_a: "Unbiased advisory delivered without any affiliation to a technology firm, product, or vendor — working solely in the client's interest.", faq2_q: 'Which sectors do you have experience in?', faq2_a: 'Manufacturing, automotive, financial services, aviation, retail, logistics, and energy across EMEA and META — 20+ years.', faq3_q: 'Do you offer remote advisory?', faq3_a: 'Yes. Both remote and in-person working models are accommodated. Location: Istanbul, Türkiye.' },
-  footer: { title: 'Join The Success!', btn: 'Subscribe', phone: '+90 553 296 55 75', email: 'vildan@vildankara.com', location: 'Istanbul, Türkiye', linkedin: '#', copy: '© 2026 Vildan Kara Kayacan. All rights reserved.' }
-};
-
-// ── AKTİF DİL ────────────────────────────────────
-let activeLang = 'tr';
-
-function toggleLang() {
-  activeLang = activeLang === 'tr' ? 'en' : 'tr';
-  document.getElementById('lang-indicator').textContent = activeLang.toUpperCase();
-  document.getElementById('lang-btn').textContent = activeLang === 'tr' ? "🇬🇧 EN'e Geç" : "🇹🇷 TR'ye Geç";
-  loadForm();
-}
-
-function getLangKey() { return activeLang === 'en' ? 'vildan_content_en' : 'vildan_content'; }
-function getDefaults() { return activeLang === 'en' ? DEFAULTS_EN : DEFAULTS; }
-
+// ─────────────────────────────────────────────────
+// STATE
+// ─────────────────────────────────────────────────
 function loadState() {
-  try { return JSON.parse(localStorage.getItem(getLangKey())) || JSON.parse(JSON.stringify(getDefaults())); }
-  catch { return JSON.parse(JSON.stringify(getDefaults())); }
+  try { return JSON.parse(localStorage.getItem('vildan_admin')) || JSON.parse(JSON.stringify(D)); }
+  catch { return JSON.parse(JSON.stringify(D)); }
 }
-function saveState(state) {
-  localStorage.setItem(getLangKey(), JSON.stringify(state));
-}
+function saveState(d) { localStorage.setItem('vildan_admin', JSON.stringify(d)); }
 
-// ── NAVIGATION ───────────────────────────────────
-function showSection(id, el) {
+// ─────────────────────────────────────────────────
+// NAV
+// ─────────────────────────────────────────────────
+function nav(id, el) {
   document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
   document.getElementById('s-' + id).classList.add('active');
-  if (el) el.classList.add('active');
+  el.classList.add('active');
 }
 
-// ── RENDER LISTS ─────────────────────────────────
-function renderValues(items) {
-  document.getElementById('values-list').innerHTML = items.map((v, i) => `
-    <div class="service-item">
-      <div class="service-item-header"><span>İlke ${i+1}</span></div>
-      <div class="field-row">
-        <div class="field"><label>Başlık</label><input id="val${i}-title" type="text" value="${esc(v.title)}"></div>
-        <div class="field"><label>Metin</label><input id="val${i}-text" type="text" value="${esc(v.text)}"></div>
-      </div>
-    </div>`).join('');
-}
-
-function renderServices(items) {
-  document.getElementById('services-list').innerHTML = items.map((s, i) => `
-    <div class="service-item">
-      <div class="service-item-header"><span>Hizmet ${i+1}</span></div>
-      <div class="field"><label>Başlık</label><input id="svc${i}-title" type="text" value="${esc(s.title)}"></div>
-      <div class="field"><label>Metin</label><textarea id="svc${i}-text">${esc(s.text)}</textarea></div>
-    </div>`).join('');
-}
-
-function renderBlog(items) {
-  document.getElementById('blog-list').innerHTML = items.map((b, i) => `
-    <div class="blog-item">
-      <div class="blog-item-header"><span>Yazı ${i+1}</span></div>
-      <div class="field"><label>Başlık</label><input id="blg${i}-title" type="text" value="${esc(b.title)}"></div>
-      <div class="field-row"><div class="field"><label>Meta</label><input id="blg${i}-meta" type="text" value="${esc(b.meta)}"></div></div>
-      <div class="field"><label>Özet</label><textarea id="blg${i}-text" style="min-height:60px;">${esc(b.text)}</textarea></div>
-      <div class="field"><label>Tam İçerik (HTML)</label><textarea id="blg${i}-body" style="min-height:160px;font-family:monospace;font-size:12px;">${esc(b.body||'')}</textarea></div>
-    </div>`).join('');
-}
-
+// ─────────────────────────────────────────────────
+// HELPERS
+// ─────────────────────────────────────────────────
+function sv(id, val) { const el = document.getElementById(id); if (el) el.value = val || ''; }
+function gv(id) { const el = document.getElementById(id); return el ? el.value : ''; }
 function esc(s) { return (s||'').replace(/"/g,'&quot;').replace(/</g,'&lt;'); }
 
-// ── FORM LOAD ─────────────────────────────────────
-function loadForm() {
-  const d = loadState();
-  setVal('b-name', d.brand.name); setVal('b-sub', d.brand.sub);
-  setVal('m-about', d.menu.about); setVal('m-services', d.menu.services);
-  setVal('m-resources', d.menu.resources); setVal('m-team', d.menu.team);
-  setVal('m-contact', d.menu.contact); setVal('m-cta', d.menu.cta);
-  setVal('h-title', d.hero.title); setVal('h-sub', d.hero.sub); setVal('h-btn', d.hero.btn);
-  setVal('h-nl-title', d.hero.nl_title); setVal('h-nl-btn', d.hero.nl_btn); setVal('h-nl-check', d.hero.nl_check);
-  setVal('w-title', d.why.title);
-  setVal('w1-title', d.why.w1.title); setVal('w1-text', d.why.w1.text);
-  setVal('w2-title', d.why.w2.title); setVal('w2-text', d.why.w2.text);
-  setVal('w3-title', d.why.w3.title); setVal('w3-text', d.why.w3.text);
-  setVal('w4-title', d.why.w4.title); setVal('w4-text', d.why.w4.text);
-  setVal('st-title', d.stats.title); setVal('st-p1', d.stats.p1); setVal('st-p2', d.stats.p2);
-  setVal('s1-num', d.stats.s1.num); setVal('s1-lbl', d.stats.s1.lbl);
-  setVal('s2-num', d.stats.s2.num); setVal('s2-lbl', d.stats.s2.lbl);
-  setVal('s3-num', d.stats.s3.num); setVal('s3-lbl', d.stats.s3.lbl);
-  setVal('s4-num', d.stats.s4.num); setVal('s4-lbl', d.stats.s4.lbl);
-  setVal('v-title', d.values.title); setVal('v-sub', d.values.sub);
-  renderValues(d.values.items);
-  setVal('a-title', d.about.title); setVal('a-sub', d.about.sub);
-  setVal('a-p1', d.about.p1); setVal('a-p2', d.about.p2); setVal('a-btn', d.about.btn);
-  setVal('sv-title', d.services.title); setVal('sv-sub', d.services.sub);
-  renderServices(d.services.items);
-  setVal('bl-title', d.blog.title); setVal('bl-sub', d.blog.sub);
-  renderBlog(d.blog.items);
-  setVal('q-text', d.quote.text); setVal('q-source', d.quote.source);
-  setVal('c-title', d.contact.title); setVal('c-tag', d.contact.tag); setVal('c-btn', d.contact.btn);
-  setVal('c-chat-title', d.contact.chat_title); setVal('c-chat-text', d.contact.chat_text);
-  setVal('faq1-q', d.contact.faq1_q); setVal('faq1-a', d.contact.faq1_a);
-  setVal('faq2-q', d.contact.faq2_q); setVal('faq2-a', d.contact.faq2_a);
-  setVal('faq3-q', d.contact.faq3_q); setVal('faq3-a', d.contact.faq3_a);
-  setVal('f-title', d.footer.title); setVal('f-btn', d.footer.btn);
-  setVal('f-phone', d.footer.phone); setVal('f-email', d.footer.email);
-  setVal('f-location', d.footer.location); setVal('f-linkedin', d.footer.linkedin);
-  setVal('f-copy', d.footer.copy);
+// ─────────────────────────────────────────────────
+// RENDER DYNAMIC CARDS
+// ─────────────────────────────────────────────────
+function renderWhyCards(items) {
+  document.getElementById('why-cards').innerHTML = items.map((item, i) => `
+    <div class="rep-item">
+      <div class="rep-header">Kutu ${i+1}</div>
+      <div class="field"><label>Başlık</label><div class="bilingual">
+        <div class="lang-input"><span class="lang-label lang-tr">TR</span><input type="text" id="w${i}-title-tr" value="${esc(item.title.tr)}"></div>
+        <div class="lang-input"><span class="lang-label lang-en">EN</span><input type="text" id="w${i}-title-en" value="${esc(item.title.en)}"></div>
+      </div></div>
+      <div class="field"><label>Metin</label><div class="bilingual">
+        <div class="lang-input"><span class="lang-label lang-tr">TR</span><input type="text" id="w${i}-text-tr" value="${esc(item.text.tr)}"></div>
+        <div class="lang-input"><span class="lang-label lang-en">EN</span><input type="text" id="w${i}-text-en" value="${esc(item.text.en)}"></div>
+      </div></div>
+    </div>`).join('');
 }
 
-function setVal(id, val) { const el = document.getElementById(id); if (el) el.value = val || ''; }
-function getVal(id) { const el = document.getElementById(id); return el ? el.value : ''; }
+function renderStatsCards(items) {
+  document.getElementById('stats-cards').innerHTML = items.map((item, i) => `
+    <div class="rep-item">
+      <div class="rep-header">İstatistik ${i+1}</div>
+      <div class="field field-single"><label>Sayı (aynı her iki dilde)</label><input type="text" id="st${i}-num" value="${esc(item.num)}"></div>
+      <div class="field"><label>Etiket</label><div class="bilingual">
+        <div class="lang-input"><span class="lang-label lang-tr">TR</span><input type="text" id="st${i}-lbl-tr" value="${esc(item.lbl.tr)}"></div>
+        <div class="lang-input"><span class="lang-label lang-en">EN</span><input type="text" id="st${i}-lbl-en" value="${esc(item.lbl.en)}"></div>
+      </div></div>
+    </div>`).join('');
+}
 
-// ── SAVE ALL ─────────────────────────────────────
+function renderValuesCards(items) {
+  document.getElementById('values-cards').innerHTML = items.map((item, i) => `
+    <div class="rep-item">
+      <div class="rep-header">İlke ${i+1}</div>
+      <div class="field"><label>Başlık</label><div class="bilingual">
+        <div class="lang-input"><span class="lang-label lang-tr">TR</span><input type="text" id="val${i}-title-tr" value="${esc(item.title.tr)}"></div>
+        <div class="lang-input"><span class="lang-label lang-en">EN</span><input type="text" id="val${i}-title-en" value="${esc(item.title.en)}"></div>
+      </div></div>
+      <div class="field"><label>Metin</label><div class="bilingual">
+        <div class="lang-input"><span class="lang-label lang-tr">TR</span><input type="text" id="val${i}-text-tr" value="${esc(item.text.tr)}"></div>
+        <div class="lang-input"><span class="lang-label lang-en">EN</span><input type="text" id="val${i}-text-en" value="${esc(item.text.en)}"></div>
+      </div></div>
+    </div>`).join('');
+}
+
+function renderServicesCards(items) {
+  document.getElementById('services-cards').innerHTML = items.map((item, i) => `
+    <div class="rep-item">
+      <div class="rep-header">Hizmet ${i+1}</div>
+      <div class="field"><label>Başlık</label><div class="bilingual">
+        <div class="lang-input"><span class="lang-label lang-tr">TR</span><input type="text" id="svc${i}-title-tr" value="${esc(item.title.tr)}"></div>
+        <div class="lang-input"><span class="lang-label lang-en">EN</span><input type="text" id="svc${i}-title-en" value="${esc(item.title.en)}"></div>
+      </div></div>
+      <div class="field"><label>Metin</label><div class="bilingual">
+        <div class="lang-input"><span class="lang-label lang-tr">TR</span><textarea id="svc${i}-text-tr">${esc(item.text.tr)}</textarea></div>
+        <div class="lang-input"><span class="lang-label lang-en">EN</span><textarea id="svc${i}-text-en">${esc(item.text.en)}</textarea></div>
+      </div></div>
+    </div>`).join('');
+}
+
+function renderBlogCards(items) {
+  document.getElementById('blog-cards').innerHTML = items.map((item, i) => `
+    <div class="rep-item">
+      <div class="rep-header">Yazı ${i+1}</div>
+      <div class="field"><label>Başlık</label><div class="bilingual">
+        <div class="lang-input"><span class="lang-label lang-tr">TR</span><input type="text" id="blg${i}-title-tr" value="${esc(item.title.tr)}"></div>
+        <div class="lang-input"><span class="lang-label lang-en">EN</span><input type="text" id="blg${i}-title-en" value="${esc(item.title.en)}"></div>
+      </div></div>
+      <div class="field"><label>Meta (tarih/süre)</label><div class="bilingual">
+        <div class="lang-input"><span class="lang-label lang-tr">TR</span><input type="text" id="blg${i}-meta-tr" value="${esc(item.meta.tr)}"></div>
+        <div class="lang-input"><span class="lang-label lang-en">EN</span><input type="text" id="blg${i}-meta-en" value="${esc(item.meta.en)}"></div>
+      </div></div>
+      <div class="field"><label>Özet</label><div class="bilingual">
+        <div class="lang-input"><span class="lang-label lang-tr">TR</span><textarea id="blg${i}-text-tr" style="min-height:56px;">${esc(item.text.tr)}</textarea></div>
+        <div class="lang-input"><span class="lang-label lang-en">EN</span><textarea id="blg${i}-text-en" style="min-height:56px;">${esc(item.text.en)}</textarea></div>
+      </div></div>
+      <div class="field"><label>Tam İçerik — TR (HTML)</label><textarea id="blg${i}-body-tr" style="min-height:120px;font-family:monospace;font-size:12px;">${esc(item.body||'')}</textarea></div>
+      <div class="field"><label>Tam İçerik — EN (HTML)</label><textarea id="blg${i}-body-en" style="min-height:120px;font-family:monospace;font-size:12px;">${esc(item.bodyEn||'')}</textarea></div>
+    </div>`).join('');
+}
+
+// ─────────────────────────────────────────────────
+// LOAD FORM
+// ─────────────────────────────────────────────────
+function loadForm() {
+  const d = loadState();
+
+  sv('b-name-tr', d.brand.name.tr); sv('b-name-en', d.brand.name.en);
+  sv('b-sub-tr', d.brand.sub.tr);   sv('b-sub-en', d.brand.sub.en);
+
+  sv('m-about-tr', d.menu.about.tr);       sv('m-about-en', d.menu.about.en);
+  sv('m-services-tr', d.menu.services.tr); sv('m-services-en', d.menu.services.en);
+  sv('m-resources-tr', d.menu.resources.tr); sv('m-resources-en', d.menu.resources.en);
+  sv('m-team-tr', d.menu.team.tr);         sv('m-team-en', d.menu.team.en);
+  sv('m-contact-tr', d.menu.contact.tr);   sv('m-contact-en', d.menu.contact.en);
+  sv('m-cta-tr', d.menu.cta.tr);           sv('m-cta-en', d.menu.cta.en);
+
+  sv('photo-profile', d.photos.profile);
+  sv('photo-hero-bg', d.photos.heroBg);
+  sv('photo-about-bg', d.photos.aboutBg);
+
+  sv('h-title-tr', d.hero.title.tr);    sv('h-title-en', d.hero.title.en);
+  sv('h-sub-tr', d.hero.sub.tr);        sv('h-sub-en', d.hero.sub.en);
+  sv('h-btn-tr', d.hero.btn.tr);        sv('h-btn-en', d.hero.btn.en);
+  sv('h-nl-title-tr', d.hero.nlTitle.tr); sv('h-nl-title-en', d.hero.nlTitle.en);
+  sv('h-nl-btn-tr', d.hero.nlBtn.tr);   sv('h-nl-btn-en', d.hero.nlBtn.en);
+  sv('h-nl-check-tr', d.hero.nlCheck.tr); sv('h-nl-check-en', d.hero.nlCheck.en);
+
+  sv('w-title-tr', d.why.title.tr); sv('w-title-en', d.why.title.en);
+  renderWhyCards(d.why.items);
+
+  sv('ad-title-tr', d.aboutDark.title.tr); sv('ad-title-en', d.aboutDark.title.en);
+  sv('ad-sub-tr', d.aboutDark.sub.tr);     sv('ad-sub-en', d.aboutDark.sub.en);
+  sv('ad-p1-tr', d.aboutDark.p1.tr);       sv('ad-p1-en', d.aboutDark.p1.en);
+  sv('ad-p2-tr', d.aboutDark.p2.tr);       sv('ad-p2-en', d.aboutDark.p2.en);
+  sv('ad-btn-tr', d.aboutDark.btn.tr);     sv('ad-btn-en', d.aboutDark.btn.en);
+
+  sv('st-title-tr', d.stats.title.tr); sv('st-title-en', d.stats.title.en);
+  sv('st-p1-tr', d.stats.p1.tr);       sv('st-p1-en', d.stats.p1.en);
+  sv('st-p2-tr', d.stats.p2.tr);       sv('st-p2-en', d.stats.p2.en);
+  renderStatsCards(d.stats.items);
+
+  sv('v-title-tr', d.values.title.tr); sv('v-title-en', d.values.title.en);
+  sv('v-sub-tr', d.values.sub.tr);     sv('v-sub-en', d.values.sub.en);
+  renderValuesCards(d.values.items);
+
+  sv('q-text-tr', d.quote.text.tr); sv('q-text-en', d.quote.text.en);
+  sv('q-source', d.quote.source);
+
+  sv('sv-title-tr', d.services.title.tr); sv('sv-title-en', d.services.title.en);
+  sv('sv-sub-tr', d.services.sub.tr);     sv('sv-sub-en', d.services.sub.en);
+  renderServicesCards(d.services.items);
+
+  sv('bl-title-tr', d.blog.title.tr); sv('bl-title-en', d.blog.title.en);
+  sv('bl-sub-tr', d.blog.sub.tr);     sv('bl-sub-en', d.blog.sub.en);
+  renderBlogCards(d.blog.items);
+
+  sv('c-title-tr', d.contact.title.tr); sv('c-title-en', d.contact.title.en);
+  sv('c-tag-tr', d.contact.tag.tr);     sv('c-tag-en', d.contact.tag.en);
+  sv('c-btn-tr', d.contact.btn.tr);     sv('c-btn-en', d.contact.btn.en);
+  sv('c-chat-tr', d.contact.chat.tr);   sv('c-chat-en', d.contact.chat.en);
+  sv('faq1-q-tr', d.contact.faq1q.tr); sv('faq1-q-en', d.contact.faq1q.en);
+  sv('faq1-a-tr', d.contact.faq1a.tr); sv('faq1-a-en', d.contact.faq1a.en);
+  sv('faq2-q-tr', d.contact.faq2q.tr); sv('faq2-q-en', d.contact.faq2q.en);
+  sv('faq2-a-tr', d.contact.faq2a.tr); sv('faq2-a-en', d.contact.faq2a.en);
+  sv('faq3-q-tr', d.contact.faq3q.tr); sv('faq3-q-en', d.contact.faq3q.en);
+  sv('faq3-a-tr', d.contact.faq3a.tr); sv('faq3-a-en', d.contact.faq3a.en);
+  sv('f-phone', d.contact.phone);
+  sv('f-email', d.contact.email);
+  sv('f-linkedin', d.contact.linkedin);
+
+  sv('ft-title-tr', d.footer.title.tr);    sv('ft-title-en', d.footer.title.en);
+  sv('ft-btn-tr', d.footer.btn.tr);        sv('ft-btn-en', d.footer.btn.en);
+  sv('ft-location-tr', d.footer.location.tr); sv('ft-location-en', d.footer.location.en);
+  sv('ft-copy-tr', d.footer.copy.tr);      sv('ft-copy-en', d.footer.copy.en);
+}
+
+// ─────────────────────────────────────────────────
+// SAVE ALL
+// ─────────────────────────────────────────────────
 function saveAll() {
   const d = loadState();
-  d.brand.name = getVal('b-name'); d.brand.sub = getVal('b-sub');
-  d.menu.about = getVal('m-about'); d.menu.services = getVal('m-services');
-  d.menu.resources = getVal('m-resources'); d.menu.team = getVal('m-team');
-  d.menu.contact = getVal('m-contact'); d.menu.cta = getVal('m-cta');
-  d.hero.title = getVal('h-title'); d.hero.sub = getVal('h-sub'); d.hero.btn = getVal('h-btn');
-  d.hero.nl_title = getVal('h-nl-title'); d.hero.nl_btn = getVal('h-nl-btn'); d.hero.nl_check = getVal('h-nl-check');
-  d.why.title = getVal('w-title');
-  d.why.w1 = { title: getVal('w1-title'), text: getVal('w1-text') };
-  d.why.w2 = { title: getVal('w2-title'), text: getVal('w2-text') };
-  d.why.w3 = { title: getVal('w3-title'), text: getVal('w3-text') };
-  d.why.w4 = { title: getVal('w4-title'), text: getVal('w4-text') };
-  d.stats.title = getVal('st-title'); d.stats.p1 = getVal('st-p1'); d.stats.p2 = getVal('st-p2');
-  d.stats.s1 = { num: getVal('s1-num'), lbl: getVal('s1-lbl') };
-  d.stats.s2 = { num: getVal('s2-num'), lbl: getVal('s2-lbl') };
-  d.stats.s3 = { num: getVal('s3-num'), lbl: getVal('s3-lbl') };
-  d.stats.s4 = { num: getVal('s4-num'), lbl: getVal('s4-lbl') };
-  d.values.title = getVal('v-title'); d.values.sub = getVal('v-sub');
-  d.values.items = d.values.items.map((_, i) => ({ title: getVal(`val${i}-title`), text: getVal(`val${i}-text`) }));
-  d.about.title = getVal('a-title'); d.about.sub = getVal('a-sub');
-  d.about.p1 = getVal('a-p1'); d.about.p2 = getVal('a-p2'); d.about.btn = getVal('a-btn');
-  d.services.title = getVal('sv-title'); d.services.sub = getVal('sv-sub');
-  d.services.items = d.services.items.map((_, i) => ({ title: getVal(`svc${i}-title`), text: getVal(`svc${i}-text`) }));
-  d.blog.title = getVal('bl-title'); d.blog.sub = getVal('bl-sub');
-  d.blog.items = d.blog.items.map((_, i) => ({ title: getVal(`blg${i}-title`), meta: getVal(`blg${i}-meta`), text: getVal(`blg${i}-text`), body: getVal(`blg${i}-body`) }));
-  d.quote.text = getVal('q-text'); d.quote.source = getVal('q-source');
-  d.contact.title = getVal('c-title'); d.contact.tag = getVal('c-tag'); d.contact.btn = getVal('c-btn');
-  d.contact.chat_title = getVal('c-chat-title'); d.contact.chat_text = getVal('c-chat-text');
-  d.contact.faq1_q = getVal('faq1-q'); d.contact.faq1_a = getVal('faq1-a');
-  d.contact.faq2_q = getVal('faq2-q'); d.contact.faq2_a = getVal('faq2-a');
-  d.contact.faq3_q = getVal('faq3-q'); d.contact.faq3_a = getVal('faq3-a');
-  d.footer.title = getVal('f-title'); d.footer.btn = getVal('f-btn');
-  d.footer.phone = getVal('f-phone'); d.footer.email = getVal('f-email');
-  d.footer.location = getVal('f-location'); d.footer.linkedin = getVal('f-linkedin');
-  d.footer.copy = getVal('f-copy');
+
+  d.brand.name = {tr:gv('b-name-tr'), en:gv('b-name-en')};
+  d.brand.sub  = {tr:gv('b-sub-tr'),  en:gv('b-sub-en')};
+
+  d.menu.about    = {tr:gv('m-about-tr'),    en:gv('m-about-en')};
+  d.menu.services = {tr:gv('m-services-tr'), en:gv('m-services-en')};
+  d.menu.resources= {tr:gv('m-resources-tr'),en:gv('m-resources-en')};
+  d.menu.team     = {tr:gv('m-team-tr'),     en:gv('m-team-en')};
+  d.menu.contact  = {tr:gv('m-contact-tr'),  en:gv('m-contact-en')};
+  d.menu.cta      = {tr:gv('m-cta-tr'),      en:gv('m-cta-en')};
+
+  d.photos.profile = gv('photo-profile');
+  d.photos.heroBg  = gv('photo-hero-bg');
+  d.photos.aboutBg = gv('photo-about-bg');
+
+  d.hero.title   = {tr:gv('h-title-tr'),    en:gv('h-title-en')};
+  d.hero.sub     = {tr:gv('h-sub-tr'),      en:gv('h-sub-en')};
+  d.hero.btn     = {tr:gv('h-btn-tr'),      en:gv('h-btn-en')};
+  d.hero.nlTitle = {tr:gv('h-nl-title-tr'), en:gv('h-nl-title-en')};
+  d.hero.nlBtn   = {tr:gv('h-nl-btn-tr'),   en:gv('h-nl-btn-en')};
+  d.hero.nlCheck = {tr:gv('h-nl-check-tr'), en:gv('h-nl-check-en')};
+
+  d.why.title = {tr:gv('w-title-tr'), en:gv('w-title-en')};
+  d.why.items = d.why.items.map((_,i) => ({
+    title:{tr:gv(`w${i}-title-tr`),en:gv(`w${i}-title-en`)},
+    text: {tr:gv(`w${i}-text-tr`), en:gv(`w${i}-text-en`)}
+  }));
+
+  d.aboutDark = {
+    title:{tr:gv('ad-title-tr'),en:gv('ad-title-en')},
+    sub:  {tr:gv('ad-sub-tr'),  en:gv('ad-sub-en')},
+    p1:   {tr:gv('ad-p1-tr'),   en:gv('ad-p1-en')},
+    p2:   {tr:gv('ad-p2-tr'),   en:gv('ad-p2-en')},
+    btn:  {tr:gv('ad-btn-tr'),  en:gv('ad-btn-en')}
+  };
+
+  d.stats.title = {tr:gv('st-title-tr'),en:gv('st-title-en')};
+  d.stats.p1    = {tr:gv('st-p1-tr'),   en:gv('st-p1-en')};
+  d.stats.p2    = {tr:gv('st-p2-tr'),   en:gv('st-p2-en')};
+  d.stats.items = d.stats.items.map((_,i) => ({
+    num: gv(`st${i}-num`),
+    lbl: {tr:gv(`st${i}-lbl-tr`), en:gv(`st${i}-lbl-en`)}
+  }));
+
+  d.values.title = {tr:gv('v-title-tr'),en:gv('v-title-en')};
+  d.values.sub   = {tr:gv('v-sub-tr'),  en:gv('v-sub-en')};
+  d.values.items = d.values.items.map((_,i) => ({
+    title:{tr:gv(`val${i}-title-tr`),en:gv(`val${i}-title-en`)},
+    text: {tr:gv(`val${i}-text-tr`), en:gv(`val${i}-text-en`)}
+  }));
+
+  d.quote.text   = {tr:gv('q-text-tr'), en:gv('q-text-en')};
+  d.quote.source = gv('q-source');
+
+  d.services.title = {tr:gv('sv-title-tr'),en:gv('sv-title-en')};
+  d.services.sub   = {tr:gv('sv-sub-tr'),  en:gv('sv-sub-en')};
+  d.services.items = d.services.items.map((_,i) => ({
+    title:{tr:gv(`svc${i}-title-tr`),en:gv(`svc${i}-title-en`)},
+    text: {tr:gv(`svc${i}-text-tr`), en:gv(`svc${i}-text-en`)}
+  }));
+
+  d.blog.title = {tr:gv('bl-title-tr'),en:gv('bl-title-en')};
+  d.blog.sub   = {tr:gv('bl-sub-tr'),  en:gv('bl-sub-en')};
+  d.blog.items = d.blog.items.map((_,i) => ({
+    title:{tr:gv(`blg${i}-title-tr`),en:gv(`blg${i}-title-en`)},
+    meta: {tr:gv(`blg${i}-meta-tr`), en:gv(`blg${i}-meta-en`)},
+    text: {tr:gv(`blg${i}-text-tr`), en:gv(`blg${i}-text-en`)},
+    body:   gv(`blg${i}-body-tr`),
+    bodyEn: gv(`blg${i}-body-en`)
+  }));
+
+  d.contact = {
+    title:  {tr:gv('c-title-tr'),  en:gv('c-title-en')},
+    tag:    {tr:gv('c-tag-tr'),    en:gv('c-tag-en')},
+    btn:    {tr:gv('c-btn-tr'),    en:gv('c-btn-en')},
+    chat:   {tr:gv('c-chat-tr'),   en:gv('c-chat-en')},
+    faq1q:  {tr:gv('faq1-q-tr'),   en:gv('faq1-q-en')},
+    faq1a:  {tr:gv('faq1-a-tr'),   en:gv('faq1-a-en')},
+    faq2q:  {tr:gv('faq2-q-tr'),   en:gv('faq2-q-en')},
+    faq2a:  {tr:gv('faq2-a-tr'),   en:gv('faq2-a-en')},
+    faq3q:  {tr:gv('faq3-q-tr'),   en:gv('faq3-q-en')},
+    faq3a:  {tr:gv('faq3-a-tr'),   en:gv('faq3-a-en')},
+    phone:  gv('f-phone'),
+    email:  gv('f-email'),
+    linkedin: gv('f-linkedin')
+  };
+
+  d.footer = {
+    title:    {tr:gv('ft-title-tr'),    en:gv('ft-title-en')},
+    btn:      {tr:gv('ft-btn-tr'),      en:gv('ft-btn-en')},
+    location: {tr:gv('ft-location-tr'), en:gv('ft-location-en')},
+    copy:     {tr:gv('ft-copy-tr'),     en:gv('ft-copy-en')}
+  };
+
   saveState(d);
-  showToast(activeLang === 'en' ? 'EN içerik kaydedildi!' : 'TR içerik kaydedildi!');
+
+  // TR ve EN localStorage'larını güncelle (siteler bunları okur)
+  writeSiteStorage(d, 'tr');
+  writeSiteStorage(d, 'en');
+
+  showToast('✓ Kaydedildi — TR ve EN site güncellendi!');
+}
+
+function writeSiteStorage(d, lang) {
+  const l = lang;
+  const out = {
+    brand:   { name: d.brand.name[l],   sub: d.brand.sub[l] },
+    menu:    { about: d.menu.about[l], services: d.menu.services[l], resources: d.menu.resources[l], team: d.menu.team[l], contact: d.menu.contact[l], cta: d.menu.cta[l] },
+    photos:  d.photos,
+    hero:    { title: d.hero.title[l], sub: d.hero.sub[l], btn: d.hero.btn[l], nl_title: d.hero.nlTitle[l], nl_btn: d.hero.nlBtn[l], nl_check: d.hero.nlCheck[l] },
+    why:     { title: d.why.title[l], items: d.why.items.map(x=>({title:x.title[l], text:x.text[l]})) },
+    aboutDark:{ title: d.aboutDark.title[l], sub: d.aboutDark.sub[l], p1: d.aboutDark.p1[l], p2: d.aboutDark.p2[l], btn: d.aboutDark.btn[l] },
+    stats:   { title: d.stats.title[l], p1: d.stats.p1[l], p2: d.stats.p2[l], items: d.stats.items.map(x=>({num:x.num, lbl:x.lbl[l]})) },
+    values:  { title: d.values.title[l], sub: d.values.sub[l], items: d.values.items.map(x=>({title:x.title[l], text:x.text[l]})) },
+    quote:   { text: d.quote.text[l], source: d.quote.source },
+    services:{ title: d.services.title[l], sub: d.services.sub[l], items: d.services.items.map(x=>({title:x.title[l], text:x.text[l]})) },
+    blog:    { title: d.blog.title[l], sub: d.blog.sub[l], items: d.blog.items.map(x=>({title:x.title[l], meta:x.meta[l], text:x.text[l], body: l==='tr'?x.body:x.bodyEn})) },
+    contact: { title: d.contact.title[l], tag: d.contact.tag[l], btn: d.contact.btn[l], chat_text: d.contact.chat[l], faq1_q: d.contact.faq1q[l], faq1_a: d.contact.faq1a[l], faq2_q: d.contact.faq2q[l], faq2_a: d.contact.faq2a[l], faq3_q: d.contact.faq3q[l], faq3_a: d.contact.faq3a[l], phone: d.contact.phone, email: d.contact.email, linkedin: d.contact.linkedin },
+    footer:  { title: d.footer.title[l], btn: d.footer.btn[l], location: d.footer.location[l], copy: d.footer.copy[l], phone: d.contact.phone, email: d.contact.email, linkedin: d.contact.linkedin }
+  };
+  const key = l === 'tr' ? 'vildan_content' : 'vildan_content_en';
+  localStorage.setItem(key, JSON.stringify(out));
 }
 
 function resetAll() {
-  if (!confirm('Tüm değişiklikleri sıfırlamak istediğinize emin misiniz?')) return;
-  localStorage.removeItem(getLangKey());
+  if (!confirm('Tüm değişiklikleri varsayılana sıfırlamak istediğinize emin misiniz?')) return;
+  localStorage.removeItem('vildan_admin');
+  localStorage.removeItem('vildan_content');
+  localStorage.removeItem('vildan_content_en');
   loadForm();
   showToast('Varsayılan içeriklere döndü.');
 }
