@@ -3,23 +3,26 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Vildan Kara Kayacan — Bağımsız Danışman</title>
+<title>Vildan Kara Kayacan — Advisory Principal</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
     --black: #0a0a0a;
-    --dark: #141414;
-    --dark2: #1e1e1e;
-    --dark3: #2a2a2a;
+    --dark: #111111;
+    --dark2: #1a1a1a;
+    --dark3: #222222;
     --white: #ffffff;
-    --off-white: #f0eeea;
-    --purple: #6b46c1;
-    --purple-light: #805ad5;
+    --off-white: #f8f7f4;
+    --surface: #f8f7f4;
+    --accent: #B08D57;
+    --accent-light: #C9A96E;
     --gray: #888888;
     --light-gray: #cccccc;
+    --border: #e8e4dc;
   }
   html { scroll-behavior: smooth; }
-  body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; background: var(--white); color: var(--black); font-size: 15px; line-height: 1.7; }
+  body { font-family: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif; background: var(--white); color: var(--black); font-size: 16px; line-height: 1.8; -webkit-font-smoothing: antialiased; }
 
   /* ── NAV ── */
   nav {
@@ -30,13 +33,13 @@
   }
   .nav-brand { display: flex; flex-direction: column; }
   .nav-brand .name { color: var(--white); font-size: 16px; font-weight: 700; letter-spacing: 0.5px; }
-  .nav-brand .name span { color: var(--purple); }
+  .nav-brand .name span { color: var(--accent); }
   .nav-brand .sub { color: var(--gray); font-size: 11px; letter-spacing: 1px; }
   .nav-links { display: flex; align-items: center; gap: 32px; list-style: none; }
   .nav-links a { color: var(--light-gray); text-decoration: none; font-size: 13px; letter-spacing: 0.5px; transition: color 0.2s; }
   .nav-links a:hover { color: var(--white); }
-  .nav-cta { background: var(--purple); color: var(--white) !important; padding: 9px 22px; border-radius: 2px; font-size: 13px !important; font-weight: 600; transition: background 0.2s !important; }
-  .nav-cta:hover { background: var(--purple-light) !important; }
+  .nav-cta { background: var(--accent); color: var(--white) !important; padding: 9px 22px; border-radius: 2px; font-size: 13px !important; font-weight: 600; transition: background 0.2s !important; }
+  .nav-cta:hover { background: var(--accent-light) !important; }
 
   /* ── SECTIONS ── */
   section { scroll-margin-top: 60px; }
@@ -57,16 +60,21 @@
   .hero-left p { color: #aaa; font-size: 16px; margin-bottom: 36px; max-width: 440px; }
   .btn-primary { display: inline-block; background: transparent; color: var(--white); border: 1.5px solid var(--white); padding: 13px 30px; font-size: 14px; font-weight: 600; letter-spacing: 1px; cursor: pointer; transition: all 0.2s; text-decoration: none; }
   .btn-primary:hover { background: var(--white); color: var(--black); }
-  .btn-purple { background: var(--purple); border-color: var(--purple); }
-  .btn-purple:hover { background: var(--purple-light); border-color: var(--purple-light); color: var(--white); }
+  .btn-purple { background: var(--accent); border-color: var(--accent); }
+  .btn-purple:hover { background: var(--accent-light); border-color: var(--accent-light); color: var(--white); }
   .hero-right { display: flex; align-items: center; justify-content: center; padding: 100px 60px 60px 40px; position: relative; z-index: 1; }
   .subscribe-box { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); padding: 36px; width: 100%; max-width: 360px; }
   .subscribe-box h3 { color: var(--white); font-size: 18px; margin-bottom: 20px; }
   .subscribe-box input { width: 100%; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.2); color: var(--white); padding: 10px 14px; font-size: 14px; margin-bottom: 12px; outline: none; }
   .subscribe-box input::placeholder { color: #888; }
-  .subscribe-box button { background: var(--purple); color: var(--white); border: none; padding: 11px 24px; font-size: 14px; font-weight: 600; cursor: pointer; width: 100%; transition: background 0.2s; }
-  .subscribe-box button:hover { background: var(--purple-light); }
+  .subscribe-box button { background: var(--accent); color: var(--white); border: none; padding: 11px 24px; font-size: 14px; font-weight: 600; cursor: pointer; width: 100%; transition: background 0.2s; }
+  .subscribe-box button:hover { background: var(--accent-light); }
   .subscribe-box label { color: #888; font-size: 12px; display: flex; align-items: center; gap: 8px; margin-top: 10px; cursor: pointer; }
+  .hero-stats { display: flex; flex-direction: column; gap: 32px; justify-content: center; padding: 40px; }
+  .hero-stat-item { border-left: 2px solid var(--accent); padding-left: 20px; }
+  .hero-stat-item .stat-num { font-size: 36px; font-weight: 800; color: var(--accent); line-height: 1; margin-bottom: 4px; }
+  .hero-stat-item .stat-lbl { color: #aaa; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; }
+  .hero-eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--accent); margin-bottom: 24px; }
 
   /* ── WHY SECTION ── */
   .why { display: grid; grid-template-columns: 1fr 1fr; min-height: 500px; }
@@ -74,8 +82,8 @@
   .why-left h2 { font-size: 42px; font-weight: 700; line-height: 1.2; color: var(--black); }
   .why-right { padding: 60px 60px 60px 40px; background: var(--white); display: grid; grid-template-columns: 1fr 1fr; gap: 40px 40px; align-content: center; }
   .why-item { }
-  .why-icon { width: 44px; height: 44px; border: 2px solid var(--purple); position: relative; margin-bottom: 16px; }
-  .why-icon::after { content: ''; position: absolute; width: 22px; height: 22px; background: var(--purple); bottom: -8px; right: -8px; }
+  .why-icon { width: 44px; height: 44px; border: 2px solid var(--accent); position: relative; margin-bottom: 16px; }
+  .why-icon::after { content: ''; position: absolute; width: 22px; height: 22px; background: var(--accent); bottom: -8px; right: -8px; }
   .why-item h4 { font-size: 16px; font-weight: 700; margin-bottom: 8px; color: var(--black); }
   .why-item p { font-size: 13px; color: #555; line-height: 1.6; }
 
@@ -109,7 +117,7 @@
   .stats-left { padding: 70px 40px 70px 60px; }
   .stats-left h2 { color: var(--white); font-size: 32px; font-weight: 700; margin-bottom: 40px; }
   .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
-  .stat-item .num { font-size: 40px; font-weight: 800; color: var(--purple); line-height: 1; margin-bottom: 6px; }
+  .stat-item .num { font-size: 40px; font-weight: 800; color: var(--accent); line-height: 1; margin-bottom: 6px; }
   .stat-item .label { color: #aaa; font-size: 13px; line-height: 1.4; }
   .stats-right { padding: 70px 60px 70px 40px; display: flex; flex-direction: column; justify-content: center; }
   .stats-right p { color: #bbb; font-size: 14px; line-height: 1.8; margin-bottom: 14px; }
@@ -121,7 +129,7 @@
   .values-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 32px; }
   .value-item { text-align: center; }
   .value-icon { width: 40px; height: 40px; border: 2px solid var(--black); position: relative; margin: 0 auto 16px; }
-  .value-icon::after { content: ''; position: absolute; width: 20px; height: 20px; background: var(--purple); opacity: 0.3; bottom: -6px; right: -6px; }
+  .value-icon::after { content: ''; position: absolute; width: 20px; height: 20px; background: var(--accent); opacity: 0.3; bottom: -6px; right: -6px; }
   .value-item h4 { font-size: 14px; font-weight: 700; margin-bottom: 8px; }
   .value-item p { font-size: 12px; color: #666; line-height: 1.6; }
 
@@ -143,8 +151,8 @@
   .service-card:hover { background: rgba(255,255,255,0.07); }
   .service-card h3 { color: var(--white); font-size: 17px; font-weight: 600; margin-bottom: 12px; }
   .service-card p { color: #888; font-size: 13px; line-height: 1.7; margin-bottom: 20px; }
-  .btn-purple-sm { display: inline-block; background: var(--purple); color: var(--white); padding: 8px 20px; font-size: 12px; font-weight: 600; letter-spacing: 0.5px; text-decoration: none; border: none; cursor: pointer; transition: background 0.2s; }
-  .btn-purple-sm:hover { background: var(--purple-light); }
+  .btn-purple-sm { display: inline-block; background: var(--accent); color: var(--white); padding: 8px 20px; font-size: 12px; font-weight: 600; letter-spacing: 0.5px; text-decoration: none; border: none; cursor: pointer; transition: background 0.2s; }
+  .btn-purple-sm:hover { background: var(--accent-light); }
 
   /* ── RESOURCES / BLOG ── */
   .resources { padding: 80px 60px; background: var(--white); }
@@ -157,7 +165,7 @@
   .blog-card { cursor: pointer; }
   .blog-img { width: 100%; height: 200px; object-fit: cover; display: block; background: #eee; }
   .blog-meta { font-size: 12px; color: #999; margin: 14px 0 8px; }
-  .blog-card h3 { font-size: 16px; font-weight: 700; color: var(--purple); margin-bottom: 10px; line-height: 1.4; }
+  .blog-card h3 { font-size: 16px; font-weight: 700; color: var(--accent); margin-bottom: 10px; line-height: 1.4; }
   .blog-card p { font-size: 13px; color: #555; line-height: 1.6; }
 
   /* ── QUOTE ── */
@@ -183,7 +191,7 @@
   footer { background: var(--black); padding: 60px; }
   .footer-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
   .footer-brand .name { color: var(--white); font-size: 20px; font-weight: 700; margin-bottom: 4px; }
-  .footer-brand .name span { color: var(--purple); }
+  .footer-brand .name span { color: var(--accent); }
   .footer-brand .sub { color: var(--gray); font-size: 12px; margin-bottom: 24px; }
   .footer-brand h3 { color: var(--white); font-size: 28px; font-weight: 700; margin-bottom: 20px; }
   .footer-brand input { background: transparent; border: none; border-bottom: 1px solid #444; color: var(--white); padding: 8px 0; font-size: 14px; width: 220px; outline: none; display: block; margin-bottom: 12px; }
@@ -219,7 +227,7 @@
   .team-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 36px; }
   .team-card { text-align: center; }
   .team-img { width: 100%; height: 260px; object-fit: cover; background: #eee; display: block; margin-bottom: 16px; }
-  .team-card .role { font-size: 11px; color: var(--purple); font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 4px; }
+  .team-card .role { font-size: 11px; color: var(--accent); font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 4px; }
   .team-card h3 { font-size: 20px; font-weight: 700; margin-bottom: 4px; }
   .team-card .company { font-size: 12px; color: #999; margin-bottom: 12px; }
   .team-card p { font-size: 13px; color: #666; line-height: 1.6; }
@@ -228,8 +236,8 @@
   .contact { background: var(--dark); display: grid; grid-template-columns: 1fr 1fr; min-height: 500px; }
   .contact-left { padding: 80px 40px 80px 60px; position: relative; z-index: 1; }
   .contact-left h2 { color: var(--white); font-size: 32px; font-weight: 700; margin-bottom: 8px; }
-  .contact-left .sub-line { width: 40px; height: 3px; background: var(--purple); margin: 12px 0 16px; }
-  .contact-left .tagline { color: var(--purple); font-size: 14px; margin-bottom: 32px; }
+  .contact-left .sub-line { width: 40px; height: 3px; background: var(--accent); margin: 12px 0 16px; }
+  .contact-left .tagline { color: var(--accent); font-size: 14px; margin-bottom: 32px; }
   .contact-left a.tagline { text-decoration: none; }
   .form-group { margin-bottom: 14px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
   .form-group.full { grid-template-columns: 1fr; }
@@ -273,10 +281,10 @@
   /* ── RESOURCES PAGE ── */
   .resources-page-hero { background: var(--dark); padding: 100px 60px 60px; text-align: center; }
   .resources-page-hero h1 { color: var(--white); font-size: 38px; font-weight: 700; margin-bottom: 10px; }
-  .resources-page-hero p { color: var(--purple); font-size: 14px; }
+  .resources-page-hero p { color: var(--accent); font-size: 14px; }
   .blog-filter { padding: 20px 60px; background: var(--white); border-bottom: 1px solid #eee; display: flex; gap: 20px; }
   .blog-filter button { background: none; border: none; font-size: 13px; font-weight: 600; cursor: pointer; color: #999; padding-bottom: 4px; border-bottom: 2px solid transparent; }
-  .blog-filter button.active { color: var(--purple); border-color: var(--purple); }
+  .blog-filter button.active { color: var(--accent); border-color: var(--accent); }
   .blog-full { padding: 60px; background: var(--white); }
   .blog-full-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
 
@@ -304,7 +312,7 @@
 <nav>
   <div class="nav-brand">
     <div class="name">Vildan<span>.</span></div>
-    <div class="sub">Bağımsız Danışman</div>
+    <div class="sub">Advisory Principal</div>
   </div>
   <ul class="nav-links">
     <li><a href="#" onclick="showPage('home')">Ana Sayfa</a></li>
@@ -326,16 +334,29 @@
   <!-- HERO -->
   <section class="hero">
     <div class="hero-left">
-      <h1>Dönüşüm Stratejisini Gerçek İş Değerine Dönüştürün</h1>
-      <p>20+ yıllık EMEA ve META deneyimiyle SAP dönüşümü, yönetilen hizmetler ve yapay zeka benimseme alanlarında bağımsız danışmanlık.</p>
-      <a href="#" class="btn-primary btn-purple" onclick="showPage('contact')">İletişime Geç</a>
+      <div class="hero-eyebrow">SAP Projects · IT Investments · AI Transformation · RFP Process · Managed Services</div>
+      <h1>Masanın her iki tarafında oturdum.</h1>
+      <p>20 yıl boyunca NTT Data, SAP ve Metro Group'ta kurumsal dönüşüm programlarını vendor tarafında yönettim. Bugün aynı deneyimi tamamen müşteri çıkarına, hiçbir vendor gündemine bağlı olmaksızın sunuyorum.</p>
+      <a href="#" class="btn-primary btn-purple" onclick="showPage('contact')">Görüşelim</a>
     </div>
     <div class="hero-right">
-      <div class="subscribe-box">
-        <h3>Bültenime Abone Olun</h3>
-        <input type="email" placeholder="E-posta adresiniz">
-        <button>Abone Ol</button>
-        <label><input type="checkbox" style="width:auto;margin:0;"> Evet, bültene abone olmak istiyorum.</label>
+      <div class="hero-stats">
+        <div class="hero-stat-item">
+          <div class="stat-num">20+</div>
+          <div class="stat-lbl">Yıl Kurumsal Deneyim</div>
+        </div>
+        <div class="hero-stat-item">
+          <div class="stat-num">16</div>
+          <div class="stat-lbl">Ülkede Program Teslimatı</div>
+        </div>
+        <div class="hero-stat-item">
+          <div class="stat-num">€1M+</div>
+          <div class="stat-lbl">Yönetilen Dönüşüm Bütçesi</div>
+        </div>
+        <div class="hero-stat-item">
+          <div class="stat-num">%35</div>
+          <div class="stat-lbl">Operasyonel Maliyet Optimizasyonu</div>
+        </div>
       </div>
     </div>
   </section>
@@ -343,28 +364,28 @@
   <!-- WHY -->
   <section class="why">
     <div class="why-left">
-      <h2>Neden Bağımsız Danışmanlık?</h2>
+      <h2>Neden Vendor Bağımsız Danışmanlık?</h2>
     </div>
     <div class="why-right">
       <div class="why-item">
         <div class="why-icon"></div>
-        <h4>Kendi Hızınızda İlerleme</h4>
-        <p>Kurumunuzun ihtiyacına ve takvime göre şekillenen esnek danışmanlık modeli.</p>
+        <h4>Sistemi içeriden tanıyorum</h4>
+        <p>Bir teknoloji firmasının nasıl fiyatlandırdığını, bir entegratörün neyi eksik bıraktığını ve bir RFP'nin nerede manipüle edildiğini bilirim — çünkü o tarafta çalıştım.</p>
       </div>
       <div class="why-item">
         <div class="why-icon"></div>
-        <h4>Sektör Uzmanı Perspektifi</h4>
-        <p>20+ yıl NTT Data, SAP ve Metro Group deneyimiyle gerçek dünya bilgisi.</p>
+        <h4>Hiçbir satıcıya borçlu değilim</h4>
+        <p>SAP, Microsoft ya da herhangi bir yazılım ekosistemiyle ticari bağım yok. Her tavsiye yalnızca kurumunuzun stratejik çıkarına dayanır.</p>
       </div>
       <div class="why-item">
         <div class="why-icon"></div>
-        <h4>Bağımsız ve Tarafsız</h4>
-        <p>Hiçbir ürün ya da satıcı gündeminden bağımsız, yalnızca sizin çıkarlarınız için.</p>
+        <h4>Stratejiden uygulamaya tam kapsam</h4>
+        <p>Yol haritası oluşturmaktan program teslimatına, tedarikçi müzakeresinden post-go-live stabilizasyona kadar uçtan uca sorumluluk.</p>
       </div>
       <div class="why-item">
         <div class="why-icon"></div>
-        <h4>Kanıtlanmış Sonuçlar</h4>
-        <p>€1M+ programlar, %35 maliyet düşürümü, 100+ kişilik global ekip kurulumları.</p>
+        <h4>Board ve C-Suite düzeyinde iletişim</h4>
+        <p>Teknik detaylar kurumsal dile tercüme edilir. Yönetim kuruluna ve üst yönetime doğrudan raporlama yapılabilir.</p>
       </div>
     </div>
   </section>
@@ -372,13 +393,13 @@
   <!-- ABOUT DARK -->
   <section class="about-dark">
     <div class="about-left">
-      <h2>Vildan Bağımsız Danışmanlık Okulu Hakkında</h2>
-      <p>Dönüşümü içeriden bilen bir danışman</p>
+      <h2>Vendor Tarafından Müşteri Tarafına.</h2>
+      <p>Nadir bir perspektif.</p>
       <a href="#" class="btn-outline-white" onclick="showPage('about')">Daha Fazla</a>
     </div>
     <div class="about-right">
-      <p>Uzun yıllar boyunca dünyanın en büyük kurumlarının en kritik dönüşüm programlarını içeriden yönettim. Daimler için Türkiye'nin ilk SAP global destek merkezini kurdum — 100'den fazla kişilik çok uluslu bir ekiple.</p>
-      <p>Bugün bağımsız bir danışman olarak çalışıyorum — çünkü en değerli rehberlik, herhangi bir ürünün, teknoloji firmasının ya da satış gündeminin dışında durabilmekten geçiyor.</p>
+      <p>NTT Data'da Direktör olarak EMEA ve META genelinde yüz milyonlarca Euro değerinde yönetilen hizmet sözleşmelerini müzakere ettim, fiyatlandırdım ve teslim ettim. Daimler için Türkiye'nin ilk SAP küresel destek merkezini sıfırdan kurdum. THY'nin ülkedeki en büyük ERP dönüşümünde program liderliği yaptım.</p>
+      <p>Bu deneyim bugün müşteri tarafında benzersiz bir avantaja dönüşüyor: bir entegratörün masanın karşısında ne düşündüğünü, bir RFP sürecinde nerede pazarlık payı bırakıldığını ve bir dönüşüm programının neden başarısız olacağını önceden görebilmek.</p>
     </div>
   </section>
 
@@ -386,7 +407,7 @@
   <section class="stats">
     <div class="stats-inner">
       <div class="stats-left">
-        <h2>Misyonum: Dönüşümü Gerçek Kılmak</h2>
+        <h2>Sahada Kanıtlanmış Sicil</h2>
         <div class="stats-grid">
           <div class="stat-item">
             <div class="num">20+</div>
@@ -407,8 +428,8 @@
         </div>
       </div>
       <div class="stats-right">
-        <p>SAP dönüşümünden yapay zeka benimsemesine, tedarikçi seçiminden yönetilen hizmet modellerine kadar — stratejiyi uygulamaya bağlayan köprüyü kuruyoruz.</p>
-        <p>CIO'lara ve üst düzey IT liderlerine bağımsız, tarafsız ve sonuç odaklı bir perspektif sunuyorum.</p>
+        <p>Kurumsal dönüşümde başarı teknolojiyle değil, doğru kararlarla gelir. Bağımsız perspektif çoğu zaman en pahalı hatadan kaçınmanın tek yoludur.</p>
+        <p>CIO'lara ve yönetim kurullarına somut, uygulanabilir ve tarafsız stratejik görüş — vendor bağımsızlığı garantisiyle.</p>
       </div>
     </div>
   </section>
@@ -449,37 +470,37 @@
   <!-- ACADEMICS / HIZMETLER -->
   <section class="academics">
     <div class="academics-inner">
-      <h2>Hizmetlerim</h2>
-      <p class="sub">Dönüşüm sürecinin her aşamasında bağımsız danışmanlık</p>
+      <h2>Hizmet Alanları</h2>
+      <p class="sub">Board ve C-Suite Düzeyinde Stratejik Danışmanlık</p>
       <div class="services-grid">
         <div class="service-card">
-          <h3>SAP & S/4HANA Dönüşümü</h3>
-          <p>S/4HANA geçiş stratejisi, program yönetimi, hedef işletme modeli tasarımı ve go-live sonrası stabilizasyon.</p>
+          <h3>Kurumsal ERP & SAP Dönüşümü</h3>
+          <p>S/4HANA geçişleri strateji, mimari, veri ve organizasyon boyutlarını eş zamanlı yönetir. THY, Eureko Sigorta ve Arçelik gibi kurumların dönüşüm programlarında liderlik eden bağımsız bir perspektif.</p>
           <a href="#" class="btn-purple-sm" onclick="showPage('services')">Detaylar</a>
         </div>
         <div class="service-card">
-          <h3>Yönetilen Hizmetler & İşletme Modeli</h3>
-          <p>ITIL tabanlı servis modeli tasarımı, SLA/KPI çerçeveleri, çok bölgeli teslimat organizasyonu.</p>
+          <h3>Yönetilen Hizmet Modeli Tasarımı</h3>
+          <p>ITIL tabanlı servis modeli tasarımı, SLA/KPI çerçeveleri ve çok bölgeli teslimat organizasyonu. B/S/H için 3 ayda 75+ kişilik servis organizasyonu kurulumu bunun somut kanıtı.</p>
           <a href="#" class="btn-purple-sm" onclick="showPage('services')">Detaylar</a>
         </div>
         <div class="service-card">
-          <h3>Tedarikçi Seçimi & RFP Yönetimi</h3>
-          <p>Bağımsız tedarikçi değerlendirmesi, RFP/RFI süreci tasarımı, teknik ve ticari değerlendirme.</p>
+          <h3>Bağımsız Tedarikçi & RFP Yönetimi</h3>
+          <p>Teknoloji tedarikçileri güçlü satış ekipleriyle gelir. NTT Data'daki RFP deneyimi artık müşteri masasında — bağımsız değerlendirme, müzakere desteği ve ticari analiz.</p>
           <a href="#" class="btn-purple-sm" onclick="showPage('services')">Detaylar</a>
         </div>
         <div class="service-card">
-          <h3>Program & Portföy Yönetimi</h3>
-          <p>PMO kurulumu, proje portföyü yönetimi, yönetişim çerçeveleri ve dönüşüm programı liderliği.</p>
+          <h3>Program Yönetişimi & Teslimat Liderliği</h3>
+          <p>PMO kurulumu, portföy yönetimi ve yönetişim çerçeveleri. €1M+ programları tutarlı biçimde zamanında ve bütçe dahilinde teslim eden kanıtlanmış bir metodoloji.</p>
           <a href="#" class="btn-purple-sm" onclick="showPage('services')">Detaylar</a>
         </div>
         <div class="service-card">
-          <h3>Yapay Zeka Benimseme & Değişim Yönetimi</h3>
-          <p>Kurumsal AI stratejisi, organizasyonel değişim yönetimi, çalışan hazırlığı ve AI yönetişimi.</p>
+          <h3>Kurumsal AI Hazırlık & Yönetişim</h3>
+          <p>Kurumsal AI stratejisi, organizasyonel hazırlık ve AI yönetişim çerçevesi. Teknolojiyi satın almak değil, kurumu hazırlamak belirleyici faktördür.</p>
           <a href="#" class="btn-purple-sm" onclick="showPage('services')">Detaylar</a>
         </div>
         <div class="service-card">
-          <h3>Kurumsal Mimari & Yönetişim</h3>
-          <p>TOGAF tabanlı kurumsal mimari değerlendirmesi, yönetişim model tasarımı, risk ve kalite yönetimi.</p>
+          <h3>Kurumsal Mimari & Teknoloji Yönetişimi</h3>
+          <p>TOGAF sertifikalı kurumsal mimari değerlendirmesi ve yönetişim model tasarımı. Teknoloji mimarisini iş stratejisiyle hizalayan bütünsel bir yaklaşım.</p>
           <a href="#" class="btn-purple-sm" onclick="showPage('services')">Detaylar</a>
         </div>
       </div>
@@ -519,13 +540,13 @@
 
   <!-- QUOTE -->
   <section class="quote">
-    <blockquote>"Başarı kalıcı değildir, başarısızlık ölümcül değildir: önemli olan devam etme cesaredidir."</blockquote>
-    <cite>— Winston Churchill</cite>
+    <blockquote>"Kurumsal dönüşümde en büyük risk, yanlış teknolojiyi seçmek değildir. Doğru kararı verecek bağımsız bir sesi olmamaktır."</blockquote>
+    <cite>— Vildan Kara Kayacan, Advisory Principal</cite>
   </section>
 
   <!-- PARTNER STRIP -->
   <div class="partner-strip">
-    <h2>Deneyim Kazandığım Kurumlar</h2>
+    <h2>Derin Operasyonel Deneyim Kazanılan Kurumlar</h2>
     <div class="partner-logos">
       <span class="partner-logo">NTT Data</span>
       <span class="partner-logo">SAP</span>
@@ -541,7 +562,7 @@
     <div class="footer-inner">
       <div class="footer-brand">
         <div class="name">Vildan<span>.</span></div>
-        <div class="sub">Bağımsız Danışman</div>
+        <div class="sub">Advisory Principal</div>
         <h3>Başarıya Katılın!</h3>
         <input type="email" placeholder="E-posta adresiniz">
         <button>Abone Ol</button>
@@ -583,40 +604,40 @@
 .ab-hero{background:var(--dark);padding:100px 60px 70px;position:relative;overflow:hidden}
 .ab-hero::before{content:'';position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1600&q=80') center/cover no-repeat;opacity:.12}
 .ab-hero-inner{position:relative;z-index:1;max-width:1000px;margin:0 auto;display:grid;grid-template-columns:180px 1fr;gap:48px;align-items:center}
-.ab-photo{width:180px;height:180px;border-radius:50%;border:3px solid var(--purple);background:url('https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&q=80') center/cover;flex-shrink:0}
+.ab-photo{width:180px;height:180px;border-radius:50%;border:3px solid var(--accent);background:url('https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&q=80') center/cover;flex-shrink:0}
 .ab-hero-text h1{color:#fff;font-size:38px;font-weight:800;margin-bottom:6px}
-.ab-hero-text .ab-tagline{color:var(--purple);font-size:15px;font-weight:600;margin-bottom:10px}
+.ab-hero-text .ab-tagline{color:var(--accent);font-size:15px;font-weight:600;margin-bottom:10px}
 .ab-hero-text .ab-location{color:#888;font-size:13px;margin-bottom:20px}
 .ab-hero-btns{display:flex;gap:12px;flex-wrap:wrap}
-.ab-btn-cv{display:inline-flex;align-items:center;gap:8px;background:var(--purple);color:#fff;padding:10px 22px;font-size:13px;font-weight:700;text-decoration:none;border-radius:2px;transition:background .2s}
-.ab-btn-cv:hover{background:var(--purple-light)}
+.ab-btn-cv{display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:#fff;padding:10px 22px;font-size:13px;font-weight:700;text-decoration:none;border-radius:2px;transition:background .2s}
+.ab-btn-cv:hover{background:var(--accent-light)}
 .ab-btn-li{display:inline-flex;align-items:center;gap:8px;border:1.5px solid #555;color:#ccc;padding:10px 22px;font-size:13px;font-weight:600;text-decoration:none;border-radius:2px;transition:all .2s}
 .ab-btn-li:hover{border-color:#fff;color:#fff}
 
 /* STORY */
 .ab-story{max-width:1000px;margin:0 auto;padding:60px 60px 0}
-.ab-story-title{font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--purple);margin-bottom:20px}
+.ab-story-title{font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--accent);margin-bottom:20px}
 .ab-story p{font-size:15px;line-height:1.9;color:#333;margin-bottom:16px}
 
 /* NUMBERS */
 .ab-numbers{background:#f9f9f7;margin-top:60px;padding:60px}
 .ab-numbers-inner{max-width:1000px;margin:0 auto}
-.ab-numbers-title{font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--purple);margin-bottom:36px}
+.ab-numbers-title{font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--accent);margin-bottom:36px}
 .ab-num-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
 .ab-num-item{text-align:center;background:#fff;border:1px solid #eee;padding:28px 16px;border-radius:4px}
-.ab-num-item .n{font-size:36px;font-weight:800;color:var(--purple);line-height:1;margin-bottom:6px}
+.ab-num-item .n{font-size:36px;font-weight:800;color:var(--accent);line-height:1;margin-bottom:6px}
 .ab-num-item .l{font-size:12px;color:#777;line-height:1.5}
 
 /* ACHIEVEMENTS */
 .ab-achieve{max-width:1000px;margin:0 auto;padding:60px}
-.ab-achieve-title{font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--purple);margin-bottom:28px}
+.ab-achieve-title{font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--accent);margin-bottom:28px}
 .ab-achieve-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.ab-achieve-item{background:#f9f9f7;border-left:3px solid var(--purple);padding:14px 16px;font-size:13px;line-height:1.6;color:#333}
+.ab-achieve-item{background:#f9f9f7;border-left:3px solid var(--accent);padding:14px 16px;font-size:13px;line-height:1.6;color:#333}
 
 /* COUNTRIES */
 .ab-countries{background:var(--dark);padding:60px}
 .ab-countries-inner{max-width:1000px;margin:0 auto}
-.ab-countries-title{font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--purple);margin-bottom:8px}
+.ab-countries-title{font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
 .ab-countries-sub{color:#888;font-size:13px;margin-bottom:32px}
 .ab-flags{display:flex;flex-wrap:wrap;gap:16px;align-items:center}
 .ab-flag-item{display:flex;flex-direction:column;align-items:center;gap:6px}
@@ -625,16 +646,16 @@
 
 /* SKILLS */
 .ab-skills{max-width:1000px;margin:0 auto;padding:60px}
-.ab-skills-title{font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--purple);margin-bottom:28px}
+.ab-skills-title{font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--accent);margin-bottom:28px}
 .ab-skills-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px}
-.ab-skill-group h4{font-size:13px;font-weight:700;color:#111;margin-bottom:10px;padding-bottom:6px;border-bottom:2px solid var(--purple)}
+.ab-skill-group h4{font-size:13px;font-weight:700;color:#111;margin-bottom:10px;padding-bottom:6px;border-bottom:2px solid var(--accent)}
 .ab-skill-group ul{list-style:none;padding:0}
 .ab-skill-group ul li{font-size:12px;color:#555;padding:4px 0;border-bottom:1px solid #f0eeea}
 
 /* COMPANIES */
 .ab-companies{background:#f9f9f7;padding:48px 60px}
 .ab-companies-inner{max-width:1000px;margin:0 auto}
-.ab-companies-title{font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--purple);margin-bottom:28px}
+.ab-companies-title{font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--accent);margin-bottom:28px}
 .ab-company-list{display:flex;flex-wrap:wrap;gap:12px}
 .ab-company-tag{background:#fff;border:1px solid #ddd;padding:8px 18px;font-size:13px;font-weight:600;color:#444;border-radius:2px}
 
@@ -748,7 +769,7 @@
     countries.forEach(function(c) {
       var flagIcon = L.divIcon({
         className: '',
-        html: '<div style="width:36px;height:36px;border-radius:50%;background:#fff;border:2.5px solid #6b46c1;box-shadow:0 2px 10px rgba(107,70,193,0.35);overflow:hidden;display:flex;align-items:center;justify-content:center;cursor:pointer;"><img src="https://flagcdn.com/48x36/' + c.code + '.png" style="width:100%;height:100%;object-fit:cover;" alt="' + c.name + '"></div>',
+        html: '<div style="width:36px;height:36px;border-radius:50%;background:#fff;border:2.5px solid var(--accent);box-shadow:0 2px 10px rgba(107,70,193,0.35);overflow:hidden;display:flex;align-items:center;justify-content:center;cursor:pointer;"><img src="https://flagcdn.com/48x36/' + c.code + '.png" style="width:100%;height:100%;object-fit:cover;" alt="' + c.name + '"></div>',
         iconSize: [36, 36], iconAnchor: [18, 18], popupAnchor: [0, -20]
       });
       var projectList = (c.projects || []).map(function(p) {
@@ -886,7 +907,7 @@
     <div class="footer-inner">
       <div class="footer-brand">
         <div class="name">Vildan<span>.</span></div>
-        <div class="sub">Bağımsız Danışman</div>
+        <div class="sub">Advisory Principal</div>
         <h3>Başarıya Katılın!</h3>
         <input type="email" placeholder="E-posta adresiniz">
         <button>Abone Ol</button>
@@ -908,9 +929,9 @@
 <div id="services" class="site-page">
 
     .cv-hero-inner { position:relative; z-index:1; display:grid; grid-template-columns:auto 1fr; gap:48px; align-items:start; max-width:1000px; margin:0 auto; }
-    .cv-photo { width:160px; height:160px; border-radius:50%; object-fit:cover; border:3px solid var(--purple); flex-shrink:0; background:url('https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&q=80') center/cover; }
+    .cv-photo { width:160px; height:160px; border-radius:50%; object-fit:cover; border:3px solid var(--accent); flex-shrink:0; background:url('https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&q=80') center/cover; }
     .cv-hero-text h1 { color:#fff; font-size:34px; font-weight:800; margin-bottom:4px; }
-    .cv-hero-text .cv-title { color:var(--purple); font-size:15px; font-weight:600; margin-bottom:6px; }
+    .cv-hero-text .cv-title { color:var(--accent); font-size:15px; font-weight:600; margin-bottom:6px; }
     .cv-hero-text .cv-tags { color:#aaa; font-size:13px; margin-bottom:16px; }
     .cv-hero-text .cv-contact { display:flex; gap:20px; flex-wrap:wrap; }
     .cv-hero-text .cv-contact a { color:#ccc; font-size:13px; text-decoration:none; }
@@ -918,18 +939,18 @@
     .cv-summary { background:#fff; padding:48px 60px; max-width:1000px; margin:0 auto; }
     .cv-summary p { font-size:15px; line-height:1.8; color:#333; }
     .cv-section { padding:48px 60px; max-width:1000px; margin:0 auto; }
-    .cv-section-title { font-size:11px; font-weight:700; letter-spacing:3px; text-transform:uppercase; color:var(--purple); border-bottom:2px solid var(--purple); padding-bottom:8px; margin-bottom:28px; }
+    .cv-section-title { font-size:11px; font-weight:700; letter-spacing:3px; text-transform:uppercase; color:var(--accent); border-bottom:2px solid var(--accent); padding-bottom:8px; margin-bottom:28px; }
     .cv-achievements { display:grid; grid-template-columns:1fr 1fr; gap:12px 40px; }
     .cv-achievement { display:flex; gap:10px; align-items:flex-start; font-size:14px; line-height:1.6; color:#333; }
-    .cv-achievement::before { content:'▪'; color:var(--purple); font-size:16px; flex-shrink:0; margin-top:1px; }
+    .cv-achievement::before { content:'▪'; color:var(--accent); font-size:16px; flex-shrink:0; margin-top:1px; }
     .cv-competencies { display:flex; flex-wrap:wrap; gap:10px; }
-    .cv-competency { background:#f3eeff; color:var(--purple); font-size:12px; font-weight:600; padding:5px 14px; border-radius:2px; }
+    .cv-competency { background:#f3eeff; color:var(--accent); font-size:12px; font-weight:600; padding:5px 14px; border-radius:2px; }
     .cv-job { margin-bottom:36px; padding-bottom:36px; border-bottom:1px solid #eee; }
     .cv-job:last-child { border-bottom:none; }
     .cv-job-header { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:4px; flex-wrap:wrap; gap:8px; }
     .cv-job-company { font-size:16px; font-weight:800; color:var(--black); }
     .cv-job-dates { font-size:12px; color:#999; font-style:italic; }
-    .cv-job-role { font-size:14px; font-weight:700; color:var(--purple); margin:8px 0 4px; }
+    .cv-job-role { font-size:14px; font-weight:700; color:var(--accent); margin:8px 0 4px; }
     .cv-job-desc { font-size:13px; color:#555; line-height:1.7; }
     .cv-job ul { margin:8px 0 0 16px; }
     .cv-job ul li { font-size:13px; color:#555; line-height:1.7; margin-bottom:4px; }
@@ -942,7 +963,7 @@
     .cv-edu-item .right { font-size:12px; color:#999; text-align:right; }
     .cv-certs { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
     .cv-cert { font-size:13px; color:#444; display:flex; gap:8px; align-items:center; }
-    .cv-cert::before { content:'·'; color:var(--purple); font-size:20px; line-height:1; }
+    .cv-cert::before { content:'·'; color:var(--accent); font-size:20px; line-height:1; }
     .cv-langs { display:flex; gap:32px; flex-wrap:wrap; }
     .cv-lang { text-align:center; }
     .cv-lang .lang-name { font-size:14px; font-weight:700; }
@@ -1141,7 +1162,7 @@
     <div class="footer-inner">
       <div class="footer-brand">
         <div class="name">Vildan<span>.</span></div>
-        <div class="sub">Bağımsız Danışman</div>
+        <div class="sub">Advisory Principal</div>
         <h3>Başarıya Katılın!</h3>
         <input type="email" placeholder="E-posta adresiniz">
         <button>Abone Ol</button>
@@ -1166,7 +1187,7 @@
     .svc-hero { background:var(--dark); padding:100px 60px 60px; text-align:center; position:relative; overflow:hidden; }
     .svc-hero::before { content:''; position:absolute; inset:0; background:url('https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1400&q=80') center/cover no-repeat; opacity:.15; }
     .svc-hero h1 { position:relative; z-index:1; color:#fff; font-size:38px; font-weight:700; margin-bottom:10px; }
-    .svc-hero p { position:relative; z-index:1; color:var(--purple); font-size:14px; }
+    .svc-hero p { position:relative; z-index:1; color:var(--accent); font-size:14px; }
     .svc-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:0; background:var(--white); }
     .svc-item { border:1px solid #eee; overflow:hidden; cursor:pointer; transition:box-shadow 0.2s; }
     .svc-item:hover { box-shadow:0 4px 24px rgba(107,70,193,0.12); z-index:1; }
@@ -1175,7 +1196,7 @@
     .svc-body h3 { font-size:17px; font-weight:700; color:var(--black); margin-bottom:10px; line-height:1.3; }
     .svc-body p { font-size:13px; color:#555; line-height:1.7; margin-bottom:12px; }
     .svc-scope { font-size:12px; color:#888; border-top:1px solid #f0eeea; padding-top:12px; margin-top:4px; }
-    .svc-scope strong { color:var(--purple); }
+    .svc-scope strong { color:var(--accent); }
     @media(max-width:900px){ .svc-grid { grid-template-columns:1fr; } .svc-hero { padding:80px 24px 40px; } }
   </style>
 
@@ -1246,7 +1267,7 @@
     <div class="footer-inner">
       <div class="footer-brand">
         <div class="name">Vildan<span>.</span></div>
-        <div class="sub">Bağımsız Danışman</div>
+        <div class="sub">Advisory Principal</div>
         <h3>Başarıya Katılın!</h3>
         <input type="email" placeholder="E-posta adresiniz">
         <button>Abone Ol</button>
@@ -1281,7 +1302,7 @@
     .blog-detail-body h4 { font-size:16px; font-weight:700; margin:24px 0 8px; color:#111; }
     .blog-card { cursor:pointer; transition:transform 0.2s; }
     .blog-card:hover { transform:translateY(-4px); }
-    .blog-card:hover h3 { color:#805ad5; }
+    .blog-card:hover h3 { color:var(--accent-light); }
   </style>
 
   <!-- Detay overlay -->
@@ -1469,7 +1490,7 @@
     <div class="footer-inner">
       <div class="footer-brand">
         <div class="name">Vildan<span>.</span></div>
-        <div class="sub">Bağımsız Danışman</div>
+        <div class="sub">Advisory Principal</div>
         <h3>Başarıya Katılın!</h3>
         <input type="email" placeholder="E-posta adresiniz">
         <button>Abone Ol</button>
@@ -1540,7 +1561,7 @@
     <div class="footer-inner">
       <div class="footer-brand">
         <div class="name">Vildan<span>.</span></div>
-        <div class="sub">Bağımsız Danışman</div>
+        <div class="sub">Advisory Principal</div>
         <h3>Başarıya Katılın!</h3>
         <input type="email" placeholder="E-posta adresiniz">
         <button>Abone Ol</button>
@@ -1564,7 +1585,7 @@
 .prj-hero{background:var(--dark);padding:100px 60px 60px;text-align:center;position:relative;overflow:hidden}
 .prj-hero::before{content:'';position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=1400&q=80') center/cover no-repeat;opacity:.15}
 .prj-hero h1{position:relative;z-index:1;color:#fff;font-size:38px;font-weight:700;margin-bottom:10px}
-.prj-hero p{position:relative;z-index:1;color:var(--purple);font-size:14px;max-width:600px;margin:0 auto}
+.prj-hero p{position:relative;z-index:1;color:var(--accent);font-size:14px;max-width:600px;margin:0 auto}
 .prj-intro{max-width:900px;margin:0 auto;padding:48px 60px;text-align:center}
 .prj-intro p{font-size:15px;line-height:1.8;color:#555}
 .prj-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;background:#f9f9f7}
@@ -1572,15 +1593,15 @@
 .prj-card:hover{box-shadow:0 6px 28px rgba(107,70,193,0.13);z-index:1}
 .prj-img{width:100%;height:180px;display:block;position:relative;overflow:hidden}
 .prj-img-inner{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:56px}
-.prj-tag{display:inline-block;background:var(--purple);color:#fff;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:3px 10px;border-radius:2px;margin-bottom:10px}
+.prj-tag{display:inline-block;background:var(--accent);color:#fff;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:3px 10px;border-radius:2px;margin-bottom:10px}
 .prj-tag.hobby{background:#2d6a4f}
 .prj-tag.active{background:#c05621}
 .prj-body{padding:22px 24px 28px;flex:1;display:flex;flex-direction:column}
 .prj-body h3{font-size:17px;font-weight:700;color:var(--black);margin-bottom:10px;line-height:1.3}
 .prj-body p{font-size:13px;color:#555;line-height:1.7;flex:1}
 .prj-footer{padding:14px 24px;border-top:1px solid #f0eeea;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
-.prj-link{display:inline-flex;align-items:center;gap:5px;color:var(--purple);font-size:12px;font-weight:600;text-decoration:none;transition:color .2s}
-.prj-link:hover{color:var(--purple-light)}
+.prj-link{display:inline-flex;align-items:center;gap:5px;color:var(--accent);font-size:12px;font-weight:600;text-decoration:none;transition:color .2s}
+.prj-link:hover{color:var(--accent-light)}
 .prj-status{font-size:11px;color:#aaa;margin-left:auto}
 @media(max-width:900px){.prj-grid{grid-template-columns:1fr}.prj-intro,.prj-hero{padding:60px 24px}.prj-intro{padding:40px 24px}}
 </style>
@@ -1710,7 +1731,7 @@
     <div class="footer-inner">
       <div class="footer-brand">
         <div class="name">Vildan<span>.</span></div>
-        <div class="sub">Bağımsız Danışman</div>
+        <div class="sub">Advisory Principal</div>
         <h3>Başarıya Katılın!</h3>
         <input type="email" placeholder="E-posta adresiniz">
         <button>Abone Ol</button>
@@ -1786,7 +1807,7 @@
     <div class="footer-inner">
       <div class="footer-brand">
         <div class="name">Vildan<span>.</span></div>
-        <div class="sub">Bağımsız Danışman</div>
+        <div class="sub">Advisory Principal</div>
         <h3>Başarıya Katılın!</h3>
         <input type="email" placeholder="E-posta adresiniz">
         <button>Abone Ol</button>
