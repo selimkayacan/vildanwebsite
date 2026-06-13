@@ -189,6 +189,14 @@
   .hero-stat-item .stat-num { font-size: 36px; font-weight: 800; color: var(--accent); line-height: 1; margin-bottom: 4px; }
   .hero-stat-item .stat-lbl { color: #aaa; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; }
   .hero-eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--accent); margin-bottom: 24px; }
+
+  /* ── SVC COLUMN LAYOUT ── */
+  .svc-col-title { font-size: 10px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--accent); margin-bottom: 20px; padding-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+  .svc-col { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); padding: 36px 32px; }
+  .svc-col .svc-item-row { margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .svc-col .svc-item-row:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+  .svc-col .svc-item-row h4 { color: var(--white); font-size: 14px; font-weight: 600; margin-bottom: 6px; }
+  .svc-col .svc-item-row p { color: #777; font-size: 12px; line-height: 1.6; }
   @media (max-width: 900px) {
     nav { padding: 0 20px; }
     .nav-links { display: none; }
@@ -233,7 +241,7 @@
 
   <section class="hero">
     <div class="hero-left">
-      <div class="hero-eyebrow">SAP Projects · IT Investments · AI Transformation · RFP Process · Managed Services</div>
+      <div class="hero-eyebrow">SAP Advisory · AI in SAP Environments · Managed Services · RFP &amp; Vendor Selection</div>
       <h1>Vendor-side insight. Client-side assurance.</h1>
       <p>Over two decades at NTT Data, SAP, and Metro Group, enterprise transformation programmes were led, service contracts negotiated, and delivery organisations built. That expertise is now available on the client side — with no vendor agenda and full alignment with client interests.</p>
       <a href="#" class="btn-primary btn-purple" onclick="showPage('contact')">Let's Talk</a>
@@ -290,6 +298,11 @@
 
   <section class="about-dark">
     <div class="about-left">
+      <div style="display:flex;gap:20px;flex-wrap:wrap;margin-bottom:28px;">
+  <span style="font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--accent);border-bottom:1px solid var(--accent);padding-bottom:4px;">SAP Turkey</span>
+  <span style="font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--accent);border-bottom:1px solid var(--accent);padding-bottom:4px;">NTT Data</span>
+  <span style="font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--accent);border-bottom:1px solid var(--accent);padding-bottom:4px;">Metro Group</span>
+</div>
       <h2>From the Vendor Side to the Client Side.</h2>
       <p>A rare perspective.</p>
       <a href="#" class="btn-outline-white" onclick="showPage('about')">Learn More</a>
@@ -333,39 +346,74 @@
   <section class="academics">
     <div class="academics-inner">
       <h2>Service Areas</h2>
-      <p class="sub">Strategic Advisory at Board and C-Suite Level</p>
-      <div class="services-grid">
-        <div class="service-card">
-          <h3>Enterprise ERP & SAP Transformation</h3>
-          <p>S/4HANA transitions require the simultaneous management of strategy, architecture, data, and organisation. Experience gained across programmes at Turkish Airlines, Eureko Sigorta, and Arçelik is brought to bear as an independent perspective.</p>
-          <a href="#" class="btn-purple-sm" onclick="showPage('services')">View Details</a>
-        </div>
-        <div class="service-card">
-          <h3>Managed Service Model Design</h3>
-          <p>ITIL-based service model design, SLA/KPI frameworks, and multi-region delivery organisation. A 75+ person service organisation was stood up for B/S/H in three months — demonstrating this methodology in practice.</p>
-          <a href="#" class="btn-purple-sm" onclick="showPage('services')">View Details</a>
-        </div>
-        <div class="service-card">
-          <h3>Independent Vendor & RFP Management</h3>
-          <p>Technology vendors come with strong sales teams. RFP expertise developed at NTT Data is now applied at the client table — with independent assessment, negotiation support, and commercial analysis.</p>
-          <a href="#" class="btn-purple-sm" onclick="showPage('services')">View Details</a>
-        </div>
-        <div class="service-card">
-          <h3>Programme Governance & Delivery Leadership</h3>
-          <p>PMO setup, portfolio management, and governance frameworks. A proven methodology through which €1M+ programmes have been delivered consistently on time and on budget.</p>
-          <a href="#" class="btn-purple-sm" onclick="showPage('services')">View Details</a>
-        </div>
-        <div class="service-card">
-          <h3>Enterprise AI Readiness & Governance</h3>
-          <p>Enterprise AI strategy, organisational readiness, and AI governance framework. Acquiring the technology is only the beginning — organisational preparation is the decisive factor.</p>
-          <a href="#" class="btn-purple-sm" onclick="showPage('services')">View Details</a>
-        </div>
-        <div class="service-card">
-          <h3>Enterprise Architecture & Technology Governance</h3>
-          <p>TOGAF-certified enterprise architecture assessment and governance model design. A holistic approach through which technology architecture is aligned with business strategy.</p>
-          <a href="#" class="btn-purple-sm" onclick="showPage('services')">View Details</a>
-        </div>
-      </div>
+      <p class="sub">Strategic advisory across SAP, AI and IT investments — at Board and C-Suite level</p>
+      <div class="services-grid" style="grid-template-columns: repeat(3,1fr);">
+
+  <div class="svc-col">
+    <div class="svc-col-title">SAP Advisory</div>
+    <div class="svc-item-row">
+      <h4>S/4HANA Strategy &amp; Roadmap</h4>
+      <p>Transition strategy, business requirements analysis, target architecture, and implementation roadmap are developed.</p>
+    </div>
+    <div class="svc-item-row">
+      <h4>SAP Investment &amp; Programme Management</h4>
+      <p>Business case preparation, programme governance, budget and risk management — end-to-end programme leadership.</p>
+    </div>
+    <div class="svc-item-row">
+      <h4>SAP Implementor &amp; Vendor Selection</h4>
+      <p>Independent assessment of SAP ecosystem implementation partners — strengths and weaknesses evaluated from first-hand knowledge of the vendor side.</p>
+    </div>
+    <div class="svc-item-row">
+      <h4>SAP Health Check &amp; QA</h4>
+      <p>Independent health assessment of in-flight SAP programmes; early identification of delivery risks and quality gaps.</p>
+    </div>
+    <div class="svc-item-row">
+      <h4>Organizational Change (OCM)</h4>
+      <p>Change management strategy, stakeholder readiness, and adoption advisory within large SAP programme contexts.</p>
+    </div>
+  </div>
+
+  <div class="svc-col">
+    <div class="svc-col-title">AI in SAP Environments</div>
+    <div class="svc-item-row">
+      <h4>AI Strategy in SAP-Dominant Organisations</h4>
+      <p>Strategic framework for where and how to initiate AI integration within organisations running SAP as their core infrastructure.</p>
+    </div>
+    <div class="svc-item-row">
+      <h4>SAP Joule &amp; Native AI Tools</h4>
+      <p>Integration of SAP's embedded AI tools into business processes and identification of high-value use cases.</p>
+    </div>
+    <div class="svc-item-row">
+      <h4>AI Readiness &amp; Governance</h4>
+      <p>Organisational readiness assessment, governance model, and risk framework before committing to enterprise AI investment.</p>
+    </div>
+    <div class="svc-item-row">
+      <h4>AI Roadmap &amp; Prioritisation</h4>
+      <p>Prioritisation of AI use cases across SAP and non-SAP processes, and preparation of an actionable implementation roadmap.</p>
+    </div>
+  </div>
+
+  <div class="svc-col">
+    <div class="svc-col-title">Managed Services &amp; IT Structure</div>
+    <div class="svc-item-row">
+      <h4>Managed Service Model Design</h4>
+      <p>ITIL-based service model, SLA/KPI framework, and multi-region delivery organisation design.</p>
+    </div>
+    <div class="svc-item-row">
+      <h4>Service Cost Optimisation</h4>
+      <p>Independent review of SAP support structures and IT service costs; identification of efficiency gaps and savings opportunities.</p>
+    </div>
+    <div class="svc-item-row">
+      <h4>RFP Design &amp; Vendor Negotiation</h4>
+      <p>RFP process design for technology procurement, independent technical and commercial assessment, and negotiation support.</p>
+    </div>
+    <div class="svc-item-row">
+      <h4>IT Structure &amp; Operations Assessment</h4>
+      <p>Holistic assessment of the existing IT service structure, operational maturity, and governance model.</p>
+    </div>
+  </div>
+
+</div>
     </div>
   </section>
 

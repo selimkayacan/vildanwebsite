@@ -288,6 +288,14 @@
   .blog-full { padding: 60px; background: var(--white); }
   .blog-full-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
 
+
+  /* ── SVC COLUMN LAYOUT ── */
+  .svc-col-title { font-size: 10px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--accent); margin-bottom: 20px; padding-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+  .svc-col { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); padding: 36px 32px; }
+  .svc-col .svc-item-row { margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .svc-col .svc-item-row:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+  .svc-col .svc-item-row h4 { color: var(--white); font-size: 14px; font-weight: 600; margin-bottom: 6px; }
+  .svc-col .svc-item-row p { color: #777; font-size: 12px; line-height: 1.6; }
   @media (max-width: 900px) {
     nav { padding: 0 20px; }
     .nav-links { display: none; }
@@ -334,7 +342,7 @@
   <!-- HERO -->
   <section class="hero">
     <div class="hero-left">
-      <div class="hero-eyebrow">SAP Projects · IT Investments · AI Transformation · RFP Process · Managed Services</div>
+      <div class="hero-eyebrow">SAP Advisory · AI in SAP Environments · Managed Services · RFP &amp; Vendor Selection</div>
       <h1>Vendor tarafında inşa edilmiş içgörü. Müşteri tarafında sunulan güvence.</h1>
       <p>20 yıl boyunca NTT Data, SAP ve Metro Group bünyesinde kurumsal dönüşüm programları yönetildi, servis sözleşmeleri müzakere edildi ve teslimat organizasyonları kuruldu. Bu birikim bugün tamamen müşteri çıkarına, hiçbir vendor gündemine bağlı olmaksızın sunulmaktadır.</p>
       <a href="#" class="btn-primary btn-purple" onclick="showPage('contact')">Görüşelim</a>
@@ -393,6 +401,11 @@
   <!-- ABOUT DARK -->
   <section class="about-dark">
     <div class="about-left">
+      <div style="display:flex;gap:20px;flex-wrap:wrap;margin-bottom:28px;">
+  <span style="font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--accent);border-bottom:1px solid var(--accent);padding-bottom:4px;">SAP Turkey</span>
+  <span style="font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--accent);border-bottom:1px solid var(--accent);padding-bottom:4px;">NTT Data</span>
+  <span style="font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--accent);border-bottom:1px solid var(--accent);padding-bottom:4px;">Metro Group</span>
+</div>
       <h2>Vendor Tarafından Müşteri Tarafına.</h2>
       <p>Nadir bir perspektif.</p>
       <a href="#" class="btn-outline-white" onclick="showPage('about')">Daha Fazla</a>
@@ -471,39 +484,74 @@
   <section class="academics">
     <div class="academics-inner">
       <h2>Hizmet Alanları</h2>
-      <p class="sub">Board ve C-Suite Düzeyinde Stratejik Danışmanlık</p>
-      <div class="services-grid">
-        <div class="service-card">
-          <h3>Kurumsal ERP & SAP Dönüşümü</h3>
-          <p>S/4HANA geçişleri; strateji, mimari, veri ve organizasyon boyutlarının eş zamanlı yönetimini gerektirmektedir. THY, Eureko Sigorta ve Arçelik gibi kurumların dönüşüm programlarında edinilen deneyim bağımsız bir perspektifle sunulmaktadır.</p>
-          <a href="#" class="btn-purple-sm" onclick="showPage('services')">Detaylar</a>
-        </div>
-        <div class="service-card">
-          <h3>Yönetilen Hizmet Modeli Tasarımı</h3>
-          <p>ITIL tabanlı servis modeli tasarımı, SLA/KPI çerçeveleri ve çok bölgeli teslimat organizasyonu. B/S/H için üç ayda 75+ kişilik servis organizasyonunun kurulması bu metodolojinin somut kanıtıdır.</p>
-          <a href="#" class="btn-purple-sm" onclick="showPage('services')">Detaylar</a>
-        </div>
-        <div class="service-card">
-          <h3>Bağımsız Tedarikçi & RFP Yönetimi</h3>
-          <p>Teknoloji tedarikçileri güçlü satış ekipleriyle gelir. NTT Data'da edinilen RFP deneyimi müşteri masasında kullanılmaktadır — bağımsız değerlendirme, müzakere desteği ve ticari analiz.</p>
-          <a href="#" class="btn-purple-sm" onclick="showPage('services')">Detaylar</a>
-        </div>
-        <div class="service-card">
-          <h3>Program Yönetişimi & Teslimat Liderliği</h3>
-          <p>PMO kurulumu, portföy yönetimi ve yönetişim çerçeveleri. €1M+ programların tutarlı biçimde zamanında ve bütçe dahilinde teslim edildiği kanıtlanmış bir metodoloji.</p>
-          <a href="#" class="btn-purple-sm" onclick="showPage('services')">Detaylar</a>
-        </div>
-        <div class="service-card">
-          <h3>Kurumsal AI Hazırlık & Yönetişim</h3>
-          <p>Kurumsal AI stratejisi, organizasyonel hazırlık ve AI yönetişim çerçevesi. Teknolojiyi satın almak değil, kurumu hazırlamak belirleyici faktördür.</p>
-          <a href="#" class="btn-purple-sm" onclick="showPage('services')">Detaylar</a>
-        </div>
-        <div class="service-card">
-          <h3>Kurumsal Mimari & Teknoloji Yönetişimi</h3>
-          <p>TOGAF sertifikalı kurumsal mimari değerlendirmesi ve yönetişim model tasarımı. Teknoloji mimarisinin iş stratejisiyle hizalandığı bütünsel bir yaklaşım.</p>
-          <a href="#" class="btn-purple-sm" onclick="showPage('services')">Detaylar</a>
-        </div>
-      </div>
+      <p class="sub">SAP, AI ve IT yatırımlarında stratejik danışmanlık — Board ve C-Suite düzeyinde</p>
+      <div class="services-grid" style="grid-template-columns: repeat(3,1fr);">
+
+  <div class="svc-col">
+    <div class="svc-col-title">SAP Advisory</div>
+    <div class="svc-item-row">
+      <h4>S/4HANA Strateji &amp; Roadmap</h4>
+      <p>Geçiş stratejisi, iş gereksinim analizi, hedef mimari ve uygulama yol haritası oluşturulmaktadır.</p>
+    </div>
+    <div class="svc-item-row">
+      <h4>SAP Yatırım &amp; Program Yönetimi</h4>
+      <p>Business case hazırlığı, program yönetişimi, bütçe ve risk yönetimi dahil uçtan uca program liderliği.</p>
+    </div>
+    <div class="svc-item-row">
+      <h4>SAP Implementor &amp; Vendor Seçimi</h4>
+      <p>SAP ekosistemindeki implementasyon partnerlerinin bağımsız değerlendirmesi; güçlü ve zayıf yönlerin içeriden bilindiği tarafsız bir değerlendirme.</p>
+    </div>
+    <div class="svc-item-row">
+      <h4>SAP Health Check &amp; QA</h4>
+      <p>Devam eden SAP programlarının bağımsız sağlık değerlendirmesi; teslimat riskleri ve kalite açıklarının erken tespiti.</p>
+    </div>
+    <div class="svc-item-row">
+      <h4>Organizational Change (OCM)</h4>
+      <p>Büyük SAP programlarında değişim yönetimi stratejisi, paydaş hazırlığı ve benimseme danışmanlığı.</p>
+    </div>
+  </div>
+
+  <div class="svc-col">
+    <div class="svc-col-title">AI in SAP Environments</div>
+    <div class="svc-item-row">
+      <h4>SAP Dominant Yapılarda AI Strateji</h4>
+      <p>SAP altyapısına sahip kurumlarda yapay zeka entegrasyonunun nereden ve nasıl başlatılacağına dair stratejik çerçeve.</p>
+    </div>
+    <div class="svc-item-row">
+      <h4>SAP Joule &amp; Native AI Araçlar</h4>
+      <p>SAP'ın yerleşik yapay zeka araçlarının iş süreçlerine entegrasyonu ve kullanım senaryolarının belirlenmesi.</p>
+    </div>
+    <div class="svc-item-row">
+      <h4>AI Hazırlık &amp; Yönetişim</h4>
+      <p>Kurumsal AI yatırımından önce organizasyonel hazırlık değerlendirmesi, yönetişim modeli ve risk çerçevesi.</p>
+    </div>
+    <div class="svc-item-row">
+      <h4>AI Roadmap &amp; Önceliklendirme</h4>
+      <p>SAP ve non-SAP süreçlerde AI kullanım senaryolarının önceliklendirilmesi ve uygulama yol haritasının hazırlanması.</p>
+    </div>
+  </div>
+
+  <div class="svc-col">
+    <div class="svc-col-title">Managed Services &amp; IT Structure</div>
+    <div class="svc-item-row">
+      <h4>Managed Services Model Tasarımı</h4>
+      <p>ITIL tabanlı servis modeli, SLA/KPI çerçevesi ve çok bölgeli teslimat organizasyonu tasarımı.</p>
+    </div>
+    <div class="svc-item-row">
+      <h4>Servis Maliyet Optimizasyonu</h4>
+      <p>SAP destek yapısı ve IT servis maliyetlerinin bağımsız incelenmesi; tasarruf fırsatlarının ve verimlilik açıklarının tespiti.</p>
+    </div>
+    <div class="svc-item-row">
+      <h4>RFP Tasarımı &amp; Vendor Müzakeresi</h4>
+      <p>Teknoloji hizmet alımlarında RFP süreci tasarımı, bağımsız teknik ve ticari değerlendirme, müzakere desteği.</p>
+    </div>
+    <div class="svc-item-row">
+      <h4>IT Yapısı &amp; Operasyon Değerlendirmesi</h4>
+      <p>Mevcut IT servis yapısının, operasyonel olgunluğun ve yönetişim modelinin bütünsel değerlendirmesi.</p>
+    </div>
+  </div>
+
+</div>
     </div>
   </section>
 
