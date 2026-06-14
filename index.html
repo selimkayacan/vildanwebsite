@@ -95,7 +95,8 @@
   .hero-stat-item .stat-lbl { color: rgba(255,255,255,0.4); font-size: 10px; letter-spacing: 2px; text-transform: uppercase; font-weight: 500; }
 
   /* ── WHY SECTION ── */
-  .why { display: grid; grid-template-columns: 1fr 1fr; min-height: 500px; background: var(--dark2); }
+  .why { display: grid; grid-template-columns: 1fr 1fr; min-height: 500px; background: var(--dark2); position:relative; overflow:hidden; }
+  .why::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(176,141,87,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(176,141,87,0.03) 1px,transparent 1px);background-size:60px 60px;pointer-events:none}
   .why-left { padding: 100px 60px; background: transparent; display: flex; align-items: center; border-right: 1px solid rgba(255,255,255,0.05); }
   .why-left h2 { font-size: 44px; font-weight: 800; line-height: 1.15; color: var(--white); letter-spacing: -1px; }
   .why-right { padding: 80px 60px 80px 60px; background: transparent; display: grid; grid-template-columns: 1fr 1fr; gap: 48px 40px; align-content: center; }
@@ -129,7 +130,7 @@
   .stats { background: var(--black); position: relative; overflow: hidden; border-top: 1px solid rgba(255,255,255,0.05); }
   .stats::before {
     content: ''; position: absolute; inset: 0;
-    background: radial-gradient(ellipse at 100% 50%, rgba(176,141,87,0.05) 0%, transparent 60%);
+    background: radial-gradient(ellipse at 100% 50%,rgba(176,141,87,0.06) 0%,transparent 60%);
     pointer-events: none;
   }
   .stats-inner { position: relative; z-index: 1; display: grid; grid-template-columns: 1fr 1fr; min-height: 360px; }
@@ -296,8 +297,8 @@
   .contact-right { position: relative; overflow: hidden; }
   .contact-right::before {
     content: ''; position: absolute; inset: 0;
-    background: url('https://images.unsplash.com/photo-1497366216548-37526070297c?w=1000&q=80') center/cover no-repeat;
-    opacity: 0.7;
+    background: url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1000&q=80') center/cover no-repeat;
+    opacity: 0.5;
   }
 
   /* ── FAQ ── */
@@ -317,7 +318,9 @@
   .site-page.active { display: block; }
 
   /* ── RESOURCES PAGE ── */
-  .resources-page-hero { background: var(--dark); padding: 100px 60px 60px; text-align: center; }
+  .resources-page-hero { background: var(--dark); padding: 100px 60px 60px; text-align: center; position:relative; overflow:hidden; }
+  .resources-page-hero::after{content:'';position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1456324504439-367cee3b3c32?w=1600&q=80') center/cover no-repeat;opacity:.06;z-index:0}
+  .resources-page-hero h1, .resources-page-hero p{position:relative;z-index:1}
   .resources-page-hero h1 { color: var(--white); font-size: 38px; font-weight: 700; margin-bottom: 10px; }
   .resources-page-hero p { color: var(--accent); font-size: 14px; }
   .blog-filter { padding: 20px 60px; background: var(--white); border-bottom: 1px solid #eee; display: flex; gap: 20px; }
@@ -325,6 +328,12 @@
   .blog-filter button.active { color: var(--accent); border-color: var(--accent); }
   .blog-full { padding: 60px; background: var(--white); }
   .blog-full-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+
+  /* ── HERO VISUAL ── */
+  .hero-right { display: flex; align-items: center; justify-content: center; padding: 64px 72px 80px 40px; position: relative; z-index: 1; }
+  .hero-visual { position: relative; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 48px; }
+  #hero-canvas { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0.9; }
+  .hero-stats { position: relative; z-index: 2; display: flex; flex-direction: column; gap: 0; width: 100%; max-width: 280px; }
 
   @media (max-width: 900px) {
     nav { padding: 0 24px; }
@@ -391,22 +400,25 @@
       <a href="#" class="btn-primary btn-purple" onclick="showPage('contact')">Görüşelim</a>
     </div>
     <div class="hero-right">
-      <div class="hero-stats">
-        <div class="hero-stat-item">
-          <div class="stat-num">20+</div>
-          <div class="stat-lbl">Yıl Kurumsal Deneyim</div>
-        </div>
-        <div class="hero-stat-item">
-          <div class="stat-num">16</div>
-          <div class="stat-lbl">Ülkede Program Teslimatı</div>
-        </div>
-        <div class="hero-stat-item">
-          <div class="stat-num">€1M+</div>
-          <div class="stat-lbl">Yönetilen Dönüşüm Bütçesi</div>
-        </div>
-        <div class="hero-stat-item">
-          <div class="stat-num">%35</div>
-          <div class="stat-lbl">Operasyonel Maliyet Optimizasyonu</div>
+      <div class="hero-visual">
+        <canvas id="hero-canvas"></canvas>
+        <div class="hero-stats">
+          <div class="hero-stat-item">
+            <div class="stat-num">20+</div>
+            <div class="stat-lbl">Yıl Kurumsal Deneyim</div>
+          </div>
+          <div class="hero-stat-item">
+            <div class="stat-num">16</div>
+            <div class="stat-lbl">Ülkede Program Teslimatı</div>
+          </div>
+          <div class="hero-stat-item">
+            <div class="stat-num">€1M+</div>
+            <div class="stat-lbl">Yönetilen Dönüşüm Bütçesi</div>
+          </div>
+          <div class="hero-stat-item">
+            <div class="stat-num">%35</div>
+            <div class="stat-lbl">Operasyonel Maliyet Optimizasyonu</div>
+          </div>
         </div>
       </div>
     </div>
@@ -609,19 +621,19 @@
     </div>
     <div class="blog-grid">
       <div class="blog-card">
-        <div class="blog-img" style="background: url('https://images.unsplash.com/photo-1551434678-e076c223a692?w=600&q=80') center/cover;"></div>
+        <div class="blog-img" style="background: url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=600&q=80') center/cover;"></div>
         <div class="blog-meta">Makale · 5 dk okuma</div>
         <h3>SAP S/4HANA Geçişlerinde Neden Başarısız Olunur?</h3>
         <p>Teknoloji değil, insan ve süreç boyutundaki eksiklikler. Başarısız projelerin ortak paydası...</p>
       </div>
       <div class="blog-card">
-        <div class="blog-img" style="background: url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&q=80') center/cover;"></div>
+        <div class="blog-img" style="background: url('https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=600&q=80') center/cover;"></div>
         <div class="blog-meta">Makale · 4 dk okuma</div>
         <h3>Yapay Zeka Kurumları Nasıl Dönüştürüyor?</h3>
         <p>AI sadece teknoloji değil, organizasyonel bir dönüşüm meselesi. İşte bilmeniz gerekenler...</p>
       </div>
       <div class="blog-card">
-        <div class="blog-img" style="background: url('https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=600&q=80') center/cover;"></div>
+        <div class="blog-img" style="background: url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&q=80') center/cover;"></div>
         <div class="blog-meta">Makale · 3 dk okuma</div>
         <h3>Sektörün Önünde Kalmak</h3>
         <p>Değişim hızlanıyor. CIO'ların bugün hazırlanması gereken üç kritik alan...</p>
@@ -693,7 +705,7 @@
 <style>
 /* ── ABOUT PAGE STYLES ── */
 .ab-hero{background:var(--dark);padding:100px 60px 70px;position:relative;overflow:hidden}
-.ab-hero::before{content:'';position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1600&q=80') center/cover no-repeat;opacity:.12}
+.ab-hero::before{content:'';position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1497366216548-37526070297c?w=1600&q=80') center/cover no-repeat;opacity:.08}
 .ab-hero-inner{position:relative;z-index:1;max-width:1000px;margin:0 auto;display:grid;grid-template-columns:180px 1fr;gap:48px;align-items:center}
 .ab-photo{width:180px;height:180px;border-radius:50%;border:3px solid var(--accent);background:url('https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&q=80') center/cover;flex-shrink:0}
 .ab-hero-text h1{color:#fff;font-size:38px;font-weight:800;margin-bottom:6px}
@@ -1276,12 +1288,12 @@
 
   <style>
     .svc-hero { background:var(--dark); padding:100px 60px 60px; text-align:center; position:relative; overflow:hidden; }
-    .svc-hero::before { content:''; position:absolute; inset:0; background:url('https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1400&q=80') center/cover no-repeat; opacity:.15; }
+    .svc-hero::before { content:''; position:absolute; inset:0; background:url('https://images.unsplash.com/photo-1551434678-e076c223a692?w=1600&q=80') center/cover no-repeat; opacity:.07; }
     .svc-hero h1 { position:relative; z-index:1; color:#fff; font-size:38px; font-weight:700; margin-bottom:10px; }
     .svc-hero p { position:relative; z-index:1; color:var(--accent); font-size:14px; }
     .svc-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:0; background:var(--white); }
     .svc-item { border:1px solid #eee; overflow:hidden; cursor:pointer; transition:box-shadow 0.2s; }
-    .svc-item:hover { box-shadow:0 4px 24px rgba(107,70,193,0.12); z-index:1; }
+    .svc-item:hover { box-shadow:0 0 40px rgba(176,141,87,0.12);border-color:rgba(176,141,87,0.25);z-index:1; }
     .svc-img { width:100%; height:200px; object-fit:cover; display:block; }
     .svc-body { padding:24px 24px 28px; }
     .svc-body h3 { font-size:17px; font-weight:700; color:var(--black); margin-bottom:10px; line-height:1.3; }
@@ -1419,21 +1431,21 @@
     <div class="blog-full-grid">
 
       <div class="blog-card" onclick="openBlog(0)">
-        <div class="blog-img" style="background:url('https://images.unsplash.com/photo-1551434678-e076c223a692?w=600&q=80') center/cover;height:220px;"></div>
+        <div class="blog-img" style="background:url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=600&q=80') center/cover;height:220px;"></div>
         <div class="blog-meta">Makale · 5 dk okuma</div>
         <h3>SAP S/4HANA Geçişlerinde Neden Başarısız Olunur?</h3>
         <p>Teknoloji değil, insan ve süreç boyutundaki eksiklikler başarısızlığın temel nedeni...</p>
       </div>
 
       <div class="blog-card" onclick="openBlog(1)">
-        <div class="blog-img" style="background:url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&q=80') center/cover;height:220px;"></div>
+        <div class="blog-img" style="background:url('https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=600&q=80') center/cover;height:220px;"></div>
         <div class="blog-meta">Makale · 4 dk okuma</div>
         <h3>Yapay Zeka Kurumları Nasıl Dönüştürüyor?</h3>
         <p>AI sadece teknoloji değil, organizasyonel bir dönüşüm meselesi...</p>
       </div>
 
       <div class="blog-card" onclick="openBlog(2)">
-        <div class="blog-img" style="background:url('https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=600&q=80') center/cover;height:220px;"></div>
+        <div class="blog-img" style="background:url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&q=80') center/cover;height:220px;"></div>
         <div class="blog-meta">Makale · 3 dk okuma</div>
         <h3>Sektörün Önünde Kalmak</h3>
         <p>Değişim hızlanıyor. CIO'ların bugün hazırlanması gereken üç kritik alan...</p>
@@ -1915,6 +1927,96 @@
 </div>
 
 <script>
+// ── HERO CANVAS — Dönen 3D Wireframe Küpler ──────────────────
+(function() {
+  const canvas = document.getElementById('hero-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const GOLD = 'rgba(176,141,87,';
+  let W, H, cx, cy;
+
+  function resize() {
+    const parent = canvas.parentElement;
+    W = canvas.width  = parent.offsetWidth;
+    H = canvas.height = parent.offsetHeight;
+    cx = W / 2; cy = H / 2;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  // Birim küp köşeleri
+  function cubeVerts(size) {
+    const h = size / 2;
+    return [
+      [-h,-h,-h],[h,-h,-h],[h,h,-h],[-h,h,-h],
+      [-h,-h, h],[h,-h, h],[h,h, h],[-h,h, h]
+    ];
+  }
+
+  const EDGES = [[0,1],[1,2],[2,3],[3,0],[4,5],[5,6],[6,7],[7,4],[0,4],[1,5],[2,6],[3,7]];
+
+  function rotX(v, a) { const c=Math.cos(a),s=Math.sin(a); return [v[0], v[1]*c-v[2]*s, v[1]*s+v[2]*c]; }
+  function rotY(v, a) { const c=Math.cos(a),s=Math.sin(a); return [v[0]*c+v[2]*s, v[1], -v[0]*s+v[2]*c]; }
+  function rotZ(v, a) { const c=Math.cos(a),s=Math.sin(a); return [v[0]*c-v[1]*s, v[0]*s+v[1]*c, v[2]]; }
+
+  function project(v, fov, offsetX, offsetY) {
+    const z = v[2] + fov;
+    const f = fov / (z === 0 ? 0.001 : z);
+    return [v[0]*f + offsetX, v[1]*f + offsetY];
+  }
+
+  // 3 küp tanımı — boyut, hız, offset
+  const cubes = [
+    { size: Math.min(W,H) * 0.38, rx:0, ry:0, rz:0, dRx:0.003, dRy:0.005, dRz:0.002, ox:0, oy:0, alpha:0.9 },
+    { size: Math.min(W,H) * 0.22, rx:1, ry:0.5, rz:0.3, dRx:0.005, dRy:-0.008, dRz:0.003, ox: 0.15, oy:-0.12, alpha:0.45 },
+    { size: Math.min(W,H) * 0.14, rx:0.5, ry:1, rz:0.8, dRx:-0.007, dRy:0.004, dRz:-0.005, ox:-0.18, oy:0.15, alpha:0.25 },
+  ];
+
+  function drawCube(cube, fov) {
+    const verts = cubeVerts(cube.size);
+    const ox = cx + cube.ox * W;
+    const oy = cy + cube.oy * H;
+
+    const rotated = verts.map(v => {
+      let r = rotX(v, cube.rx);
+      r = rotY(r, cube.ry);
+      r = rotZ(r, cube.rz);
+      return r;
+    });
+
+    const projected = rotated.map(v => project(v, fov, ox, oy));
+
+    EDGES.forEach(([a, b]) => {
+      const depthA = rotated[a][2];
+      const depthB = rotated[b][2];
+      const avgZ   = (depthA + depthB) / 2;
+      const maxZ   = cube.size * 0.9;
+      const alpha  = cube.alpha * (0.3 + 0.7 * ((avgZ + maxZ) / (2 * maxZ)));
+
+      ctx.beginPath();
+      ctx.moveTo(projected[a][0], projected[a][1]);
+      ctx.lineTo(projected[b][0], projected[b][1]);
+      ctx.strokeStyle = GOLD + Math.max(0.05, Math.min(1, alpha)) + ')';
+      ctx.lineWidth = cube === cubes[0] ? 1.2 : 0.7;
+      ctx.stroke();
+    });
+  }
+
+  function animate() {
+    ctx.clearRect(0, 0, W, H);
+    const fov = Math.min(W, H) * 1.8;
+    cubes.forEach(cube => {
+      cube.rx += cube.dRx;
+      cube.ry += cube.dRy;
+      cube.rz += cube.dRz;
+      cube.ox = cube.ox * 0.9995; // hafif merkeze çekim
+      drawCube(cube, fov);
+    });
+    requestAnimationFrame(animate);
+  }
+  animate();
+})();
+
   function showPage(id) {
     document.querySelectorAll('.site-page').forEach(p => p.classList.remove('active'));
     document.getElementById(id).classList.add('active');

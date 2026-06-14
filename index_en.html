@@ -72,6 +72,9 @@
   .btn-purple { background: var(--accent); border-color: var(--accent); color: var(--black) !important; }
   .btn-purple:hover { background: var(--accent-light); border-color: var(--accent-light); }
   .hero-right { display: flex; align-items: center; justify-content: center; padding: 100px 72px 80px 40px; position: relative; z-index: 1; }
+  .hero-visual { position: relative; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 48px; }
+  #hero-canvas { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0.9; }
+  .hero-stats { position: relative; z-index: 2; display: flex; flex-direction: column; gap: 0; width: 100%; max-width: 280px; }
   .subscribe-box { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); padding: 36px; width: 100%; max-width: 360px; }
   .subscribe-box h3 { color: var(--white); font-size: 18px; margin-bottom: 20px; }
   .subscribe-box input { width: 100%; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.2); color: var(--white); padding: 10px 14px; font-size: 14px; margin-bottom: 12px; outline: none; }
@@ -251,7 +254,6 @@
   .blog-full-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
   .site-page { display: none; }
   .site-page.active { display: block; }
-  .hero-stats { display: flex; flex-direction: column; gap: 0; width: 100%; max-width: 320px; }
   .hero-stat-item { padding: 24px 0 24px 24px; border-left: 1px solid rgba(176,141,87,0.3); margin-bottom: 4px; transition: border-color 0.3s; }
   .hero-stat-item:hover { border-left-color: var(--accent); }
   .hero-stat-item .stat-num { font-size: 40px; font-weight: 800; color: var(--accent); line-height: 1; margin-bottom: 6px; letter-spacing: -1px; }
@@ -330,22 +332,25 @@
       <a href="#" class="btn-primary btn-purple" onclick="showPage('contact')">Let's Talk</a>
     </div>
     <div class="hero-right">
-      <div class="hero-stats">
-        <div class="hero-stat-item">
-          <div class="stat-num">20+</div>
-          <div class="stat-lbl">Years of Enterprise Experience</div>
-        </div>
-        <div class="hero-stat-item">
-          <div class="stat-num">16</div>
-          <div class="stat-lbl">Countries of Program Delivery</div>
-        </div>
-        <div class="hero-stat-item">
-          <div class="stat-num">€1M+</div>
-          <div class="stat-lbl">Transformation Budgets Managed</div>
-        </div>
-        <div class="hero-stat-item">
-          <div class="stat-num">35%</div>
-          <div class="stat-lbl">Operational Cost Optimization</div>
+      <div class="hero-visual">
+        <canvas id="hero-canvas"></canvas>
+        <div class="hero-stats">
+          <div class="hero-stat-item">
+            <div class="stat-num">20+</div>
+            <div class="stat-lbl">Years of Enterprise Experience</div>
+          </div>
+          <div class="hero-stat-item">
+            <div class="stat-num">16</div>
+            <div class="stat-lbl">Countries of Programme Delivery</div>
+          </div>
+          <div class="hero-stat-item">
+            <div class="stat-num">€1M+</div>
+            <div class="stat-lbl">Transformation Budgets Managed</div>
+          </div>
+          <div class="hero-stat-item">
+            <div class="stat-num">35%</div>
+            <div class="stat-lbl">Operational Cost Optimisation</div>
+          </div>
         </div>
       </div>
     </div>
@@ -1385,6 +1390,86 @@
 </div>
 
 <script>
+// ── HERO CANVAS — Rotating 3D Wireframe Cubes ─────────────
+(function() {
+  const canvas = document.getElementById('hero-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const GOLD = 'rgba(176,141,87,';
+  let W, H, cx, cy;
+
+  function resize() {
+    const parent = canvas.parentElement;
+    W = canvas.width  = parent.offsetWidth;
+    H = canvas.height = parent.offsetHeight;
+    cx = W / 2; cy = H / 2;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  function cubeVerts(size) {
+    const h = size / 2;
+    return [
+      [-h,-h,-h],[h,-h,-h],[h,h,-h],[-h,h,-h],
+      [-h,-h, h],[h,-h, h],[h,h, h],[-h,h, h]
+    ];
+  }
+
+  const EDGES = [[0,1],[1,2],[2,3],[3,0],[4,5],[5,6],[6,7],[7,4],[0,4],[1,5],[2,6],[3,7]];
+
+  function rotX(v, a) { const c=Math.cos(a),s=Math.sin(a); return [v[0], v[1]*c-v[2]*s, v[1]*s+v[2]*c]; }
+  function rotY(v, a) { const c=Math.cos(a),s=Math.sin(a); return [v[0]*c+v[2]*s, v[1], -v[0]*s+v[2]*c]; }
+  function rotZ(v, a) { const c=Math.cos(a),s=Math.sin(a); return [v[0]*c-v[1]*s, v[0]*s+v[1]*c, v[2]]; }
+
+  function project(v, fov, offsetX, offsetY) {
+    const z = v[2] + fov;
+    const f = fov / (z === 0 ? 0.001 : z);
+    return [v[0]*f + offsetX, v[1]*f + offsetY];
+  }
+
+  const cubes = [
+    { size: 0, rx:0, ry:0, rz:0, dRx:0.003, dRy:0.005, dRz:0.002, ox:0, oy:0, alpha:0.9 },
+    { size: 0, rx:1, ry:0.5, rz:0.3, dRx:0.005, dRy:-0.008, dRz:0.003, ox:0.15, oy:-0.12, alpha:0.45 },
+    { size: 0, rx:0.5, ry:1, rz:0.8, dRx:-0.007, dRy:0.004, dRz:-0.005, ox:-0.18, oy:0.15, alpha:0.25 },
+  ];
+
+  function initSizes() {
+    const s = Math.min(W, H);
+    cubes[0].size = s * 0.38;
+    cubes[1].size = s * 0.22;
+    cubes[2].size = s * 0.14;
+  }
+  initSizes();
+  window.addEventListener('resize', initSizes);
+
+  function drawCube(cube, fov) {
+    const verts = cubeVerts(cube.size);
+    const ox = cx + cube.ox * W;
+    const oy = cy + cube.oy * H;
+    const rotated = verts.map(v => { let r = rotX(v, cube.rx); r = rotY(r, cube.ry); r = rotZ(r, cube.rz); return r; });
+    const projected = rotated.map(v => project(v, fov, ox, oy));
+    EDGES.forEach(([a, b]) => {
+      const avgZ = (rotated[a][2] + rotated[b][2]) / 2;
+      const maxZ = cube.size * 0.9;
+      const alpha = cube.alpha * (0.3 + 0.7 * ((avgZ + maxZ) / (2 * maxZ)));
+      ctx.beginPath();
+      ctx.moveTo(projected[a][0], projected[a][1]);
+      ctx.lineTo(projected[b][0], projected[b][1]);
+      ctx.strokeStyle = GOLD + Math.max(0.05, Math.min(1, alpha)) + ')';
+      ctx.lineWidth = cube === cubes[0] ? 1.2 : 0.7;
+      ctx.stroke();
+    });
+  }
+
+  function animate() {
+    ctx.clearRect(0, 0, W, H);
+    const fov = Math.min(W, H) * 1.8;
+    cubes.forEach(cube => { cube.rx += cube.dRx; cube.ry += cube.dRy; cube.rz += cube.dRz; drawCube(cube, fov); });
+    requestAnimationFrame(animate);
+  }
+  animate();
+})();
+
   function showPage(id) {
     document.querySelectorAll('.site-page').forEach(p => p.classList.remove('active'));
     document.getElementById(id).classList.add('active');
